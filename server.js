@@ -2,10 +2,31 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-const User = require('./models/User');
-const Transaction = require('./models/Transaction');
+// --- EMBEDDED MONGOOSE SCHEMAS (NO SEPARATE FOLDER NEEDED) ---
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, default: 'user' },
+  bonusBalance: { type: Number, default: 50 },
+  winningBalance: { type: Number, default: 0 }
+}, { timestamps: true });
+
+const User = mongoose.models.User || mongoose.model('User', userSchema);
+
+const transactionSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  type: { type: String, enum: ['deposit', 'withdraw'], required: true },
+  amount: { type: Number, required: true },
+  utrNumber: { type: String },
+  upiId: { type: String },
+  status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' }
+}, { timestamps: true });
+
+const Transaction = mongoose.models.Transaction || mongoose.model('Transaction', transactionSchema);
 
 const app = express();
 app.use(cors());
@@ -40,14 +61,13 @@ Object.keys(global.rooms).forEach(roomKey => {
       let winningNum;
       if (room.forcedResult !== null && room.forcedResult !== undefined) {
         winningNum = Number(room.forcedResult);
-        room.forcedResult = null; // Auto reset
+        room.forcedResult = null;
       } else {
         winningNum = Math.floor(Math.random() * 10);
       }
 
       const meta = getNumberMeta(winningNum);
 
-      // Settle Bets
       for (const bet of room.activeBets) {
         try {
           let isWin = false;
@@ -69,7 +89,6 @@ Object.keys(global.rooms).forEach(roomKey => {
             await User.findByIdAndUpdate(bet.userId, { $inc: { winningBalance: winAmount } });
           }
 
-          // Save To Personal Bet History Ledger
           if (!global.userBetLedger[bet.userId]) global.userBetLedger[bet.userId] = [];
           global.userBetLedger[bet.userId].unshift({
             period: room.currentPeriod,
@@ -107,8 +126,35 @@ Object.keys(global.rooms).forEach(roomKey => {
   }, 1000);
 });
 
-// Authentication Routes
-app.use('/api/auth', require('./routes/auth'));
+// --- INLINE AUTHENTICATION ROUTES ---
+app.post('/api/auth/register', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    let user = await User.findOne({ email });
+    if (user) return res.status(400).json({ error: 'Email already registered' });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user = await User.create({ name, email, password: hashedPassword, bonusBalance: 50, winningBalance: 0 });
+    res.json({ message: 'User created successfully', user: { id: user._id, name: user.name, email: user.email } });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ error: 'Invalid credentials' });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
+
+    res.json({ user: { id: user._id, name: user.name, email: user.email, bonusBalance: user.bonusBalance, winningBalance: user.winningBalance } });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // Room Info API
 app.get('/api/game/all-rooms', (req, res) => {
@@ -125,7 +171,7 @@ app.get('/api/game/all-rooms', (req, res) => {
   res.json(data);
 });
 
-// User Balances & Personal Win/Loss Bets History
+// User Balances & Personal History
 app.get('/api/game/my-bets/:userId', async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
@@ -166,7 +212,7 @@ app.post('/api/game/bet', async (req, res) => {
   res.json({ message: 'Bet accepted!', bonusBalance: user.bonusBalance, winningBalance: user.winningBalance });
 });
 
-// UPI Config API (Masked / Safe)
+// UPI Config
 app.get('/api/wallet/upi-config', (req, res) => {
   res.json({
     upiId: process.env.RECEIVING_UPI_ID || 'merchantpay@upi',
@@ -174,7 +220,7 @@ app.get('/api/wallet/upi-config', (req, res) => {
   });
 });
 
-// User Submits UTR for Deposit
+// Submit Deposit
 app.post('/api/wallet/submit-deposit', async (req, res) => {
   const { userId, amount, utrNumber } = req.body;
   if (!utrNumber || utrNumber.length < 8) {
@@ -197,7 +243,7 @@ app.post('/api/wallet/submit-deposit', async (req, res) => {
   res.json({ message: 'Deposit submitted! Balance will be credited once verified.' });
 });
 
-// User Withdrawal Request
+// Withdraw Request
 app.post('/api/wallet/withdraw-request', async (req, res) => {
   const { userId, amount, upiId } = req.body;
   const user = await User.findById(userId);
@@ -211,7 +257,7 @@ app.post('/api/wallet/withdraw-request', async (req, res) => {
   res.json({ message: 'Withdrawal submitted!', winningBalance: user.winningBalance });
 });
 
-// User's Withdrawal & Transaction History
+// Transactions History
 app.get('/api/wallet/user-transactions/:userId', async (req, res) => {
   try {
     const txs = await Transaction.find({ userId: req.params.userId }).sort({ createdAt: -1 }).limit(30);
@@ -221,7 +267,7 @@ app.get('/api/wallet/user-transactions/:userId', async (req, res) => {
   }
 });
 
-// --- ADMIN SYSTEM APIS & PERMANENT FINANCIAL AUDIT ---
+// Admin Control APIs
 app.post('/api/admin/force-number', (req, res) => {
   const { roomKey, number } = req.body;
   if (!global.rooms[roomKey]) return res.status(400).json({ error: 'Room not found' });
@@ -231,18 +277,9 @@ app.post('/api/admin/force-number', (req, res) => {
 
 app.get('/api/admin/system-status', async (req, res) => {
   try {
-    const pendingDeposits = await Transaction.find({ type: 'deposit', status: 'pending' })
-      .populate('userId', 'name email')
-      .sort({ createdAt: -1 });
-
-    const pendingWithdraws = await Transaction.find({ type: 'withdraw', status: 'pending' })
-      .populate('userId', 'name email')
-      .sort({ createdAt: -1 });
-
-    const approvedDeposits = await Transaction.find({ type: 'deposit', status: 'approved' })
-      .populate('userId', 'name email')
-      .sort({ createdAt: -1 })
-      .limit(50);
+    const pendingDeposits = await Transaction.find({ type: 'deposit', status: 'pending' }).populate('userId', 'name email').sort({ createdAt: -1 });
+    const pendingWithdraws = await Transaction.find({ type: 'withdraw', status: 'pending' }).populate('userId', 'name email').sort({ createdAt: -1 });
+    const approvedDeposits = await Transaction.find({ type: 'deposit', status: 'approved' }).populate('userId', 'name email').sort({ createdAt: -1 }).limit(50);
 
     const allApprovedDeposits = await Transaction.find({ type: 'deposit', status: 'approved' });
     const allApprovedWithdraws = await Transaction.find({ type: 'withdraw', status: 'approved' });
@@ -294,7 +331,7 @@ app.post('/api/admin/process-tx', async (req, res) => {
   res.json({ message: `Transaction ${status}` });
 });
 
-// Boot Permanent Cloud Database & Server
+// Boot Database & Server
 async function startServer() {
   const mongoUri = process.env.MONGO_URI;
   if (!mongoUri) {
@@ -310,8 +347,8 @@ async function startServer() {
     return;
   }
 
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`🚀 Live: http://localhost:${PORT}`));
+  const PORT = process.env.PORT || 10000;
+  app.listen(PORT, () => console.log(`🚀 Live: http://0.0.0.0:${PORT}`));
 }
 
 startServer();
