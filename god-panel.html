@@ -19,7 +19,6 @@
   --text-primary:#f8fafc;
   --text-secondary:#8a99ad;
   --glass-border:rgba(255,255,255,0.08);
-  --glass-bg:rgba(11, 15, 25, 0.85);
 }
 
 body{
@@ -39,160 +38,82 @@ body{
   flex-direction:column;
   gap:14px;
 }
-
 .hidden{display:none!important;}
 
-/* ========================================================= */
-/* 🔒 ULTRA-LUXURY PIN ENTRY GATE (PASSWORD: 1104) */
-/* ========================================================= */
+/* 🔒 SECURE VAULT PIN GATE (PASS: 1104) */
 .vault-pin-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(2,3,6,0.95);
-  backdrop-filter:blur(16px);
-  z-index:99999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+  position:fixed;inset:0;background:rgba(2,3,6,0.95);backdrop-filter:blur(16px);
+  z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;
 }
 .vault-pin-box{
   background:linear-gradient(135deg, #182238 0%, #0d1320 100%);
-  border:1px solid rgba(255,215,0,0.3);
-  border-radius:28px;
-  padding:32px 20px;
-  width:100%;
-  max-width:340px;
-  text-align:center;
-  box-shadow:0 25px 60px rgba(0,0,0,0.9), 0 0 30px rgba(255,215,0,0.15);
-  animation:vaultPopIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border:1px solid rgba(255,215,0,0.3);border-radius:28px;padding:32px 20px;
+  width:100%;max-width:340px;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,0.9);
 }
-@keyframes vaultPopIn{0%{transform:scale(0.8);opacity:0;}100%{transform:scale(1);opacity:1;}}
-
 .vault-shield-glow{
   width:70px;height:70px;border-radius:50%;
   background:radial-gradient(circle, rgba(255,215,0,0.2) 0%, rgba(255,42,85,0.1) 100%);
-  border:2px solid var(--gold-text);
-  display:flex;align-items:center;justify-content:center;
-  font-size:2rem;color:var(--gold-text);margin:0 auto 16px;
-  box-shadow:0 0 25px rgba(255,215,0,0.3);
+  border:2px solid var(--gold-text);display:flex;align-items:center;justify-content:center;
+  font-size:2rem;color:var(--gold-text);margin:0 auto 16px;box-shadow:0 0 25px rgba(255,215,0,0.3);
 }
-
-.pin-dots-row{
-  display:flex;justify-content:center;gap:12px;margin:20px 0;
-}
-.pin-dot{
-  width:16px;height:16px;border-radius:50%;
-  background:var(--dark-base);border:1.5px solid var(--text-secondary);
-  transition:all 0.15s ease;
-}
+.pin-dots-row{display:flex;justify-content:center;gap:12px;margin:20px 0;}
+.pin-dot{width:16px;height:16px;border-radius:50%;background:var(--dark-base);border:1.5px solid var(--text-secondary);transition:all 0.15s;}
 .pin-dot.filled{background:var(--neon-green);border-color:var(--neon-green);box-shadow:0 0 10px var(--neon-green);}
-
-.pin-keypad{
-  display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;margin-top:10px;
-}
+.pin-keypad{display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;margin-top:10px;}
 .pin-key{
-  background:var(--dark-elevated);border:1px solid var(--glass-border);
-  color:#fff;border-radius:14px;padding:14px 0;font-size:1.2rem;font-weight:900;
-  cursor:pointer;transition:transform 0.1s;
+  background:var(--dark-elevated);border:1px solid var(--glass-border);color:#fff;
+  border-radius:14px;padding:14px 0;font-size:1.2rem;font-weight:900;cursor:pointer;
 }
 .pin-key:active{transform:scale(0.92);background:var(--neon-red);}
 
-/* ========================================================= */
-/* DASHBOARD STYLING */
-/* ========================================================= */
+/* DASHBOARD HEADER */
 .admin-header{
   background:linear-gradient(135deg, #182238, #0d1320);
-  border:1px solid var(--glass-border);
-  border-radius:20px;
-  padding:16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+  border:1px solid var(--glass-border);border-radius:20px;padding:16px;
+  display:flex;justify-content:space-between;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,0.6);
 }
 
-.stats-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .stat-box{
-  background:var(--dark-surface);
-  border:1px solid var(--glass-border);
-  border-radius:16px;
-  padding:14px;
-  text-align:center;
-  box-shadow:0 6px 20px rgba(0,0,0,0.4);
+  background:var(--dark-surface);border:1px solid var(--glass-border);
+  border-radius:16px;padding:14px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.4);
 }
 .stat-box span{font-size:0.68rem;color:var(--text-secondary);font-weight:800;text-transform:uppercase;display:block;}
 .stat-box b{font-size:1.25rem;font-weight:900;margin-top:4px;display:block;}
 
 .admin-card{
-  background:var(--dark-surface);
-  border:1px solid var(--glass-border);
-  border-radius:20px;
-  padding:16px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.5);
+  background:var(--dark-surface);border:1px solid var(--glass-border);
+  border-radius:20px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,0.5);
 }
+.admin-card h3{font-size:0.9rem;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 
-.admin-card h3{
-  font-size:0.9rem;
-  font-weight:900;
-  margin-bottom:12px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
+.table-responsive{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.admin-table{width:100%;border-collapse:collapse;font-size:0.78rem;white-space:nowrap;}
+.admin-table th{padding:8px 6px;color:var(--text-secondary);border-bottom:1px solid var(--glass-border);font-weight:800;text-align:left;}
+.admin-table td{padding:10px 6px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;}
 
-.table-responsive{
-  width:100%;
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-}
-.admin-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:0.78rem;
-  white-space:nowrap;
-}
-.admin-table th{
-  padding:8px 6px;
-  color:var(--text-secondary);
-  border-bottom:1px solid var(--glass-border);
-  font-weight:800;
-  text-align:left;
-}
-.admin-table td{
-  padding:10px 6px;
-  border-bottom:1px solid rgba(255,255,255,0.03);
-  font-weight:700;
-}
-
-.btn-action{
-  border:none;border-radius:8px;padding:6px 12px;font-size:0.75rem;font-weight:900;cursor:pointer;
-}
+.btn-action{border:none;border-radius:8px;padding:6px 12px;font-size:0.75rem;font-weight:900;cursor:pointer;}
 .btn-approve{background:var(--neon-green);color:#000;}
 .btn-reject{background:var(--neon-red);color:#fff;}
 
-.room-rig-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:var(--dark-elevated);
-  padding:10px 12px;
-  border-radius:12px;
-  margin-bottom:8px;
-  font-size:0.85rem;
-  font-weight:800;
-  border:1px solid var(--glass-border);
+/* 💎 PREMIUM RIGGING ENGINE STYLING */
+.rig-room-box{
+  background:var(--dark-elevated);border:1px solid var(--glass-border);
+  border-radius:16px;padding:12px;margin-bottom:10px;
 }
-.rig-num-btns{display:flex;gap:4px;}
+.rig-room-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:0.85rem;font-weight:900;}
+.rig-num-grid{display:grid;grid-template-columns:repeat(5, 1fr);gap:6px;}
 .num-btn{
-  width:26px;height:26px;background:var(--dark-surface);border:1px solid var(--glass-border);
-  color:#fff;border-radius:6px;font-size:0.75rem;font-weight:900;cursor:pointer;
+  background:var(--dark-surface);border:1px solid var(--glass-border);color:#fff;
+  border-radius:8px;padding:8px 0;font-size:0.8rem;font-weight:900;cursor:pointer;text-align:center;
+  transition:all 0.15s;
 }
-.num-btn:active{background:var(--neon-red);}
+.num-btn:active, .num-btn.rigged-active{background:var(--neon-cyan);color:#000;border-color:var(--neon-cyan);box-shadow:0 0 10px rgba(0,210,255,0.5);}
+
+.btn-wipe-zero{
+  width:100%;background:linear-gradient(135deg, #7f1d1d, #450a0a);border:1px solid rgba(239,68,68,0.4);
+  color:#fca5a5;border-radius:14px;padding:14px;font-weight:900;cursor:pointer;box-shadow:0 5px 20px rgba(127,29,29,0.4);
+}
 </style>
 </head>
 <body>
@@ -255,9 +176,32 @@ body{
     </div>
   </div>
 
+  <!-- 💎 ULTRA-PREMIUM RIGGING & FORCE RESULT ENGINE -->
+  <div class="admin-card">
+    <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--neon-cyan);"></i> Ultimate Rigging Engine</h3>
+    <p style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:12px;">Tap target winning number for upcoming room period:</p>
+    
+    <div class="rig-room-box">
+      <div class="rig-room-head"><span>⚡ 30s Quick Room</span> <b style="color:var(--neon-cyan);" id="period30s">Period: ---</b></div>
+      <div class="rig-num-grid" id="rigGrid30s"></div>
+    </div>
+    <div class="rig-room-box">
+      <div class="rig-room-head"><span>⚡ 90s Room</span> <b style="color:var(--neon-cyan);" id="period90s">Period: ---</b></div>
+      <div class="rig-num-grid" id="rigGrid90s"></div>
+    </div>
+    <div class="rig-room-box">
+      <div class="rig-room-head"><span>⚡ 3m Room</span> <b style="color:var(--neon-cyan);" id="period3m">Period: ---</b></div>
+      <div class="rig-num-grid" id="rigGrid3m"></div>
+    </div>
+    <div class="rig-room-box">
+      <div class="rig-room-head"><span>⚡ 5m Room</span> <b style="color:var(--neon-cyan);" id="period5m">Period: ---</b></div>
+      <div class="rig-num-grid" id="rigGrid5m"></div>
+    </div>
+  </div>
+
   <!-- PENDING DEPOSITS APPROVAL -->
   <div class="admin-card">
-    <h3><i class="fa-solid fa-arrow-down-long" style="color:var(--neon-green);"></i> Pending Recharges (UTR Verification)</h3>
+    <h3><i class="fa-solid fa-arrow-down-long" style="color:var(--neon-green);"></i> Pending Recharges</h3>
     <div class="table-responsive">
       <table class="admin-table">
         <thead><tr><th>User</th><th>Amount</th><th>UTR Number</th><th>Action</th></tr></thead>
@@ -268,7 +212,7 @@ body{
 
   <!-- PENDING WITHDRAWALS APPROVAL -->
   <div class="admin-card">
-    <h3><i class="fa-solid fa-arrow-up-long" style="color:var(--neon-red);"></i> Pending Withdrawals (Cashout)</h3>
+    <h3><i class="fa-solid fa-arrow-up-long" style="color:var(--neon-red);"></i> Pending Withdrawals</h3>
     <div class="table-responsive">
       <table class="admin-table">
         <thead><tr><th>User</th><th>Amount</th><th>UPI ID</th><th>Action</th></tr></thead>
@@ -277,27 +221,11 @@ body{
     </div>
   </div>
 
-  <!-- RIGGING & FORCE RESULT ENGINE -->
-  <div class="admin-card">
-    <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--neon-cyan);"></i> Rigging & Force Result Engine</h3>
-    <p style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:10px;">Select exact next winning number for rooms:</p>
-    
-    <div class="room-rig-row">
-      <span>30s Quick Room</span>
-      <div class="rig-num-btns" id="rigBtns30s"></div>
-    </div>
-    <div class="room-rig-row">
-      <span>90s Room</span>
-      <div class="rig-num-btns" id="rigBtns90s"></div>
-    </div>
-    <div class="room-rig-row">
-      <span>3m Room</span>
-      <div class="rig-num-btns" id="rigBtns3m"></div>
-    </div>
-    <div class="room-rig-row">
-      <span>5m Room</span>
-      <div class="rig-num-btns" id="rigBtns5m"></div>
-    </div>
+  <!-- FRESH START ZERO WIPE BUTTON -->
+  <div class="admin-card" style="text-align:center;background:rgba(127,29,29,0.15);border-color:rgba(239,68,68,0.3);">
+    <h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--neon-red);"></i> Emergency Platform Reset</h3>
+    <p style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">Wipe all transactions, bets, and reset balances to zero for a fresh start.</p>
+    <button class="btn-wipe-zero" onclick="executeFreshZeroWipe()">WIPE ALL DATA & START FRESH 🔄</button>
   </div>
 
 </div>
@@ -310,19 +238,15 @@ function pressPin(digit) {
   if (enteredPin.length < 4) {
     enteredPin += digit;
     updatePinDots();
-    if (enteredPin.length === 4) {
-      setTimeout(verifyPin, 150);
-    }
+    if (enteredPin.length === 4) setTimeout(verifyPin, 150);
   }
 }
-
 function clearPin() { enteredPin = ''; updatePinDots(); }
 function backPin() { enteredPin = enteredPin.slice(0, -1); updatePinDots(); }
 
 function updatePinDots() {
   for (let i = 1; i <= 4; i++) {
-    const dot = document.getElementById('dot' + i);
-    dot.classList.toggle('filled', i <= enteredPin.length);
+    document.getElementById('dot' + i).classList.toggle('filled', i <= enteredPin.length);
   }
 }
 
@@ -331,9 +255,9 @@ function verifyPin() {
     document.getElementById('vaultGate').classList.add('hidden');
     document.getElementById('adminMainContent').classList.remove('hidden');
     loadAdminData();
-    setInterval(loadAdminData, 8000);
+    setInterval(loadAdminData, 6000);
   } else {
-    alert('❌ Incorrect Security PIN! Try again.');
+    alert('❌ Incorrect Security PIN!');
     clearPin();
   }
 }
@@ -346,6 +270,27 @@ async function loadAdminData() {
     document.getElementById('statRev').innerText = '₹' + data.stats.totalRevenue.toLocaleString('en-IN');
     document.getElementById('statPaid').innerText = '₹' + data.stats.totalPaid.toLocaleString('en-IN');
     document.getElementById('statProfit').innerText = '₹' + data.stats.netProfit.toLocaleString('en-IN');
+
+    // Rooms Periods
+    ['30s', '90s', '3m', '5m'].forEach(roomKey => {
+      if (data.rooms[roomKey]) {
+        document.getElementById('period' + roomKey).innerText = `Period: ${data.rooms[roomKey].period}`;
+      }
+      const grid = document.getElementById('rigGrid' + roomKey);
+      if (grid && grid.innerHTML === '') {
+        let html = '';
+        for (let i = 0; i <= 9; i++) {
+          html += `<button class="num-btn" id="rig_${roomKey}_${i}" onclick="forceRoomNum('${roomKey}', ${i}, this)">${i}</button>`;
+        }
+        grid.innerHTML = html;
+      }
+      // Highlight forced
+      const forced = data.rooms[roomKey] ? data.rooms[roomKey].forcedResult : null;
+      for (let i = 0; i <= 9; i++) {
+        const btn = document.getElementById(`rig_${roomKey}_${i}`);
+        if (btn) btn.classList.toggle('rigged-active', forced === i);
+      }
+    });
 
     const depTbody = document.getElementById('pendingDepRows');
     if (!data.pendingDeposits.length) {
@@ -380,24 +325,12 @@ async function loadAdminData() {
         </tr>
       `).join('');
     }
-
-    ['30s', '90s', '3m', '5m'].forEach(roomKey => {
-      const container = document.getElementById('rigBtns' + roomKey);
-      if (container && container.innerHTML === '') {
-        let html = '';
-        for (let i = 0; i <= 9; i++) {
-          html += `<button class="num-btn" onclick="forceRoomNum('${roomKey}', ${i})">${i}</button>`;
-        }
-        container.innerHTML = html;
-      }
-    });
   } catch(e) {}
 }
 
 async function processTx(txId, status) {
   const res = await fetch('/api/admin/process-tx', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    method: 'POST', headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ txId, status })
   });
   const data = await res.json();
@@ -405,14 +338,22 @@ async function processTx(txId, status) {
   loadAdminData();
 }
 
-async function forceRoomNum(roomKey, number) {
+async function forceRoomNum(roomKey, number, el) {
   const res = await fetch('/api/admin/force-number', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    method: 'POST', headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ roomKey, number })
   });
   const data = await res.json();
   alert(data.message);
+  loadAdminData();
+}
+
+async function executeFreshZeroWipe() {
+  if (!confirm('⚠️ Are you sure? This will wipe all transaction history, user bets, and reset balances to zero!')) return;
+  const res = await fetch('/api/admin/fresh-reset', { method: 'POST' });
+  const data = await res.json();
+  alert(data.message);
+  loadAdminData();
 }
 </script>
 </body>
