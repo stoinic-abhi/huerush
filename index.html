@@ -3,294 +3,291 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>HueRush — Enterprise VIP Colour Trading</title>
+<title>HueRush — Luxury VIP Parity Club</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --red-main:#e52433;
-  --red-dark:#b3121f;
-  --green-main:#10b981;
-  --violet-main:#8b5cf6;
-  --gold-grad:linear-gradient(135deg, #fbbf24, #d97706);
-  --card-bg:#ffffff;
-  --bg-app:#f3f5f9;
-  --text-dark:#111827;
-  --text-muted:#6b7280;
-  --border-light:#e5e7eb;
+  --dark-base:#0d111a;
+  --dark-surface:#161d2b;
+  --dark-elevated:#1f293d;
+  --red-matte:#ef394e;
+  --green-matte:#10b981;
+  --violet-matte:#8b5cf6;
+  --gold-glow:linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+  --gold-text:#fde047;
+  --text-primary:#f8fafc;
+  --text-secondary:#94a3b8;
+  --glass-border:rgba(255,255,255,0.08);
+  --glass-surface:rgba(22, 29, 43, 0.75);
 }
 
 body{
-  background:#090d16;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  color:var(--text-dark);
+  background:#05070b;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;
+  color:var(--text-primary);
   display:flex;
   justify-content:center;
   min-height:100vh;
 }
 
-.mobile-shell{
+.luxury-shell{
   width:100%;
   max-width:440px;
-  background:var(--bg-app);
+  background:var(--dark-base);
   min-height:100vh;
   position:relative;
   display:flex;
   flex-direction:column;
-  padding-bottom:85px;
-  box-shadow:0 0 50px rgba(0,0,0,0.6);
+  padding-bottom:88px;
+  box-shadow:0 0 60px rgba(0,0,0,0.85);
   overflow-x:hidden;
 }
 
 .hidden{display:none!important;}
 
-/* HEADER WITH CUSTOM VECTOR LOGO */
-.app-header-strip{
-  background:linear-gradient(135deg, #ff444a 0%, #b80d19 100%);
-  padding:16px 16px 56px;
-  color:#fff;
-  border-bottom-left-radius:28px;
-  border-bottom-right-radius:28px;
-  position:relative;
+/* ========================================================= */
+/* LUXURY MATTE GLASS HEADER */
+/* ========================================================= */
+.app-luxury-topbar{
+  background:linear-gradient(180deg, #1c2436 0%, #0d111a 100%);
+  padding:16px 16px 20px;
+  border-bottom:1px solid var(--glass-border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(10px);
 }
 
-.brand-bar{
+.top-brand-flex{
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 
-.huerush-vector-logo{
+.brand-badge{
   display:flex;
   align-items:center;
   gap:10px;
 }
 
-.logo-symbol{
+.brand-icon-shield{
   width:36px;
   height:36px;
-  background:#ffffff;
-  border-radius:10px;
+  background:linear-gradient(135deg, #ef394e, #8b5cf6);
+  border-radius:12px;
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:0 4px 14px rgba(0,0,0,0.25);
+  box-shadow:0 4px 16px rgba(239,57,78,0.35);
 }
 
-.logo-text-title{
+.brand-title{
   font-size:1.35rem;
   font-weight:900;
   letter-spacing:-0.5px;
-  color:#ffffff;
-  display:flex;
-  align-items:center;
+  color:#fff;
 }
-.logo-text-title span{
-  color:#ffd24d;
+.brand-title span{
+  background:var(--gold-glow);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-.top-icons-duo{
+.top-actions-duo{
   display:flex;
   gap:8px;
 }
-.top-action-circle{
-  background:rgba(255,255,255,0.18);
-  border:1px solid rgba(255,255,255,0.3);
-  color:#fff;
-  border-radius:50%;
+.luxury-circle-btn{
   width:36px;
   height:36px;
+  border-radius:50%;
+  background:var(--dark-surface);
+  border:1px solid var(--glass-border);
+  color:#cbd5e1;
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:0.95rem;
   cursor:pointer;
-  transition:transform 0.1s;
+  transition:all 0.15s ease;
 }
-.top-action-circle:active{transform:scale(0.92);}
+.luxury-circle-btn:active{transform:scale(0.92);}
 
-.user-quick-ribbon{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-top:14px;
-}
-
-.user-badge-avatar{
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  background:linear-gradient(135deg, #ffe066, #ff7700);
-  border:2px solid #fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  color:#5a1e00;
-  font-size:1.2rem;
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-
-/* DUAL WALLET */
-.wallet-board-card{
-  margin:-40px 14px 14px;
-  background:#fff;
-  border-radius:22px;
-  padding:18px 16px;
-  box-shadow:0 12px 30px rgba(184,13,25,0.15);
-  border:1px solid #ffeaeb;
+/* ========================================================= */
+/* MATTE GLASS DUAL WALLET CARD */
+/* ========================================================= */
+.matte-wallet-card{
+  margin:14px;
+  background:linear-gradient(135deg, rgba(31,41,61,0.85) 0%, rgba(22,29,43,0.95) 100%);
+  border:1px solid var(--glass-border);
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 14px 34px rgba(0,0,0,0.45);
+  backdrop-filter:blur(12px);
   position:relative;
-  z-index:10;
 }
 
-.wallet-subhead{
-  display:flex;
-  justify-content:space-between;
+.wallet-subtag{
   font-size:0.75rem;
   font-weight:800;
-  color:var(--text-muted);
+  color:var(--text-secondary);
   text-transform:uppercase;
+  letter-spacing:0.8px;
+  display:flex;
+  justify-content:space-between;
 }
 
-.wallet-master-sum{
-  font-size:2.3rem;
+.wallet-primary-amount{
+  font-size:2.4rem;
   font-weight:900;
-  color:var(--red-dark);
-  margin:4px 0 10px;
+  color:#ffffff;
+  margin:6px 0 12px;
   letter-spacing:-1px;
 }
 
-.wallet-columns-duo{
-  display:flex;
+.wallet-vault-duo{
+  display:grid;
+  grid-template-columns:1fr 1fr;
   gap:10px;
-  background:#f9fafc;
-  padding:10px 12px;
-  border-radius:14px;
-  margin-bottom:14px;
+  background:rgba(13,17,26,0.6);
+  border:1px solid var(--glass-border);
+  padding:12px 14px;
+  border-radius:16px;
+  margin-bottom:16px;
 }
 
-.w-col{flex:1;}
-.w-col span{font-size:0.68rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;display:block;}
-.w-col b{font-size:1.05rem;font-weight:900;}
+.vault-col span{
+  font-size:0.68rem;
+  font-weight:800;
+  color:var(--text-secondary);
+  text-transform:uppercase;
+  display:block;
+}
+.vault-col b{
+  font-size:1.1rem;
+  font-weight:900;
+}
 
-.wallet-ctrl-btns{
+.wallet-actions-flex{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
 }
 
-.btn-w-ctrl{
+.btn-luxury-deposit{
   border:none;
-  border-radius:12px;
-  padding:13px 0;
+  border-radius:14px;
+  padding:14px 0;
   font-weight:900;
-  font-size:0.9rem;
+  font-size:0.92rem;
   cursor:pointer;
+  background:linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  box-shadow:0 6px 20px rgba(16,185,129,0.3);
+}
+
+.btn-luxury-withdraw{
+  border:none;
+  border-radius:14px;
+  padding:14px 0;
+  font-weight:900;
+  font-size:0.92rem;
+  cursor:pointer;
+  background:linear-gradient(135deg, #1f293d 0%, #111827 100%);
+  border:1px solid var(--glass-border);
+  color:#f8fafc;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:8px;
 }
-.btn-deposit-green{
-  background:linear-gradient(135deg, #10b981, #059669);
-  color:#fff;
-  box-shadow:0 6px 16px rgba(16,185,129,0.3);
-}
-.btn-withdraw-dark{
-  background:#111827;
-  color:#fff;
-  box-shadow:0 6px 16px rgba(0,0,0,0.15);
-}
 
-/* 4-BUTTON SHORTCUTS */
-.service-shortcuts-row{
+/* ========================================================= */
+/* 4 QUICK TILES */
+/* ========================================================= */
+.quick-matrix-grid{
   display:grid;
   grid-template-columns:repeat(4, 1fr);
-  gap:8px;
+  gap:10px;
   margin:0 14px 14px;
 }
-.service-icon-box{
-  background:#fff;
-  border-radius:14px;
-  padding:12px 6px;
+.tile-matte-box{
+  background:var(--dark-surface);
+  border:1px solid var(--glass-border);
+  border-radius:16px;
+  padding:14px 8px;
   text-align:center;
-  box-shadow:0 2px 10px rgba(0,0,0,0.03);
   cursor:pointer;
-  transition:transform 0.1s;
+  transition:all 0.15s ease;
 }
-.service-icon-box:active{transform:scale(0.94);}
-.service-icon-box i{
-  font-size:1.3rem;
-  margin-bottom:5px;
-  display:block;
-}
-.service-icon-box span{
-  font-size:0.68rem;
-  font-weight:800;
-  color:var(--text-dark);
-}
+.tile-matte-box:active{transform:scale(0.94);}
+.tile-matte-box i{font-size:1.4rem;margin-bottom:6px;display:block;}
+.tile-matte-box span{font-size:0.7rem;font-weight:800;color:var(--text-primary);}
 
-/* LUCKY SPIN BANNER */
-.spin-banner-card{
+/* ========================================================= */
+/* FUNCTIONAL LUCKY SPIN BANNER (MATTE NEON) */
+/* ========================================================= */
+.spin-luxury-card{
   margin:0 14px 14px;
-  background:linear-gradient(135deg, #4c1d95, #6d28d9 60%, #c026d3 100%);
-  border-radius:18px;
-  padding:14px 16px;
-  color:#fff;
+  background:linear-gradient(135deg, #581c87 0%, #3b0764 100%);
+  border:1px solid rgba(168,85,247,0.3);
+  border-radius:20px;
+  padding:16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  box-shadow:0 8px 24px rgba(109,40,217,0.3);
+  box-shadow:0 10px 25px rgba(88,28,135,0.35);
+  cursor:pointer;
   position:relative;
   overflow:hidden;
-  cursor:pointer;
 }
-.spin-banner-card::after{
+.spin-luxury-card::after{
   content:"🎡";
   position:absolute;
-  font-size:5rem;
-  opacity:0.18;
   right:-10px;
   bottom:-14px;
+  font-size:5rem;
+  opacity:0.18;
 }
-.spin-banner-content small{
+.spin-card-title small{
   font-size:0.7rem;
   font-weight:800;
-  color:#e9d5ff;
+  color:#d8b4fe;
   text-transform:uppercase;
   letter-spacing:0.5px;
-  display:flex;
-  align-items:center;
-  gap:4px;
 }
-.spin-banner-content b{
+.spin-card-title b{
   font-size:1.45rem;
   font-weight:900;
-  color:#fde047;
+  color:var(--gold-text);
   display:block;
   margin-top:2px;
 }
-.spin-cta-btn{
-  background:var(--gold-grad);
+.btn-spin-glow{
+  background:var(--gold-glow);
   color:#000;
   border:none;
   border-radius:12px;
-  padding:9px 16px;
+  padding:10px 16px;
   font-size:0.8rem;
   font-weight:900;
   cursor:pointer;
-  display:flex;
-  align-items:center;
-  gap:6px;
-  box-shadow:0 4px 12px rgba(251,191,36,0.35);
-  position:relative;
   z-index:2;
+  box-shadow:0 4px 14px rgba(251,191,36,0.4);
 }
 
-/* TICKER STREAM */
+/* ========================================================= */
+/* LIVE WINNERS TICKER */
+/* ========================================================= */
 .live-stream-ticker{
   margin:0 14px 14px;
-  background:#fff;
+  background:var(--dark-surface);
+  border:1px solid var(--glass-border);
   border-radius:12px;
   padding:8px 12px;
   font-size:0.75rem;
@@ -298,58 +295,60 @@ body{
   display:flex;
   align-items:center;
   gap:8px;
-  color:var(--text-muted);
+  color:var(--text-secondary);
   overflow:hidden;
   white-space:nowrap;
-  box-shadow:0 2px 8px rgba(0,0,0,0.04);
 }
-.live-stream-ticker i{color:#f59e0b;}
-.scrolling-winners{display:inline-block;padding-left:100%;animation:tickerScroll 22s linear infinite;}
+.scrolling-winners{display:inline-block;padding-left:100%;animation:tickerScroll 24s linear infinite;}
 @keyframes tickerScroll{to{transform:translateX(-100%);}}
 
-/* ROOM SELECTION TABS */
-.parity-room-strip{
+/* ========================================================= */
+/* ROOM SELECTORS */
+/* ========================================================= */
+.room-selector-strip{
   display:flex;
   margin:0 14px 12px;
-  background:#fff;
+  background:var(--dark-surface);
   padding:4px;
   border-radius:14px;
   gap:4px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.03);
+  border:1px solid var(--glass-border);
 }
-.p-room-tab{
+.room-pill{
   flex:1;
   text-align:center;
   padding:10px 2px;
   border-radius:10px;
   font-size:0.75rem;
   font-weight:800;
-  color:var(--text-muted);
+  color:var(--text-secondary);
   cursor:pointer;
 }
-.p-room-tab.active{
-  background:linear-gradient(135deg, #ff444a, #b80d19);
+.room-pill.active{
+  background:linear-gradient(135deg, #ef394e, #b91c1c);
   color:#fff;
-  box-shadow:0 4px 12px rgba(184,13,25,0.25);
+  box-shadow:0 4px 14px rgba(239,57,78,0.3);
 }
 
-/* ARENA TIMER STAGE */
-.stage-period-box{
+/* ========================================================= */
+/* ARENA COUNTDOWN */
+/* ========================================================= */
+.stage-card-matte{
   margin:0 14px 14px;
-  background:#fff;
+  background:var(--dark-surface);
+  border:1px solid var(--glass-border);
   border-radius:20px;
   padding:16px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.04);
 }
 .stage-head-row{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
 }
-.issue-tag-sub{font-size:0.7rem;color:var(--text-muted);font-weight:800;text-transform:uppercase;}
-.issue-large-code{font-size:1.15rem;font-weight:900;color:var(--text-dark);margin-top:2px;}
+.issue-large-code{font-size:1.15rem;font-weight:900;color:#fff;margin-top:2px;}
 .countdown-box-black{
-  background:#0f172a;
+  background:#090d16;
+  border:1px solid var(--glass-border);
   padding:6px 12px;
   border-radius:12px;
   display:flex;
@@ -357,9 +356,8 @@ body{
   gap:4px;
 }
 .countdown-digit{font-size:1.4rem;font-weight:900;color:#38bdf8;font-family:monospace;}
-.countdown-colon{color:#fff;font-weight:900;}
 
-.progress-track{height:6px;background:#edf2f7;border-radius:10px;margin-top:12px;overflow:hidden;}
+.progress-track{height:6px;background:#090d16;border-radius:10px;margin-top:12px;overflow:hidden;}
 .progress-bar-glow{height:100%;width:100%;background:linear-gradient(90deg, #10b981, #f59e0b, #ef4444);transition:width 0.25s linear;}
 
 .recent-strip-scroller{
@@ -382,16 +380,18 @@ body{
   font-weight:900;
   color:#fff;
   flex-shrink:0;
-  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+  box-shadow:0 4px 10px rgba(0,0,0,0.3);
 }
 
-/* 0–9 EXACT CASINO MATRIX */
+/* ========================================================= */
+/* 0–9 BETTING BOARD */
+/* ========================================================= */
 .betting-matrix-card{
   margin:0 14px 14px;
-  background:#fff;
+  background:var(--dark-surface);
+  border:1px solid var(--glass-border);
   border-radius:20px;
   padding:16px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.04);
 }
 
 .color-action-row{
@@ -402,13 +402,13 @@ body{
 .btn-color-pick{
   flex:1;
   border:none;
-  border-radius:12px;
+  border-radius:14px;
   padding:14px 0;
   font-size:0.95rem;
   font-weight:900;
   color:#fff;
   cursor:pointer;
-  box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  box-shadow:0 4px 14px rgba(0,0,0,0.25);
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -416,7 +416,7 @@ body{
 .btn-color-pick span{font-size:0.65rem;opacity:0.85;margin-top:2px;font-weight:700;}
 .pick-green{background:linear-gradient(135deg, #10b981, #059669);}
 .pick-violet{background:linear-gradient(135deg, #8b5cf6, #6d28d9);}
-.pick-red{background:linear-gradient(135deg, #ff444a, #b80d19);}
+.pick-red{background:linear-gradient(135deg, #ef394e, #b91c1c);}
 
 .exact-number-grid{
   display:grid;
@@ -437,7 +437,7 @@ body{
   font-size:1.25rem;
   font-weight:900;
   cursor:pointer;
-  box-shadow:0 4px 10px rgba(0,0,0,0.12);
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
 }
 .ball-btn sub{font-size:0.6rem;font-weight:800;margin-top:-2px;opacity:0.9;text-transform:uppercase;}
 
@@ -453,7 +453,7 @@ body{
 .bs-btn{
   flex:1;
   border:none;
-  border-radius:12px;
+  border-radius:14px;
   padding:12px 0;
   font-size:0.95rem;
   font-weight:900;
@@ -470,58 +470,19 @@ body{
   pointer-events:none;
 }
 
-/* HOT & COLD NUMBERS ANALYZER */
-.trend-roadmap-card{
+/* ========================================================= */
+/* LEDGER TABS WITH 100% PERSISTENT MONGO HISTORY */
+/* ========================================================= */
+.ledger-matte-card{
   margin:0 14px 14px;
-  background:#fff;
-  border-radius:18px;
-  padding:14px;
-  box-shadow:0 4px 18px rgba(0,0,0,0.04);
-}
-.trend-title{
-  display:flex;
-  justify-content:space-between;
-  font-size:0.8rem;
-  font-weight:900;
-  margin-bottom:10px;
-}
-.trend-stats-bars{
-  display:flex;
-  gap:8px;
-  margin-bottom:10px;
-}
-.trend-stat-box{
-  flex:1;
-  background:#f8fafc;
-  padding:8px;
-  border-radius:10px;
-  border:1px solid #edf2f7;
-  text-align:center;
-}
-.trend-stat-box span{font-size:0.65rem;color:var(--text-muted);font-weight:800;display:block;}
-.trend-stat-box b{font-size:0.9rem;font-weight:900;}
-
-.hot-cold-row{
-  display:flex;
-  justify-content:space-between;
-  background:#f9fafb;
-  border-radius:10px;
-  padding:8px 12px;
-  font-size:0.75rem;
-  font-weight:800;
-}
-
-/* LEDGER TABS */
-.ledger-container-card{
-  margin:0 14px 14px;
-  background:#fff;
+  background:var(--dark-surface);
+  border:1px solid var(--glass-border);
   border-radius:20px;
   padding:14px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.04);
 }
 .ledger-tabs-nav{
   display:flex;
-  background:#f1f3f8;
+  background:#090d16;
   padding:4px;
   border-radius:12px;
   margin-bottom:12px;
@@ -534,150 +495,76 @@ body{
   border-radius:9px;
   font-size:0.75rem;
   font-weight:800;
-  color:var(--text-muted);
+  color:var(--text-secondary);
   cursor:pointer;
 }
 .l-tab-btn.active{
-  background:var(--red-main);
+  background:var(--red-matte);
   color:#fff;
-  box-shadow:0 2px 8px rgba(229,36,51,0.3);
 }
+.table-luxury{width:100%;border-collapse:collapse;font-size:0.8rem;}
+.table-luxury th{padding:8px 4px;color:var(--text-secondary);border-bottom:1px solid var(--glass-border);font-weight:800;}
+.table-luxury td{padding:10px 4px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:center;font-weight:800;}
 
-.table-custom{width:100%;border-collapse:collapse;font-size:0.8rem;}
-.table-custom th{padding:8px 4px;color:var(--text-muted);border-bottom:1px solid #edf2f7;font-weight:800;}
-.table-custom td{padding:10px 4px;border-bottom:1px solid #f8fafc;text-align:center;font-weight:800;}
-.size-badge{padding:2px 8px;border-radius:100px;color:#fff;font-size:0.65rem;}
-
-/* PROMOTION ACCORDIONS */
-.promo-guide-card{
-  margin:0 14px 14px;
-  background:#fff;
-  border-radius:18px;
-  padding:16px;
-  box-shadow:0 4px 18px rgba(0,0,0,0.04);
-}
-.promo-guide-card h4{font-size:0.85rem;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
-.promo-guide-card p{font-size:0.72rem;color:var(--text-muted);line-height:1.5;}
-
-/* BOTTOM FIXED DOCK */
-.dock-nav-bottom{
+/* ========================================================= */
+/* BOTTOM LUXURY FIXED DOCK (5 FULL APP PAGES) */
+/* ========================================================= */
+.dock-luxury-bar{
   position:fixed;
   bottom:0;
   width:100%;
   max-width:440px;
-  background:#fff;
-  border-top:1px solid var(--border-light);
+  background:rgba(22, 29, 43, 0.94);
+  border-top:1px solid var(--glass-border);
   display:flex;
   justify-content:space-around;
-  padding:8px 0 calc(8px + env(safe-area-inset-bottom));
+  padding:10px 0 calc(10px + env(safe-area-inset-bottom));
   z-index:90;
-  box-shadow:0 -4px 20px rgba(0,0,0,0.06);
+  backdrop-filter:blur(16px);
 }
-.dock-btn{
+.dock-nav-item{
   border:none;
   background:none;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:3px;
-  color:var(--text-muted);
+  gap:4px;
+  color:var(--text-secondary);
   font-size:0.68rem;
   font-weight:800;
   cursor:pointer;
 }
-.dock-btn.active{color:var(--red-main);}
-.dock-btn i{font-size:1.2rem;}
+.dock-nav-item.active{color:var(--red-matte);}
+.dock-nav-item i{font-size:1.25rem;}
 
-/* MODAL DRAWERS */
-.drawer-backdrop{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.65);
-  backdrop-filter:blur(3px);
-  z-index:100;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 0.25s;
+/* ========================================================= */
+/* PRESET QUICK-CHIP BUTTONS FOR FAST RECHARGE & WITHDRAW */
+/* ========================================================= */
+.presets-grid-chips{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:8px;
+  margin:12px 0 16px;
 }
-.drawer-backdrop.open{opacity:1;pointer-events:auto;}
-.bottom-drawer{
-  width:100%;
-  max-width:440px;
-  background:#fff;
-  border-radius:24px 24px 0 0;
-  padding:16px 20px calc(20px + env(safe-area-inset-bottom));
-  transform:translateY(100%);
-  transition:transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  max-height:85vh;
-  overflow-y:auto;
-}
-.drawer-backdrop.open .bottom-drawer{transform:translateY(0);}
-.btn-confirm-order{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:14px;
-  background:linear-gradient(135deg, #ff444a, #b80d19);
+.chip-btn{
+  background:var(--dark-elevated);
+  border:1px solid var(--glass-border);
   color:#fff;
-  font-size:1rem;
-  font-weight:900;
+  border-radius:12px;
+  padding:10px 0;
+  font-size:0.85rem;
+  font-weight:800;
   cursor:pointer;
-  box-shadow:0 6px 18px rgba(184,13,25,0.3);
+  transition:all 0.15s;
 }
-
-/* WHEEL CANVAS */
-.wheel-wrapper{
-  position:relative;
-  width:270px;
-  height:270px;
-  margin:10px auto 16px;
-}
-.wheel-pointer{
-  position:absolute;
-  top:-14px;
-  left:50%;
-  transform:translateX(-50%);
-  width:0;
-  height:0;
-  border-left:14px solid transparent;
-  border-right:14px solid transparent;
-  border-top:26px solid #ef4444;
-  z-index:15;
-  filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));
-}
-.wheel-center-pin{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
-  width:52px;
-  height:52px;
-  background:radial-gradient(circle, #fde047 30%, #ca8a04 100%);
-  border-radius:50%;
-  z-index:10;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  font-size:0.8rem;
-  color:#78350f;
-  box-shadow:0 4px 12px rgba(0,0,0,0.3);
-  border:3px solid #ffffff;
-  cursor:pointer;
-}
-#spinCanvas{
-  width:100%;
-  height:100%;
-  border-radius:50%;
-  box-shadow:0 8px 24px rgba(0,0,0,0.3);
-  transition:transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
+.chip-btn:active, .chip-btn.active{
+  background:var(--green-matte);
+  border-color:#10b981;
+  color:#fff;
 }
 
 /* ========================================================= */
-/* 7-DAY STREAK CALENDAR CSS */
+/* 7-DAY STREAK CALENDAR */
 /* ========================================================= */
 .streak-grid{
   display:grid;
@@ -686,57 +573,35 @@ body{
   margin-bottom:14px;
 }
 .streak-day-card{
-  background:#f8fafc;
-  border:1.5px solid #e2e8f0;
+  background:var(--dark-elevated);
+  border:1.5px solid var(--glass-border);
   border-radius:12px;
   padding:10px 4px;
   text-align:center;
   position:relative;
-  transition:all 0.2s;
 }
 .streak-day-card.claimed{
-  background:#ecfdf5;
+  background:rgba(16,185,129,0.15);
   border-color:#10b981;
 }
 .streak-day-card.active-today{
   border-color:#f59e0b;
   box-shadow:0 0 10px rgba(245,158,11,0.3);
 }
-.streak-day-card .day-label{
-  font-size:0.65rem;
-  color:var(--text-muted);
-  font-weight:800;
-  display:block;
-}
-.streak-day-card .prize-amount{
-  font-size:0.95rem;
-  font-weight:900;
-  color:var(--text-dark);
-  margin-top:2px;
-  display:block;
-}
-.streak-day-card.claimed .prize-amount{
-  color:#10b981;
-}
-.streak-day-card .tick-badge{
-  display:none;
-  font-size:0.75rem;
-  color:#10b981;
-  font-weight:900;
-  margin-top:2px;
-}
-.streak-day-card.claimed .tick-badge{
-  display:block;
-}
+.streak-day-card .day-label{font-size:0.65rem;color:var(--text-secondary);font-weight:800;}
+.streak-day-card .prize-amount{font-size:0.95rem;font-weight:900;color:#fff;margin-top:2px;display:block;}
+.streak-day-card.claimed .prize-amount{color:#10b981;}
+.streak-day-card .tick-badge{display:none;font-size:0.75rem;color:#10b981;font-weight:900;margin-top:2px;}
+.streak-day-card.claimed .tick-badge{display:block;}
 
 /* ========================================================= */
-/* 🎯 EXACT SAME ATM DISPENSER ANIMATION FOR WIN & LOSS */
+/* 🎯 EXACT SAME ATM RECEIPT DISPENSER MODAL (WIN VS LOSS) */
 /* ========================================================= */
 .atm-viewport-overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.85);
-  backdrop-filter:blur(6px);
+  background:rgba(0,0,0,0.88);
+  backdrop-filter:blur(8px);
   z-index:9999;
   display:flex;
   align-items:center;
@@ -825,29 +690,82 @@ body{
 .close-dot-indicator{width:16px;height:16px;border-radius:50%;background:#ff9179;display:inline-block;}
 .toggle-active .close-dot-indicator{background:#fff;box-shadow:0 0 8px #fff;}
 
-/* AUTH OVERLAY */
-.auth-gate-view{
+/* ========================================================= */
+/* LUXURY STATUS CONFIRMATION POPUP (REPLACES GREY BOX) */
+/* ========================================================= */
+.luxury-modal-overlay{
   position:fixed;
   inset:0;
-  background:#090d16;
-  z-index:200;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(10px);
+  z-index:99999;
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.25s ease;
 }
-.auth-box-modal{
-  background:#fff;
+.luxury-modal-overlay.open{opacity:1;pointer-events:auto;}
+.luxury-status-box{
+  background:linear-gradient(135deg, #1c2436 0%, #111827 100%);
+  border:1px solid var(--glass-border);
   border-radius:24px;
-  padding:24px 20px;
+  padding:28px 20px;
+  text-align:center;
+  max-width:320px;
   width:100%;
-  max-width:380px;
-  box-shadow:0 20px 50px rgba(0,0,0,0.4);
+  box-shadow:0 20px 60px rgba(0,0,0,0.8);
+  animation:atmPopIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.auth-input-field{
+.luxury-glow-icon{
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.8rem;
+  margin:0 auto 16px;
+}
+.icon-success-glow{background:rgba(16,185,129,0.2);color:#10b981;border:2px solid #10b981;}
+.icon-error-glow{background:rgba(239,57,78,0.2);color:#ef394e;border:2px solid #ef394e;}
+
+/* DRAWERS & INPUTS */
+.drawer-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(5px);
+  z-index:100;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.25s;
+}
+.drawer-backdrop.open{opacity:1;pointer-events:auto;}
+.bottom-drawer{
   width:100%;
-  border:1.5px solid var(--border-light);
-  background:#f8fafc;
+  max-width:440px;
+  background:var(--dark-surface);
+  border-radius:24px 24px 0 0;
+  border:1px solid var(--glass-border);
+  padding:16px 20px calc(20px + env(safe-area-inset-bottom));
+  transform:translateY(100%);
+  transition:transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height:85vh;
+  overflow-y:auto;
+}
+.drawer-backdrop.open .bottom-drawer{transform:translateY(0);}
+
+.luxury-input-field{
+  width:100%;
+  background:#090d16;
+  border:1.5px solid var(--glass-border);
+  color:#fff;
   padding:14px;
   border-radius:14px;
   font-size:0.95rem;
@@ -855,161 +773,192 @@ body{
   margin-bottom:12px;
   outline:none;
 }
+.luxury-input-field:focus{border-color:var(--red-matte);}
+
+.btn-confirm-order{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg, #ef394e, #b91c1c);
+  color:#fff;
+  font-size:1rem;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(239,57,78,0.35);
+}
+
+/* WHEEL CANVAS */
+.wheel-wrapper{
+  position:relative;
+  width:270px;
+  height:270px;
+  margin:10px auto 16px;
+}
+.wheel-pointer{
+  position:absolute;
+  top:-14px;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:0;
+  border-left:14px solid transparent;
+  border-right:14px solid transparent;
+  border-top:26px solid #ef4444;
+  z-index:15;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+}
+.wheel-center-pin{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  width:52px;
+  height:52px;
+  background:radial-gradient(circle, #fde047 30%, #ca8a04 100%);
+  border-radius:50%;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  font-size:0.8rem;
+  color:#78350f;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+  border:3px solid #ffffff;
+  cursor:pointer;
+}
+#spinCanvas{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  box-shadow:0 8px 24px rgba(0,0,0,0.5);
+  transition:transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
+}
 </style>
 </head>
 <body>
 
-<div class="mobile-shell">
+<div class="luxury-shell">
 
   <!-- AUTH SCREEN -->
-  <div class="auth-gate-view" id="authGate">
-    <div class="auth-box-modal">
+  <div class="drawer-backdrop open" id="authGate" style="opacity:1;pointer-events:auto;">
+    <div style="background:var(--dark-surface);border:1px solid var(--glass-border);border-radius:24px;padding:24px 20px;width:100%;max-width:380px;margin:auto;">
       <div style="text-align:center;margin-bottom:20px;">
-        <svg width="48" height="48" viewBox="0 0 100 100" style="margin-bottom:6px;">
-          <defs>
-            <linearGradient id="gLogo" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#ff444a"/>
-              <stop offset="50%" stop-color="#8b5cf6"/>
-              <stop offset="100%" stop-color="#10b981"/>
-            </linearGradient>
-          </defs>
-          <polygon points="50,5 95,28 95,72 50,95 5,72 5,28" fill="url(#gLogo)"/>
-          <path d="M32 30 L44 30 L44 45 L56 45 L56 30 L68 30 L68 70 L56 70 L56 55 L44 55 L44 70 L32 70 Z" fill="#ffffff"/>
-        </svg>
+        <div style="font-size:2.4rem;color:var(--red-matte);">🎨</div>
         <h2 id="authTitle" style="font-weight:900;">HueRush VIP</h2>
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Predict Colour • Win Instant Cash</p>
+        <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Predict Colour • Win Instant Cash</p>
       </div>
-      <input type="text" id="suName" class="auth-input-field" placeholder="Full Name" style="display:none;" />
-      <input type="email" id="authEmail" class="auth-input-field" placeholder="Email Address" value="vip@player.com" />
-      <input type="password" id="authPass" class="auth-input-field" placeholder="Password" value="123456" />
+      <input type="text" id="suName" class="luxury-input-field" placeholder="Full Name" style="display:none;" />
+      <input type="email" id="authEmail" class="luxury-input-field" placeholder="Email Address" value="vip@player.com" />
+      <input type="password" id="authPass" class="luxury-input-field" placeholder="Password" value="123456" />
+      <input type="text" id="suInvite" class="luxury-input-field" placeholder="Invite Code (Optional)" style="display:none;text-transform:uppercase;" />
       <button class="btn-confirm-order" id="authSubmitBtn" onclick="handleAuthSubmit()">SIGN IN</button>
-      <div style="text-align:center;margin-top:14px;font-size:0.8rem;color:var(--text-muted);cursor:pointer;" onclick="toggleAuthMode()">
-        <span id="authSwitchMsg">New player? Register & get ₹50 bonus</span>
+      <div style="text-align:center;margin-top:14px;font-size:0.8rem;color:var(--text-secondary);cursor:pointer;" onclick="toggleAuthMode()">
+        <span id="authSwitchMsg">New player? Register with invite</span>
       </div>
     </div>
   </div>
 
-  <!-- MAIN APP PORTAL -->
+  <!-- MAIN APP STRUCTURE (5 FULL PAGES) -->
   <div id="mainScreen" class="hidden">
     
-    <!-- TOP BRAND HEADER -->
-    <div class="app-header-strip">
-      <div class="brand-bar">
-        <div class="huerush-vector-logo">
-          <div class="logo-symbol">
-            <svg width="26" height="26" viewBox="0 0 100 100">
-              <defs>
-                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#ff444a"/>
-                  <stop offset="50%" stop-color="#8b5cf6"/>
-                  <stop offset="100%" stop-color="#10b981"/>
-                </linearGradient>
-              </defs>
-              <polygon points="50,5 95,28 95,72 50,95 5,72 5,28" fill="url(#logoGrad)"/>
-              <path d="M32 30 L44 30 L44 45 L56 45 L56 30 L68 30 L68 70 L56 70 L56 55 L44 55 L44 70 L32 70 Z" fill="#ffffff"/>
-            </svg>
-          </div>
-          <div class="logo-text-title">Hue<span>Rush</span></div>
+    <!-- TOP STICKY BAR -->
+    <div class="app-luxury-topbar">
+      <div class="top-brand-flex">
+        <div class="brand-badge">
+          <div class="brand-icon-shield"><i class="fa-solid fa-crown" style="color:#fff;"></i></div>
+          <div class="brand-title">Hue<span>Rush</span></div>
         </div>
-        <div class="top-icons-duo">
-          <div class="top-action-circle" id="soundToggleBtn" onclick="toggleAudio()" title="Sound On/Off">
-            <i class="fa-solid fa-volume-high"></i>
-          </div>
-          <div class="top-action-circle" onclick="openSupportDrawer()" title="24/7 Support">
-            <i class="fa-solid fa-headset"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="user-quick-ribbon">
-        <div class="user-badge-avatar" id="topAvatar">P</div>
-        <div>
-          <div style="font-size:0.95rem;font-weight:900;" id="topName">Player</div>
-          <div style="font-size:0.72rem;opacity:0.85;">ID: <span id="topUid">HR8899</span></div>
+        <div class="top-actions-duo">
+          <div class="luxury-circle-btn" id="soundToggleBtn" onclick="toggleAudio()"><i class="fa-solid fa-volume-high"></i></div>
+          <div class="luxury-circle-btn" onclick="openSupportDrawer()"><i class="fa-solid fa-headset"></i></div>
         </div>
       </div>
     </div>
 
-    <!-- 1. LIVE WINGO CASINO HUB -->
-    <div id="wingoHub">
+    <!-- ========================================================= -->
+    <!-- PAGE 1: WINGO ARENA -->
+    <!-- ========================================================= -->
+    <div id="pageWingo">
       <!-- DUAL WALLET -->
-      <div class="wallet-board-card">
-        <div class="wallet-subhead">
+      <div class="matte-wallet-card">
+        <div class="wallet-subtag">
           <span>Available Assets</span>
-          <span>100% Encrypted</span>
+          <span style="color:#10b981;">● Realtime Synced</span>
         </div>
-        <div class="wallet-master-sum">₹<span id="totBal">50.00</span></div>
-        <div class="wallet-columns-duo">
-          <div class="w-col">
+        <div class="wallet-primary-amount">₹<span id="totBal">50.00</span></div>
+        <div class="wallet-vault-duo">
+          <div class="vault-col">
             <span>Bonus (Play Bets)</span>
-            <b style="color:#0284c7;">₹<span id="bonBal">50.00</span></b>
+            <b style="color:#38bdf8;">₹<span id="bonBal">50.00</span></b>
           </div>
-          <div class="w-col" style="text-align:right;">
-            <span>Winning (Cashout)</span>
+          <div class="vault-col" style="text-align:right;">
+            <span>Withdrawable Cash</span>
             <b style="color:#10b981;">₹<span id="winBal">0.00</span></b>
           </div>
         </div>
-        <div class="wallet-ctrl-btns">
-          <button class="btn-w-ctrl btn-deposit-green" onclick="openDepositDrawer()"><i class="fa-solid fa-arrow-down"></i> Deposit</button>
-          <button class="btn-w-ctrl btn-withdraw-dark" onclick="openWithdrawDrawer()"><i class="fa-solid fa-arrow-up"></i> Withdraw</button>
+        <div class="wallet-actions-flex">
+          <button class="btn-luxury-deposit" onclick="switchMainPage('wallet')"><i class="fa-solid fa-bolt"></i> Fast Recharge</button>
+          <button class="btn-luxury-withdraw" onclick="switchMainPage('wallet'); toggleWalletSubTab('withdraw')"><i class="fa-solid fa-arrow-up-from-bracket"></i> Cashout</button>
         </div>
       </div>
 
-      <!-- SERVICE SHORTCUTS ROW -->
-      <div class="service-shortcuts-row">
-        <div class="service-icon-box" onclick="openGiftCodeModal()">
-          <i class="fa-solid fa-gift" style="color:#f59e0b;"></i>
+      <!-- 4 TILES -->
+      <div class="quick-matrix-grid">
+        <div class="tile-matte-box" onclick="openGiftCodeModal()">
+          <i class="fa-solid fa-ticket" style="color:#f59e0b;"></i>
           <span>Redeem Code</span>
         </div>
-        <div class="service-icon-box" onclick="openInviteModal()">
-          <i class="fa-solid fa-users-rays" style="color:#ef4444;"></i>
+        <div class="tile-matte-box" onclick="switchMainPage('promotion')">
+          <i class="fa-solid fa-users-rays" style="color:#ef394e;"></i>
           <span>Invite & Earn</span>
         </div>
-        <div class="service-icon-box" onclick="openVipModal()">
+        <div class="tile-matte-box" onclick="openVipModal()">
           <i class="fa-solid fa-calendar-check" style="color:#8b5cf6;"></i>
           <span>7-Day Streak</span>
         </div>
-        <div class="service-icon-box" onclick="openRebatesModal()">
-          <i class="fa-solid fa-hand-holding-dollar" style="color:#10b981;"></i>
-          <span>Rebates</span>
+        <div class="tile-matte-box" onclick="openVipClubModal()">
+          <i class="fa-solid fa-gem" style="color:#10b981;"></i>
+          <span>VIP Club</span>
         </div>
       </div>
 
       <!-- 🎡 LUCKY SPIN BANNER -->
-      <div class="spin-banner-card" onclick="openLuckySpinModal()">
-        <div class="spin-banner-content">
+      <div class="spin-luxury-card" onclick="openLuckySpinModal()">
+        <div class="spin-card-title">
           <small><i class="fa-solid fa-sparkles"></i> 1 Free Daily Chance</small>
           <b>LUCKY SPIN WHEEL</b>
         </div>
-        <button class="spin-cta-btn" onclick="event.stopPropagation(); openLuckySpinModal()">SPIN & WIN →</button>
+        <button class="btn-spin-glow" onclick="event.stopPropagation(); openLuckySpinModal()">SPIN & WIN →</button>
       </div>
 
-      <!-- TICKER STREAM -->
+      <!-- STREAM TICKER -->
       <div class="live-stream-ticker">
-        <i class="fa-solid fa-bolt"></i>
-        <div class="scrolling-winners">🏆 Player User***39 won ₹4,900 on 30s • User***91 won ₹9,800 on Number 7 • User***22 won ₹20 on Lucky Spin! • User***02 won ₹1,960 on Red • </div>
+        <i class="fa-solid fa-bolt" style="color:#f59e0b;"></i>
+        <div class="scrolling-winners">🏆 User***92 won ₹4,900 on 30s Quick • User***11 redeemed ₹15 voucher • User***44 won ₹20 on Lucky Spin! • </div>
       </div>
 
       <!-- ROOM TIME SELECTORS -->
-      <div class="parity-room-strip">
-        <div class="p-room-tab active" onclick="switchParityRoom('30s', this)">30s Quick</div>
-        <div class="p-room-tab" onclick="switchParityRoom('90s', this)">1.5 Min</div>
-        <div class="p-room-tab" onclick="switchParityRoom('3m', this)">3 Min</div>
-        <div class="p-room-tab" onclick="switchParityRoom('5m', this)">5 Min</div>
+      <div class="room-selector-strip">
+        <div class="room-pill active" onclick="switchParityRoom('30s', this)">30s Quick</div>
+        <div class="room-pill" onclick="switchParityRoom('90s', this)">1.5 Min</div>
+        <div class="room-pill" onclick="switchParityRoom('3m', this)">3 Min</div>
+        <div class="room-pill" onclick="switchParityRoom('5m', this)">5 Min</div>
       </div>
 
-      <!-- COUNTDOWN ARENA -->
-      <div class="stage-period-box">
+      <!-- ARENA STAGE -->
+      <div class="stage-card-matte">
         <div class="stage-head-row">
           <div>
-            <div class="issue-tag-sub">Active Period</div>
+            <div style="font-size:0.7rem;color:var(--text-secondary);font-weight:800;text-transform:uppercase;">Active Period</div>
             <div class="issue-large-code" id="displayPeriod">20260901001</div>
           </div>
           <div style="text-align:right;">
-            <div class="issue-tag-sub">Time Remaining</div>
+            <div style="font-size:0.7rem;color:var(--text-secondary);font-weight:800;text-transform:uppercase;">Time Remaining</div>
             <div class="countdown-box-black">
               <span class="countdown-digit" id="boxMin">00</span>
-              <span class="countdown-colon">:</span>
+              <span style="color:#fff;font-weight:900;">:</span>
               <span class="countdown-digit" id="boxSec">30</span>
             </div>
           </div>
@@ -1018,7 +967,7 @@ body{
         <div class="recent-strip-scroller" id="stripRecentBalls"></div>
       </div>
 
-      <!-- 0–9 BETTING BOARD -->
+      <!-- 0–9 EXACT CASINO MATRIX -->
       <div class="betting-matrix-card" id="betBoardArena">
         <div class="color-action-row">
           <button class="btn-color-pick pick-green" onclick="prepareBetContract('color', 'green')">Green <span>2X</span></button>
@@ -1045,377 +994,333 @@ body{
         </div>
       </div>
 
-      <!-- LIVE TREND & HOT/COLD ROADMAP -->
-      <div class="trend-roadmap-card">
-        <div class="trend-title">
-          <span>📊 Live Parity Analytics</span>
-          <span style="color:#10b981;">● Online Sync</span>
-        </div>
-        <div class="trend-stats-bars">
-          <div class="trend-stat-box"><span>Green Ratio</span><b style="color:#10b981;">48%</b></div>
-          <div class="trend-stat-box"><span>Red Ratio</span><b style="color:#ef4444;">44%</b></div>
-          <div class="trend-stat-box"><span>Violet Hits</span><b style="color:#8b5cf6;">8%</b></div>
-        </div>
-        <div class="hot-cold-row">
-          <div><span style="color:#ef4444;">🔥 Hot Numbers:</span> <b id="hotNumbersList">3, 7, 8</b></div>
-          <div><span style="color:#3b82f6;">❄️ Cold Numbers:</span> <b id="coldNumbersList">0, 4, 9</b></div>
-        </div>
-      </div>
-
-      <!-- LEDGER TABLES -->
-      <div class="ledger-container-card">
+      <!-- 100% PERSISTENT LEDGER -->
+      <div class="ledger-matte-card">
         <div class="ledger-tabs-nav">
           <button class="l-tab-btn active" onclick="switchLedgerTab('records', this)">Game History</button>
-          <button class="l-tab-btn" onclick="switchLedgerTab('mybets', this)">My Bets</button>
+          <button class="l-tab-btn" onclick="switchLedgerTab('mybets', this)">My Bets (Persistent)</button>
           <button class="l-tab-btn" onclick="switchLedgerTab('withdrawals', this)">Withdrawals</button>
         </div>
         <div id="paneRecords">
-          <table class="table-custom">
+          <table class="table-luxury">
             <thead><tr><th>Issue</th><th>Number</th><th>Size</th><th>Colour</th></tr></thead>
             <tbody id="histRows"></tbody>
           </table>
         </div>
         <div id="paneMyBets" class="hidden">
-          <div id="myBetsList"><p style="text-align:center;padding:16px;font-size:0.75rem;color:var(--text-muted);">No bets placed yet.</p></div>
+          <div id="myBetsList"><p style="text-align:center;padding:16px;font-size:0.75rem;color:var(--text-secondary);">No bets recorded in database.</p></div>
         </div>
         <div id="paneWithdrawals" class="hidden">
-          <div id="myWdList"><p style="text-align:center;padding:16px;font-size:0.75rem;color:var(--text-muted);">No withdrawals recorded.</p></div>
-        </div>
-      </div>
-
-      <!-- RULES -->
-      <div class="promo-guide-card">
-        <h4><i class="fa-solid fa-circle-question" style="color:var(--red-main);"></i> Official Rules & Instructions</h4>
-        <p>1. Choose room duration (30s, 90s, 3m, 5m).<br>
-        2. Bet on Colors (2x, Violet 4.5x), Exact Number (9x), or Big/Small (2x).<br>
-        3. Round settles every 30 seconds with instant dual wallet credit.</p>
-      </div>
-
-    </div>
-
-    <!-- 2. VIP ACCOUNT SCREEN -->
-    <div id="accountViewScreen" class="hidden" style="padding:0 14px;">
-      <div style="background:#fff;border-radius:20px;padding:24px 16px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,0.04);margin-top:14px;">
-        <div class="user-badge-avatar" style="width:74px;height:74px;margin:0 auto 12px;font-size:2rem;" id="accAvatar">P</div>
-        <h3 id="accName" style="font-weight:900;">Player Name</h3>
-        <p id="accEmail" style="font-size:0.8rem;color:var(--text-muted);">vip@player.com</p>
-        <span style="display:inline-block;background:#eef2ff;color:#4f46e5;padding:3px 12px;border-radius:20px;font-size:0.75rem;font-weight:800;margin-top:8px;">ID: <span id="accUid">HR8899</span></span>
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;">
-        <div style="background:#fff;border-radius:16px;padding:14px;border:1px solid var(--border-light);">
-          <span style="font-size:0.7rem;color:var(--text-muted);font-weight:800;text-transform:uppercase;">Total Balance</span>
-          <b style="font-size:1.15rem;font-weight:900;color:var(--red-main);margin-top:4px;display:block;">₹<span id="accTot">0.00</span></b>
-        </div>
-        <div style="background:#fff;border-radius:16px;padding:14px;border:1px solid var(--border-light);">
-          <span style="font-size:0.7rem;color:var(--text-muted);font-weight:800;text-transform:uppercase;">Withdrawable Cash</span>
-          <b style="font-size:1.15rem;font-weight:900;color:var(--green-main);margin-top:4px;display:block;">₹<span id="accWin">0.00</span></b>
-        </div>
-      </div>
-
-      <div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,0.04);">
-        <div style="display:flex;justify-content:space-between;padding:16px;border-bottom:1px solid #f1f3f8;font-weight:800;font-size:0.9rem;cursor:pointer;" onclick="openDepositDrawer()">
-          <span><i class="fa-solid fa-wallet" style="color:var(--green-main);margin-right:10px;"></i> Deposit Funds</span>
-          <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:16px;border-bottom:1px solid #f1f3f8;font-weight:800;font-size:0.9rem;cursor:pointer;" onclick="openWithdrawDrawer()">
-          <span><i class="fa-solid fa-money-bill-transfer" style="color:var(--red-main);margin-right:10px;"></i> Withdraw Money</span>
-          <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:16px;border-bottom:1px solid #f1f3f8;font-weight:800;font-size:0.9rem;cursor:pointer;" onclick="openInviteModal()">
-          <span><i class="fa-solid fa-share-nodes" style="color:#0284c7;margin-right:10px;"></i> Referral Program</span>
-          <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:16px;border-bottom:1px solid #f1f3f8;font-weight:800;font-size:0.9rem;cursor:pointer;" onclick="openGiftCodeModal()">
-          <span><i class="fa-solid fa-gift" style="color:#f59e0b;margin-right:10px;"></i> Redeem Code</span>
-          <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:16px;font-weight:800;font-size:0.9rem;cursor:pointer;color:#dc2626;" onclick="logoutApp()">
-          <span><i class="fa-solid fa-power-off" style="margin-right:10px;"></i> Log Out</span>
-          <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
+          <div id="myWdList"><p style="text-align:center;padding:16px;font-size:0.75rem;color:var(--text-secondary);">No withdrawals recorded.</p></div>
         </div>
       </div>
     </div>
 
-    <!-- BOTTOM FIXED DOCK -->
-    <div class="dock-nav-bottom">
-      <button class="dock-btn active" id="btnDockWingo" onclick="switchAppTab('wingo')"><i class="fa-solid fa-gamepad"></i>WinGo</button>
-      <button class="dock-btn" onclick="openDepositDrawer()"><i class="fa-solid fa-wallet"></i>Deposit</button>
-      <button class="dock-btn" id="btnDockAcc" onclick="switchAppTab('account')"><i class="fa-solid fa-circle-user"></i>Account</button>
+    <!-- ========================================================= -->
+    <!-- PAGE 2: ACTIVITY & REWARDS HUB -->
+    <!-- ========================================================= -->
+    <div id="pageActivity" class="hidden" style="padding:14px;">
+      <h3 style="font-weight:900;margin-bottom:12px;">Activity Rewards Center</h3>
+      <div class="matte-wallet-card" style="margin:0 0 14px;cursor:pointer;" onclick="openVipModal()">
+        <h4 style="color:#f59e0b;font-weight:900;"><i class="fa-solid fa-calendar-days"></i> 7-Day Continuous Check-In</h4>
+        <p style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Login daily to unlock rewards from ₹5 to ₹50.</p>
+      </div>
+      <div class="matte-wallet-card" style="margin:0 0 14px;cursor:pointer;" onclick="openGiftCodeModal()">
+        <h4 style="color:#10b981;font-weight:900;"><i class="fa-solid fa-ticket"></i> Telegram Redeem Voucher</h4>
+        <p style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Enter vouchers like BONUS10 or VIP15 to credit your wallet.</p>
+      </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- PAGE 3: PROMOTION / REAL INVITE & EARN -->
+    <!-- ========================================================= -->
+    <div id="pagePromotion" class="hidden" style="padding:14px;">
+      <h3 style="font-weight:900;margin-bottom:12px;">Affiliate Agency Center</h3>
+      <div class="matte-wallet-card" style="margin:0 0 14px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-secondary);font-weight:800;">
+          <span>YOUR REFERRAL CODE</span>
+          <span style="color:#38bdf8;">REALTIME LINKED</span>
+        </div>
+        <div style="font-size:2rem;font-weight:900;color:var(--gold-text);margin:6px 0;" id="refCodeDisplay">HR8899</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;">
+          <div style="background:#090d16;padding:10px;border-radius:12px;border:1px solid var(--glass-border);">
+            <span style="font-size:0.7rem;color:var(--text-secondary);display:block;">Total Invited</span>
+            <b style="font-size:1.2rem;color:#fff;" id="statInvitedCount">0 Players</b>
+          </div>
+          <div style="background:#090d16;padding:10px;border-radius:12px;border:1px solid var(--glass-border);">
+            <span style="font-size:0.7rem;color:var(--text-secondary);display:block;">Claimable Bonus</span>
+            <b style="font-size:1.2rem;color:#10b981;" id="statReferralEarnings">₹0.00</b>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">Your Invitation Link:</p>
+      <input type="text" id="promoRefLink" class="luxury-input-field" readonly />
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+        <button class="btn-luxury-deposit" onclick="copyInviteLink()"><i class="fa-solid fa-copy"></i> Copy Link</button>
+        <button class="btn-luxury-deposit" style="background:#16a34a;" onclick="shareWhatsappInvite()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+      </div>
+
+      <button class="btn-confirm-order" onclick="claimRealReferralCommission()">CLAIM COMMISSION TO WALLET</button>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- PAGE 4: FAST WALLET CHARGE & CASHOUT VAULT -->
+    <!-- ========================================================= -->
+    <div id="pageWallet" class="hidden" style="padding:14px;">
+      <div class="ledger-tabs-nav" style="margin-bottom:14px;">
+        <button class="l-tab-btn active" id="tabWalletDep" onclick="toggleWalletSubTab('deposit')">Fast Recharge</button>
+        <button class="l-tab-btn" id="tabWalletWd" onclick="toggleWalletSubTab('withdraw')">Cashout Vault</button>
+      </div>
+
+      <!-- DEPOSIT SUB-PANE -->
+      <div id="subPaneDeposit">
+        <div class="matte-wallet-card" style="margin:0 0 14px;">
+          <span style="font-size:0.75rem;color:var(--text-secondary);font-weight:800;display:block;">Select Fast Recharge Amount:</span>
+          
+          <!-- 8 QUICK-CHIP PRESETS -->
+          <div class="presets-grid-chips">
+            <button class="chip-btn" onclick="selectDepositChip(100, this)">₹100</button>
+            <button class="chip-btn" onclick="selectDepositChip(300, this)">₹300</button>
+            <button class="chip-btn active" onclick="selectDepositChip(500, this)">₹500</button>
+            <button class="chip-btn" onclick="selectDepositChip(1000, this)">₹1,000</button>
+            <button class="chip-btn" onclick="selectDepositChip(2000, this)">₹2,000</button>
+            <button class="chip-btn" onclick="selectDepositChip(5000, this)">₹5,000</button>
+            <button class="chip-btn" onclick="selectDepositChip(10000, this)">₹10,000</button>
+            <button class="chip-btn" onclick="selectDepositChip(20000, this)">₹20,000</button>
+          </div>
+
+          <span style="font-size:0.75rem;color:var(--text-secondary);font-weight:800;display:block;margin-bottom:6px;">Custom Amount (Min: ₹10, Max: ₹1,000):</span>
+          <input type="number" id="inWalletDepAmt" class="luxury-input-field" value="500" min="10" max="1000" placeholder="Min: 10, Max: 1000" oninput="refreshQrDisplay()" style="text-align:center;font-size:1.3rem;font-weight:900;" />
+
+          <div style="text-align:center;background:#090d16;border:1px solid var(--glass-border);padding:14px;border-radius:16px;margin:12px 0;">
+            <img id="qrLuxuryImg" src="" alt="Payment QR" style="width:160px;height:160px;margin:0 auto;display:block;border-radius:8px;" />
+            <span style="display:block;font-size:0.75rem;font-weight:800;color:#10b981;margin-top:8px;">🛡️ 100% Encrypted UPI Merchant</span>
+          </div>
+
+          <input type="text" id="inWalletUtr" class="luxury-input-field" placeholder="Enter 12-digit Payment UTR / Ref No." />
+          <button class="btn-confirm-order" onclick="submitWalletDeposit()">CONFIRM & SUBMIT RECHARGE</button>
+        </div>
+      </div>
+
+      <!-- WITHDRAW SUB-PANE -->
+      <div id="subPaneWithdraw" class="hidden">
+        <div class="matte-wallet-card" style="margin:0 0 14px;">
+          <span style="font-size:0.75rem;color:var(--text-secondary);font-weight:800;display:block;">Available Withdrawable Cash:</span>
+          <div style="font-size:2rem;font-weight:900;color:#10b981;margin:6px 0 12px;">₹<span id="wdAvailBal">0.00</span></div>
+
+          <span style="font-size:0.75rem;color:var(--text-secondary);font-weight:800;display:block;">Quick Cashout Chips:</span>
+          <div class="presets-grid-chips">
+            <button class="chip-btn" onclick="selectWithdrawChip(110, this)">₹110</button>
+            <button class="chip-btn" onclick="selectWithdrawChip(250, this)">₹250</button>
+            <button class="chip-btn active" onclick="selectWithdrawChip(500, this)">₹500</button>
+            <button class="chip-btn" onclick="selectWithdrawChip(1000, this)">₹1,000</button>
+            <button class="chip-btn" onclick="selectWithdrawChip(2500, this)">₹2,500</button>
+            <button class="chip-btn" onclick="selectWithdrawChip(5000, this)">₹5,000</button>
+          </div>
+
+          <input type="number" id="inWalletWdAmt" class="luxury-input-field" value="500" placeholder="Withdrawal Amount (₹)" />
+          <input type="text" id="inWalletWdUpi" class="luxury-input-field" placeholder="Your Receiving UPI ID (e.g. name@okhdfcbank)" />
+          <button class="btn-confirm-order" onclick="submitWalletWithdraw()">REQUEST CASHOUT</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- PAGE 5: VIP ACCOUNT & AUDIT -->
+    <!-- ========================================================= -->
+    <div id="pageAccount" class="hidden" style="padding:14px;">
+      <div class="matte-wallet-card" style="margin:0 0 14px;text-align:center;">
+        <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg, #ffd05b, #ff7a00);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:#5a1e00;" id="accAvatar">P</div>
+        <h3 id="accName" style="font-weight:900;">Abhishek</h3>
+        <p id="accEmail" style="font-size:0.8rem;color:var(--text-secondary);">vip@player.com</p>
+        <span style="display:inline-block;background:rgba(255,255,255,0.08);color:#fbbf24;padding:4px 14px;border-radius:20px;font-size:0.75rem;font-weight:800;margin-top:8px;">ID: <span id="accUid">HR8899</span></span>
+      </div>
+
+      <div class="matte-wallet-card" style="margin:0 0 14px;padding:12px 16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--glass-border);cursor:pointer;" onclick="switchMainPage('wallet')">
+          <span><i class="fa-solid fa-wallet" style="color:#10b981;margin-right:10px;"></i> Fast Recharge</span>
+          <i class="fa-solid fa-chevron-right" style="color:var(--text-secondary);"></i>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--glass-border);cursor:pointer;" onclick="switchMainPage('wallet'); toggleWalletSubTab('withdraw')">
+          <span><i class="fa-solid fa-arrow-up-from-bracket" style="color:#ef394e;margin-right:10px;"></i> Cashout Vault</span>
+          <i class="fa-solid fa-chevron-right" style="color:var(--text-secondary);"></i>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;cursor:pointer;color:#ef4444;" onclick="logoutApp()">
+          <span><i class="fa-solid fa-power-off" style="margin-right:10px;"></i> Sign Out</span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM FIXED DOCK (5 FULL TABS) -->
+    <div class="dock-luxury-bar">
+      <button class="dock-nav-item active" id="dockWingo" onclick="switchMainPage('wingo')"><i class="fa-solid fa-gamepad"></i>WinGo</button>
+      <button class="dock-nav-item" id="dockActivity" onclick="switchMainPage('activity')"><i class="fa-solid fa-gift"></i>Activity</button>
+      <button class="dock-nav-item" id="dockPromotion" onclick="switchMainPage('promotion')"><i class="fa-solid fa-users-rays"></i>Promotion</button>
+      <button class="dock-nav-item" id="dockWallet" onclick="switchMainPage('wallet')"><i class="fa-solid fa-wallet"></i>Wallet</button>
+      <button class="dock-nav-item" id="dockAccount" onclick="switchMainPage('account')"><i class="fa-solid fa-circle-user"></i>Account</button>
     </div>
 
   </div>
 
-  <!-- 🎡 1. LUCKY SPIN ROULETTE MODAL -->
-  <div class="drawer-backdrop" id="luckySpinModal" onclick="if(event.target===this)closeDrawer('luckySpinModal')">
-    <div class="bottom-drawer" style="background:#111827;color:#fff;text-align:center;">
-      <div style="width:40px;height:4px;background:#374151;border-radius:100px;margin:0 auto 12px;"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <h3 style="font-weight:900;color:#fde047;"><i class="fa-solid fa-sparkles"></i> Daily Lucky Roulette Spin</h3>
-        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;color:#94a3b8;" onclick="closeDrawer('luckySpinModal')"></i>
-      </div>
-      
-      <p style="font-size:0.75rem;color:#94a3b8;margin-bottom:8px;">Remaining Chances Today: <b style="color:#38bdf8;" id="spinCountText">1</b></p>
-
-      <div class="wheel-wrapper">
-        <div class="wheel-pointer"></div>
-        <div class="wheel-center-pin" id="btnCenterSpin" onclick="executeLuckySpin()">SPIN</div>
-        <canvas id="spinCanvas" width="540" height="540"></canvas>
-      </div>
-
-      <button class="btn-confirm-order" id="btnExecuteSpin" style="background:var(--gold-grad);color:#000;" onclick="executeLuckySpin()">
-        START LUCKY SPIN 🎡
-      </button>
-    </div>
-  </div>
-
-  <!-- 2. GIFT / REDEEM CODE MODAL -->
-  <div class="drawer-backdrop" id="giftModal" onclick="if(event.target===this)closeDrawer('giftModal')">
-    <div class="bottom-drawer">
-      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <h3 style="font-weight:900;"><i class="fa-solid fa-gift" style="color:#f59e0b;"></i> Redeem VIP Gift Code</h3>
-        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('giftModal')"></i>
-      </div>
-
-      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px;">Enter promotional voucher or Telegram gift code for direct wallet injection:</p>
-
-      <input type="text" id="giftCodeInput" class="auth-input-field" placeholder="e.g. BONUS50 or VIP100" style="text-transform:uppercase;letter-spacing:1.5px;text-align:center;font-size:1.1rem;" />
-
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:10px;border-radius:12px;font-size:0.72rem;color:var(--text-muted);margin-bottom:14px;">
-        💡 Valid Codes: <b>BONUS50</b> (₹50 Bonus), <b>VIP100</b> (₹100 Cash), <b>FREEVIP</b> (₹25 Bonus)
-      </div>
-
-      <button class="btn-confirm-order" onclick="submitGiftCode()">REDEEM CODE NOW</button>
-    </div>
-  </div>
-
-  <!-- 3. INVITE & EARN AFFILIATE MODAL -->
-  <div class="drawer-backdrop" id="inviteModal" onclick="if(event.target===this)closeDrawer('inviteModal')">
-    <div class="bottom-drawer">
-      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <h3 style="font-weight:900;"><i class="fa-solid fa-users-rays" style="color:#0284c7;"></i> Invite & Earn Program</h3>
-        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('inviteModal')"></i>
-      </div>
-
-      <div style="background:linear-gradient(135deg, #e0f2fe, #bae6fd);border:1px solid #7dd3fc;padding:14px;border-radius:16px;margin-bottom:14px;">
-        <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#0369a1;font-weight:800;">
-          <span>Referral Commission:</span>
-          <b>Level 1: 0.6% • Level 2: 0.3%</b>
-        </div>
-        <div style="font-size:1.4rem;font-weight:900;color:#0c4a6e;margin-top:6px;">Your Code: <span id="refCodeText">HR-8899</span></div>
-      </div>
-
-      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:8px;">Your Invitation Link:</p>
-      <input type="text" id="refLinkInput" class="auth-input-field" readonly style="font-size:0.78rem;" />
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-        <button class="btn-confirm-order" style="background:#0284c7;" onclick="copyReferralLink()"><i class="fa-solid fa-copy"></i> Copy Link</button>
-        <button class="btn-confirm-order" style="background:#16a34a;" onclick="shareWhatsapp()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
-      </div>
-
-      <button class="btn-confirm-order" style="background:#f59e0b;color:#000;" onclick="claimReferralCommission()">CLAIM COMMISSION (₹35.00)</button>
-    </div>
-  </div>
-
-  <!-- 4. 7-DAY STREAK DAILY BONUS MODAL (FULL DAY 1-7 INTERACTIVE) -->
+  <!-- ========================================================= -->
+  <!-- MODAL: 7-DAY STREAK WITH INTERACTIVE CLAIM -->
+  <!-- ========================================================= -->
   <div class="drawer-backdrop" id="vipModal" onclick="if(event.target===this)closeDrawer('vipModal')">
     <div class="bottom-drawer">
-      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
+      <div style="width:40px;height:4px;background:var(--glass-border);border-radius:100px;margin:0 auto 14px;"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <h3 style="font-weight:900;"><i class="fa-solid fa-calendar-check" style="color:#f59e0b;"></i> 7-Day Login Streak</h3>
+        <h3 style="font-weight:900;"><i class="fa-solid fa-calendar-check" style="color:#f59e0b;"></i> 7-Day Continuous Streak</h3>
         <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('vipModal')"></i>
       </div>
 
-      <div style="background:linear-gradient(135deg, #fffbeb, #fef3c7);border:1px solid #fde68a;padding:14px;border-radius:16px;margin-bottom:14px;">
-        <div style="display:flex;justify-content:space-between;font-weight:900;font-size:0.9rem;">
-          <span>Streak Status:</span>
-          <span style="color:#b45309;" id="streakStatusText">Active</span>
-        </div>
-        <p style="font-size:0.72rem;color:#78350f;margin-top:4px;">Login every 24 hours to claim incremental rewards. Day 7 gives a massive surprise jackpot!</p>
-      </div>
-
-      <!-- FULL DAY 1 TO DAY 7 GRID -->
-      <div class="streak-grid" id="streakDaysGrid">
-        <div class="streak-day-card" id="cardDay1">
-          <span class="day-label">Day 1</span>
-          <span class="prize-amount">₹5</span>
-          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
-        </div>
-        <div class="streak-day-card" id="cardDay2">
-          <span class="day-label">Day 2</span>
-          <span class="prize-amount">₹10</span>
-          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
-        </div>
-        <div class="streak-day-card" id="cardDay3">
-          <span class="day-label">Day 3</span>
-          <span class="prize-amount">₹15</span>
-          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
-        </div>
-        <div class="streak-day-card" id="cardDay4">
-          <span class="day-label">Day 4</span>
-          <span class="prize-amount">₹20</span>
-          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
-        </div>
-        <div class="streak-day-card" id="cardDay5">
-          <span class="day-label">Day 5</span>
-          <span class="prize-amount">₹25</span>
-          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
-        </div>
-        <div class="streak-day-card" id="cardDay6">
-          <span class="day-label">Day 6</span>
-          <span class="prize-amount">₹30</span>
-          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
-        </div>
-        <div class="streak-day-card" id="cardDay7" style="grid-column: span 2; background:linear-gradient(135deg, #fef3c7, #fde68a); border-color:#f59e0b;">
-          <span class="day-label" style="color:#78350f;">Day 7 (Grand Prize)</span>
-          <span class="prize-amount" style="color:#b45309;">₹50 🎁</span>
-          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
-        </div>
+      <div class="streak-grid">
+        <div class="streak-day-card" id="cardDay1"><span class="day-label">Day 1</span><span class="prize-amount">₹5</span><span class="tick-badge">✓ Claimed</span></div>
+        <div class="streak-day-card" id="cardDay2"><span class="day-label">Day 2</span><span class="prize-amount">₹10</span><span class="tick-badge">✓ Claimed</span></div>
+        <div class="streak-day-card" id="cardDay3"><span class="day-label">Day 3</span><span class="prize-amount">₹15</span><span class="tick-badge">✓ Claimed</span></div>
+        <div class="streak-day-card" id="cardDay4"><span class="day-label">Day 4</span><span class="prize-amount">₹20</span><span class="tick-badge">✓ Claimed</span></div>
+        <div class="streak-day-card" id="cardDay5"><span class="day-label">Day 5</span><span class="prize-amount">₹25</span><span class="tick-badge">✓ Claimed</span></div>
+        <div class="streak-day-card" id="cardDay6"><span class="day-label">Day 6</span><span class="prize-amount">₹30</span><span class="tick-badge">✓ Claimed</span></div>
+        <div class="streak-day-card" id="cardDay7" style="grid-column: span 2; background:rgba(245,158,11,0.15); border-color:#f59e0b;"><span class="day-label" style="color:#f59e0b;">Day 7 (Grand Prize)</span><span class="prize-amount" style="color:#fbbf24;">₹50 🎁</span><span class="tick-badge">✓ Claimed</span></div>
       </div>
 
       <button class="btn-confirm-order" id="btnClaimDaily" onclick="claimDailyRewardStreak()">CLAIM TODAY'S REWARD</button>
     </div>
   </div>
 
-  <!-- 5. REBATES MODAL -->
-  <div class="drawer-backdrop" id="rebatesModal" onclick="if(event.target===this)closeDrawer('rebatesModal')">
+  <!-- MODAL: REDEEM CODE (CONTROLLED ₹10-₹15) -->
+  <div class="drawer-backdrop" id="giftModal" onclick="if(event.target===this)closeDrawer('giftModal')">
     <div class="bottom-drawer">
-      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
+      <div style="width:40px;height:4px;background:var(--glass-border);border-radius:100px;margin:0 auto 14px;"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <h3 style="font-weight:900;"><i class="fa-solid fa-hand-holding-dollar" style="color:#10b981;"></i> Realtime Turnover Rebate</h3>
-        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('rebatesModal')"></i>
+        <h3 style="font-weight:900;"><i class="fa-solid fa-ticket" style="color:#f59e0b;"></i> Redeem VIP Voucher</h3>
+        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('giftModal')"></i>
       </div>
-
-      <div style="background:#f0fdf4;border:1px solid #bbf7d0;padding:16px;border-radius:16px;margin-bottom:14px;">
-        <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#166534;font-weight:800;">
-          <span>Rebate Rate:</span>
-          <b>0.8% Unlimited Daily</b>
-        </div>
-        <div style="font-size:1.8rem;font-weight:900;color:#15803d;margin:8px 0 2px;">₹<span id="rebateClaimAmt">12.50</span></div>
-        <small style="color:#166534;font-size:0.7rem;">Calculated based on your total settled bets today.</small>
+      <p style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">Enter valid voucher code to claim instant cash injection:</p>
+      <input type="text" id="giftCodeInput" class="luxury-input-field" placeholder="e.g. BONUS10 or VIP15" style="text-transform:uppercase;text-align:center;font-size:1.1rem;" />
+      <div style="background:#090d16;padding:10px;border-radius:12px;font-size:0.72rem;color:var(--text-secondary);margin-bottom:14px;">
+        💡 Valid Codes: <b>BONUS10</b> (₹10), <b>VIP15</b> (₹15), <b>LUCKY10</b> (₹10)
       </div>
-
-      <button class="btn-confirm-order" style="background:linear-gradient(135deg,#10b981,#059669);" onclick="claimRebateCash()">CLAIM REBATE TO CASH WALLET</button>
+      <button class="btn-confirm-order" onclick="submitGiftCode()">REDEEM VOUCHER NOW</button>
     </div>
   </div>
 
-  <!-- 6. 24/7 SUPPORT MODAL -->
-  <div class="drawer-backdrop" id="supportDrawer" onclick="if(event.target===this)closeDrawer('supportDrawer')">
+  <!-- MODAL: VIP CLUB (REPLACES REBATES) -->
+  <div class="drawer-backdrop" id="vipClubModal" onclick="if(event.target===this)closeDrawer('vipClubModal')">
     <div class="bottom-drawer">
-      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <h3 style="font-weight:900;"><i class="fa-solid fa-headset" style="color:var(--red-main);"></i> 24/7 VIP Customer Desk</h3>
-        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('supportDrawer')"></i>
+      <div style="width:40px;height:4px;background:var(--glass-border);border-radius:100px;margin:0 auto 14px;"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 style="font-weight:900;"><i class="fa-solid fa-gem" style="color:#10b981;"></i> VIP Club Privileges</h3>
+        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('vipClubModal')"></i>
       </div>
-      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
-        <a href="https://t.me/HueRushSupport" target="_blank" style="text-decoration:none;display:flex;align-items:center;justify-content:space-between;background:#0284c7;color:#fff;padding:14px;border-radius:14px;font-weight:900;font-size:0.9rem;">
-          <span><i class="fa-brands fa-telegram" style="margin-right:8px;font-size:1.2rem;"></i> Official Telegram Support</span>
-          <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </a>
-        <a href="https://wa.me/919999999999?text=Hello%20HueRush%20Support" target="_blank" style="text-decoration:none;display:flex;align-items:center;justify-content:space-between;background:#16a34a;color:#fff;padding:14px;border-radius:14px;font-weight:900;font-size:0.9rem;">
-          <span><i class="fa-brands fa-whatsapp" style="margin-right:8px;font-size:1.2rem;"></i> WhatsApp Direct Desk</span>
-          <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </a>
+      <div style="background:linear-gradient(135deg, #090d16, #161d2b);padding:14px;border-radius:14px;border:1px solid var(--glass-border);margin-bottom:12px;">
+        <b style="color:var(--gold-text);font-size:1rem;">VIP 1 — Silver Member</b>
+        <p style="font-size:0.72rem;color:var(--text-secondary);margin-top:4px;">Next Level: VIP 2 (Requires ₹10,000 Experience Turnover)</p>
       </div>
-      <button class="btn-confirm-order" style="background:#111827;" onclick="closeDrawer('supportDrawer')">CLOSE SUPPORT</button>
+      <button class="btn-confirm-order" onclick="closeDrawer('vipClubModal')">CLOSE</button>
+    </div>
+  </div>
+
+  <!-- MODAL: 🎡 LUCKY SPIN WHEEL -->
+  <div class="drawer-backdrop" id="luckySpinModal" onclick="if(event.target===this)closeDrawer('luckySpinModal')">
+    <div class="bottom-drawer" style="text-align:center;">
+      <div style="width:40px;height:4px;background:var(--glass-border);border-radius:100px;margin:0 auto 12px;"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <h3 style="font-weight:900;color:var(--gold-text);"><i class="fa-solid fa-sparkles"></i> Lucky Roulette Spin</h3>
+        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('luckySpinModal')"></i>
+      </div>
+      <p style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;">Remaining Free Spins Today: <b style="color:#38bdf8;" id="spinCountText">1</b></p>
+      <div class="wheel-wrapper">
+        <div class="wheel-pointer"></div>
+        <div class="wheel-center-pin" onclick="executeLuckySpin()">SPIN</div>
+        <canvas id="spinCanvas" width="540" height="540"></canvas>
+      </div>
+      <button class="btn-confirm-order" onclick="executeLuckySpin()">START LUCKY SPIN 🎡</button>
     </div>
   </div>
 
   <!-- ORDER BET DRAWER -->
   <div class="drawer-backdrop" id="betDrawer" onclick="if(event.target===this)closeDrawer('betDrawer')">
     <div class="bottom-drawer">
-      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
+      <div style="width:40px;height:4px;background:var(--glass-border);border-radius:100px;margin:0 auto 14px;"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <h3 id="contractLabel" style="font-weight:900;">Contract Order</h3>
         <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('betDrawer')"></i>
       </div>
-      <div style="font-size:0.75rem;color:var(--text-muted);font-weight:800;">Contract Base Amount (₹)</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 14px;">
         <button class="l-tab-btn active" onclick="setUnitVal(10,this)">₹10</button>
         <button class="l-tab-btn" onclick="setUnitVal(100,this)">₹100</button>
         <button class="l-tab-btn" onclick="setUnitVal(500,this)">₹500</button>
         <button class="l-tab-btn" onclick="setUnitVal(1000,this)">₹1000</button>
       </div>
-      <div style="font-size:0.75rem;color:var(--text-muted);font-weight:800;">Multiplier</div>
       <div style="display:flex;gap:8px;margin:8px 0 14px;">
         <button class="l-tab-btn active" onclick="setMultVal(1,this)">×1</button>
         <button class="l-tab-btn" onclick="setMultVal(5,this)">×5</button>
         <button class="l-tab-btn" onclick="setMultVal(10,this)">×10</button>
         <button class="l-tab-btn" onclick="setMultVal(20,this)">×20</button>
       </div>
-      <div style="display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--border-light);margin-bottom:10px;">
-        <span style="font-weight:800;color:var(--text-muted);">Total Order</span>
-        <b style="font-size:1.3rem;font-weight:900;color:var(--red-main);">₹<span id="calcTotal">10</span></b>
+      <div style="display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--glass-border);margin-bottom:10px;">
+        <span style="font-weight:800;color:var(--text-secondary);">Total Order</span>
+        <b style="font-size:1.3rem;font-weight:900;color:var(--red-matte);">₹<span id="calcTotal">10</span></b>
       </div>
       <button class="btn-confirm-order" onclick="submitBetOrder()">CONFIRM PURCHASE</button>
     </div>
   </div>
 
-  <!-- ANONYMOUS DEPOSIT DRAWER -->
-  <div class="drawer-backdrop" id="depDrawer" onclick="if(event.target===this)closeDrawer('depDrawer')">
-    <div class="bottom-drawer">
-      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
-      <h3 style="font-weight:900;margin-bottom:8px;">Fast Wallet Recharge</h3>
-      <input type="number" id="inDepAmt" class="auth-input-field" value="100" min="10" placeholder="Recharge Amount (₹)" oninput="refreshQrImg()" style="text-align:center;font-size:1.2rem;font-weight:900;" />
-      <div style="text-align:center;background:#fff;border:1px solid var(--border-light);padding:14px;border-radius:14px;margin-bottom:12px;">
-        <img id="qrImgSrc" src="" alt="Payment Gateway QR" style="width:160px;height:160px;margin:0 auto;display:block;" />
-        <span style="display:block;font-size:0.75rem;font-weight:800;color:#10b981;margin-top:8px;">🛡️ 100% Encrypted Gateway</span>
-      </div>
-      <input type="text" id="inUtr" class="auth-input-field" placeholder="Enter 12-digit Receipt UTR" style="letter-spacing:1px;" />
-      <button class="btn-confirm-order" onclick="submitUtrReceipt()">SUBMIT VERIFICATION</button>
-    </div>
-  </div>
-
-  <!-- WITHDRAW DRAWER -->
-  <div class="drawer-backdrop" id="wdDrawer" onclick="if(event.target===this)closeDrawer('wdDrawer')">
-    <div class="bottom-drawer">
-      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
-      <h3 style="font-weight:900;margin-bottom:4px;">Cashout Winnings</h3>
-      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px;">Only winning wallet balance can be withdrawn.</p>
-      <input type="number" id="inWdAmt" class="auth-input-field" placeholder="Withdrawal Amount (₹)" />
-      <input type="text" id="inWdUpi" class="auth-input-field" placeholder="Receiving UPI ID" />
-      <button class="btn-confirm-order" onclick="submitWdOrder()">REQUEST CASHOUT</button>
-    </div>
-  </div>
-
-  <!-- ========================================================= -->
-  <!-- 🎯 EXACT SAME ATM RECEIPT DISPENSER MODAL (WIN VS LOSS) -->
-  <!-- ========================================================= -->
+  <!-- 🎯 EXACT SAME ATM DISPENSER (WIN VS LOSS) -->
   <div class="atm-viewport-overlay" id="atmCashModal">
     <div class="atm-pop-container">
-      
-      <!-- EXACT SAME 3D GOLDEN RIBBON & ROCKET -->
       <div class="atm-gold-ribbon">
         <div class="ribbon-lateral-wings"></div>
         <i class="fa-solid fa-rocket atm-flight-rocket"></i>
       </div>
-
       <div class="atm-heading-congrats" id="atmMainHeading">Congratulations on your</div>
       <div class="atm-subheading-win" id="atmSubHeading">winning</div>
-      
       <div class="atm-result-pill-row">
         <span class="pill-label-tag">lottery result</span>
         <span class="pill-badge pill-green" id="atmWinCol">green</span>
         <span class="pill-badge pill-green" id="atmWinNum">9</span>
         <span class="pill-badge pill-green" id="atmWinSize">Big</span>
       </div>
-
-      <!-- EXACT SAME DISPENSER SLOT CUTTER -->
       <div class="atm-cutter-slot"></div>
-
-      <!-- EXACT SAME SLIDING CASH RECEIPT PAPER -->
       <div class="atm-slide-receipt">
         <div class="receipt-bonus-lbl" id="receiptTagLabel">bonus</div>
         <div class="receipt-cash-val" id="atmWinCash">+₹0.00</div>
         <div class="receipt-issue-id" id="atmWinIssue">Issue: 30s Quick 20260901001</div>
       </div>
-
       <div class="atm-auto-close-toggle toggle-active" id="atmToggleBox" onclick="toggleAutoClose()">
         <span class="close-dot-indicator"></span>
         <span>3s auto shut off</span>
       </div>
+    </div>
+  </div>
+
+  <!-- 🛡️ ANIMATED LUXURY CONFIRMATION MODAL (REPLACES GREY BOX) -->
+  <div class="luxury-modal-overlay" id="luxuryStatusModal">
+    <div class="luxury-status-box">
+      <div class="luxury-glow-icon icon-success-glow" id="statusGlowIcon">
+        <i class="fa-solid fa-check" id="statusIconGlyph"></i>
+      </div>
+      <h3 id="statusTitle" style="font-weight:900;color:#fff;margin-bottom:6px;">Submitted!</h3>
+      <p id="statusMsg" style="font-size:0.8rem;color:var(--text-secondary);line-height:1.4;margin-bottom:16px;">Action completed successfully.</p>
+      <button class="btn-confirm-order" onclick="closeLuxuryModal()">OKAY</button>
+    </div>
+  </div>
+
+  <!-- SUPPORT DRAWER -->
+  <div class="drawer-backdrop" id="supportDrawer" onclick="if(event.target===this)closeDrawer('supportDrawer')">
+    <div class="bottom-drawer">
+      <div style="width:40px;height:4px;background:var(--glass-border);border-radius:100px;margin:0 auto 14px;"></div>
+      <h3 style="font-weight:900;margin-bottom:14px;"><i class="fa-solid fa-headset" style="color:var(--red-matte);"></i> 24/7 VIP Helpdesk</h3>
+      <a href="https://t.me/HueRushSupport" target="_blank" style="text-decoration:none;display:flex;justify-content:space-between;background:#0284c7;color:#fff;padding:14px;border-radius:14px;font-weight:900;margin-bottom:10px;">
+        <span><i class="fa-brands fa-telegram"></i> Telegram Support</span><i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+      <a href="https://wa.me/919999999999" target="_blank" style="text-decoration:none;display:flex;justify-content:space-between;background:#16a34a;color:#fff;padding:14px;border-radius:14px;font-weight:900;margin-bottom:14px;">
+        <span><i class="fa-brands fa-whatsapp"></i> WhatsApp Helpdesk</span><i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+      <button class="btn-confirm-order" onclick="closeDrawer('supportDrawer')">CLOSE</button>
     </div>
   </div>
 
@@ -1433,12 +1338,11 @@ let playerPendingBets = [];
 let upiInfo = { upiId: 'merchantpay@upi', name: 'HueRush' };
 let soundEnabled = true;
 
-// 7-DAY STREAK PRIZE MAPPING
 const streakPrizes = { 1: 5, 2: 10, 3: 15, 4: 20, 5: 25, 6: 30, 7: 50 };
 let userClaimedDays = [];
 let userLastStreakDate = '';
 
-// 8 CONTROLLED SEGMENTS: ₹10 TO ₹50
+// Controlled Lucky Spin
 const spinRewards = [
   { text: "₹10", value: 10, color: "#ef4444" },
   { text: "Try Again", value: 0, color: "#64748b" },
@@ -1449,7 +1353,6 @@ const spinRewards = [
   { text: "₹50", value: 50, color: "#8b5cf6" },
   { text: "Better Luck", value: 0, color: "#1e293b" }
 ];
-
 let isSpinningWheel = false;
 let currentWheelRotation = 0;
 const todayDateStr = new Date().toDateString();
@@ -1481,31 +1384,81 @@ function playTickBeep(freq = 600, dur = 0.08) {
 function toggleAudio() {
   soundEnabled = !soundEnabled;
   const btn = document.getElementById('soundToggleBtn');
-  if (soundEnabled) {
-    btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-    btn.style.color = '#fff';
-    playTickBeep(800);
+  btn.innerHTML = soundEnabled ? '<i class="fa-solid fa-volume-high"></i>' : '<i class="fa-solid fa-volume-xmark"></i>';
+}
+
+function showLuxuryStatus(isSuccess, title, msg) {
+  const modal = document.getElementById('luxuryStatusModal');
+  const glow = document.getElementById('statusGlowIcon');
+  const glyph = document.getElementById('statusIconGlyph');
+  document.getElementById('statusTitle').innerText = title;
+  document.getElementById('statusMsg').innerText = msg;
+
+  if (isSuccess) {
+    glow.className = 'luxury-glow-icon icon-success-glow';
+    glyph.className = 'fa-solid fa-check';
+    playTickBeep(880, 0.3);
   } else {
-    btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
-    btn.style.color = '#9ca3af';
+    glow.className = 'luxury-glow-icon icon-error-glow';
+    glyph.className = 'fa-solid fa-xmark';
+    playTickBeep(300, 0.2);
   }
+  modal.classList.add('open');
+}
+
+function closeLuxuryModal() {
+  document.getElementById('luxuryStatusModal').classList.remove('open');
+}
+
+function switchMainPage(page) {
+  const pages = ['wingo', 'activity', 'promotion', 'wallet', 'account'];
+  pages.forEach(p => {
+    const el = document.getElementById('page' + p.charAt(0).toUpperCase() + p.slice(1));
+    if (el) el.classList.toggle('hidden', p !== page);
+    const dock = document.getElementById('dock' + p.charAt(0).toUpperCase() + p.slice(1));
+    if (dock) dock.classList.toggle('active', p === page);
+  });
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function toggleWalletSubTab(tab) {
+  const isDep = tab === 'deposit';
+  document.getElementById('subPaneDeposit').classList.toggle('hidden', !isDep);
+  document.getElementById('subPaneWithdraw').classList.toggle('hidden', isDep);
+  document.getElementById('tabWalletDep').classList.toggle('active', isDep);
+  document.getElementById('tabWalletWd').classList.toggle('active', !isDep);
+}
+
+function selectDepositChip(val, el) {
+  document.getElementById('inWalletDepAmt').value = val;
+  el.parentElement.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  refreshQrDisplay();
+}
+
+function selectWithdrawChip(val, el) {
+  document.getElementById('inWalletWdAmt').value = val;
+  el.parentElement.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
 }
 
 function toggleAuthMode() {
   isRegisterMode = !isRegisterMode;
   document.getElementById('authTitle').innerText = isRegisterMode ? 'VIP Register' : 'HueRush VIP';
   document.getElementById('suName').style.display = isRegisterMode ? 'block' : 'none';
-  document.getElementById('authSubmitBtn').innerText = isRegisterMode ? 'REGISTER & CLAIM ₹50' : 'SIGN IN';
-  document.getElementById('authSwitchMsg').innerText = isRegisterMode ? 'Already VIP? Sign In' : 'New player? Register & get ₹50 bonus';
+  document.getElementById('suInvite').style.display = isRegisterMode ? 'block' : 'none';
+  document.getElementById('authSubmitBtn').innerText = isRegisterMode ? 'REGISTER NOW' : 'SIGN IN';
+  document.getElementById('authSwitchMsg').innerText = isRegisterMode ? 'Already registered? Sign In' : 'New player? Register with invite';
 }
 
 async function handleAuthSubmit() {
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPass').value;
   const name = document.getElementById('suName').value.trim();
+  const inviteCode = document.getElementById('suInvite').value.trim();
 
   const endpoint = isRegisterMode ? '/api/auth/register' : '/api/auth/login';
-  const payload = isRegisterMode ? { name, email, password } : { email, password };
+  const payload = isRegisterMode ? { name, email, password, inviteCode } : { email, password };
 
   try {
     const res = await fetch(endpoint, {
@@ -1514,10 +1467,10 @@ async function handleAuthSubmit() {
       body:JSON.stringify(payload)
     });
     const data = await res.json();
-    if (!res.ok) return alert(data.error || 'Auth failed');
+    if (!res.ok) return showLuxuryStatus(false, 'Auth Error', data.error || 'Authentication failed');
 
     if (isRegisterMode) {
-      alert('Registration successful! ₹50 Bonus Credited.');
+      showLuxuryStatus(true, 'Registered!', 'Account registered! Please sign in.');
       toggleAuthMode();
     } else {
       currentUser = data.user;
@@ -1525,7 +1478,7 @@ async function handleAuthSubmit() {
       bootApp();
     }
   } catch(e) {
-    alert('Server connection error!');
+    showLuxuryStatus(false, 'Error', 'Server connection error');
   }
 }
 
@@ -1536,22 +1489,18 @@ function logoutApp() {
 
 function bootApp() {
   if (!currentUser) return;
+  document.getElementById('authGate').classList.remove('open');
   document.getElementById('authGate').classList.add('hidden');
   document.getElementById('mainScreen').classList.remove('hidden');
 
   const shortName = currentUser.name.split(' ')[0];
-  document.getElementById('topName').innerText = shortName;
-  document.getElementById('topAvatar').innerText = shortName.charAt(0).toUpperCase();
-  document.getElementById('topUid').innerText = 'HR' + (currentUser.id ? currentUser.id.slice(-4).toUpperCase() : '8899');
-
   document.getElementById('accName').innerText = currentUser.name;
   document.getElementById('accEmail').innerText = currentUser.email;
   document.getElementById('accAvatar').innerText = shortName.charAt(0).toUpperCase();
-  document.getElementById('accUid').innerText = 'HR' + (currentUser.id ? currentUser.id.slice(-4).toUpperCase() : '8899');
+  document.getElementById('accUid').innerText = currentUser.referralCode || 'HR8899';
 
-  const code = 'HR' + (currentUser.id ? currentUser.id.slice(-4).toUpperCase() : '8899');
-  document.getElementById('refCodeText').innerText = code;
-  document.getElementById('refLinkInput').value = `${window.location.origin}/?ref=${code}`;
+  document.getElementById('refCodeDisplay').innerText = currentUser.referralCode || 'HR8899';
+  document.getElementById('promoRefLink').value = `${window.location.origin}/?invite=${currentUser.referralCode || 'HR8899'}`;
 
   document.getElementById('spinCountText').innerText = remainingSpins;
 
@@ -1573,31 +1522,36 @@ async function syncWalletBalances() {
     document.getElementById('totBal').innerText = total.toFixed(2);
     document.getElementById('bonBal').innerText = data.bonusBalance.toFixed(2);
     document.getElementById('winBal').innerText = data.winningBalance.toFixed(2);
+    document.getElementById('wdAvailBal').innerText = data.winningBalance.toFixed(2);
 
-    document.getElementById('accTot').innerText = total.toFixed(2);
-    document.getElementById('accWin').innerText = data.winningBalance.toFixed(2);
+    document.getElementById('statInvitedCount').innerText = `${data.invitedCount || 0} Players`;
+    document.getElementById('statReferralEarnings').innerText = `₹${(data.referralEarnings || 0).toFixed(2)}`;
 
     userClaimedDays = data.claimedStreakDays || [];
     userLastStreakDate = data.lastStreakDate || '';
     updateStreakUI();
 
-    renderPersonalBets(data.bets || []);
+    renderPersistentPersonalBets(data.bets || []);
   } catch(e) {}
 }
 
-function switchAppTab(tab) {
-  const isWingo = tab === 'wingo';
-  document.getElementById('wingoHub').classList.toggle('hidden', !isWingo);
-  document.getElementById('accountViewScreen').classList.toggle('hidden', isWingo);
-
-  document.getElementById('btnDockWingo').classList.toggle('active', isWingo);
-  document.getElementById('btnDockAcc').classList.toggle('active', !isWingo);
-  window.scrollTo({ top:0, behavior:'smooth' });
+function renderPersistentPersonalBets(bets) {
+  const box = document.getElementById('myBetsList');
+  if (!bets.length) {
+    box.innerHTML = '<p style="text-align:center;padding:16px;font-size:0.75rem;color:var(--text-secondary);">No bets recorded in database.</p>';
+    return;
+  }
+  box.innerHTML = bets.map(b => `
+    <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--glass-border);font-size:0.8rem;">
+      <div><b>Target: ${String(b.target).toUpperCase()}</b><div style="font-size:0.65rem;color:var(--text-secondary);">${b.period} • Result: ${b.winningNum}</div></div>
+      <div style="text-align:right;"><b style="color:${b.status==='won'?'#10b981':'#ef4444'};">${b.status==='won'?'+':'-'}₹${b.status==='won'?b.winAmount.toFixed(2):b.amount}</b><div style="font-size:0.65rem;color:var(--text-secondary);">${b.status.toUpperCase()}</div></div>
+    </div>
+  `).join('');
 }
 
 function switchParityRoom(key, el) {
   curRoom = key;
-  document.querySelectorAll('.p-room-tab').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.room-pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
 }
 
@@ -1655,9 +1609,7 @@ async function submitBetOrder() {
     })
   });
   const data = await res.json();
-  if (!res.ok) return alert(data.error);
-
-  playTickBeep(700);
+  if (!res.ok) return showLuxuryStatus(false, 'Bet Error', data.error);
 
   playerPendingBets.push({
     period: document.getElementById('displayPeriod').innerText,
@@ -1670,9 +1622,7 @@ async function submitBetOrder() {
   syncWalletBalances();
 }
 
-/* ========================================================= */
-/* 🎡 FUNCTIONAL LUCKY SPIN ENGINE */
-/* ========================================================= */
+/* LUCKY SPIN */
 function renderSpinWheelCanvas() {
   const canvas = document.getElementById('spinCanvas');
   if (!canvas) return;
@@ -1711,23 +1661,20 @@ function openLuckySpinModal() {
 
 function executeLuckySpin() {
   if (isSpinningWheel) return;
-  if (remainingSpins <= 0) {
-    return alert('❌ You have already used your 1 Free Spin for today! Check back tomorrow.');
-  }
+  if (remainingSpins <= 0) return showLuxuryStatus(false, 'Limit Reached', 'You have already used your 1 Free Spin for today!');
 
   isSpinningWheel = true;
   remainingSpins = 0;
   localStorage.setItem('huerush_last_spin_date', todayDateStr);
   document.getElementById('spinCountText').innerText = 0;
 
-  let targetIndex = 1; // Try Again
+  let targetIndex = 1;
   const dice = Math.random();
-
   if (dice < 0.25) targetIndex = 0; // ₹10
   else if (dice < 0.30) targetIndex = 2; // ₹20
-  else if (dice < 0.55) targetIndex = 1; // Try Again
-  else if (dice < 0.75) targetIndex = 3; // No Prize
-  else targetIndex = 5; // Hard Luck
+  else if (dice < 0.55) targetIndex = 1;
+  else if (dice < 0.75) targetIndex = 3;
+  else targetIndex = 5;
 
   const segmentAngle = 360 / spinRewards.length;
   const targetDegree = 360 - (targetIndex * segmentAngle) - (segmentAngle / 2);
@@ -1736,91 +1683,52 @@ function executeLuckySpin() {
   const canvas = document.getElementById('spinCanvas');
   canvas.style.transform = `rotate(${currentWheelRotation}deg)`;
 
-  let tickCount = 0;
-  const tickInterval = setInterval(() => {
-    playTickBeep(550 + (tickCount * 10), 0.05);
-    tickCount++;
-    if (tickCount > 25) clearInterval(tickInterval);
-  }, 140);
-
   setTimeout(async () => {
     isSpinningWheel = false;
     const wonReward = spinRewards[targetIndex];
 
     if (wonReward.value > 0) {
-      playTickBeep(880, 0.4);
-      // Permanent DB injection
       await fetch('/api/wallet/claim-reward', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          userId: currentUser.id,
-          type: 'spin_reward',
-          amount: wonReward.value,
-          targetWallet: 'winning'
-        })
+        body: JSON.stringify({ userId: currentUser.id, type: 'spin_reward', amount: wonReward.value, targetWallet: 'winning' })
       });
       syncWalletBalances();
-      alert(`🎉 CONGRATULATIONS!\nYou won ${wonReward.text}! Credited permanently to your Withdrawable Balance.`);
+      showLuxuryStatus(true, 'Winner!', `Won ${wonReward.text}! Credited to Withdrawable Balance.`);
     } else {
-      playTickBeep(300, 0.2);
-      alert(`😔 ${wonReward.text}!\nBetter luck next time! Your daily spin is completed.`);
+      showLuxuryStatus(false, 'Hard Luck', `${wonReward.text}! Try again tomorrow.`);
     }
   }, 4100);
 }
 
-/* ========================================================= */
-/* 2. REAL PERMANENT GIFT CODE REDEEM */
-/* ========================================================= */
+/* CONTROLLED REDEEM CODES (₹10 - ₹15) */
 function openGiftCodeModal() {
   document.getElementById('giftModal').classList.add('open');
 }
 
 async function submitGiftCode() {
   const code = document.getElementById('giftCodeInput').value.trim().toUpperCase();
-  if (!code) return alert('Please enter a voucher code!');
-
-  const validCodes = {
-    'BONUS50': { amount: 50, wallet: 'bonus' },
-    'VIP100': { amount: 100, wallet: 'winning' },
-    'FREEVIP': { amount: 25, wallet: 'bonus' },
-    'HUERUSH2026': { amount: 200, wallet: 'winning' }
-  };
-
-  if (!validCodes[code]) {
-    return alert('❌ Invalid or expired redeem voucher code!');
-  }
-
-  const { amount, wallet } = validCodes[code];
+  if (!code) return showLuxuryStatus(false, 'Input Missing', 'Please enter a voucher code!');
 
   try {
     const res = await fetch('/api/wallet/claim-reward', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        userId: currentUser.id,
-        type: 'gift_code',
-        code: code,
-        amount: amount,
-        targetWallet: wallet
-      })
+      body: JSON.stringify({ userId: currentUser.id, type: 'gift_code', code: code, targetWallet: 'bonus' })
     });
     const data = await res.json();
-    if (!res.ok) return alert(data.error);
+    if (!res.ok) return showLuxuryStatus(false, 'Voucher Error', data.error);
 
-    playTickBeep(900);
     document.getElementById('giftCodeInput').value = '';
     closeDrawer('giftModal');
     syncWalletBalances();
-    alert(`✅ Code successfully redeemed! ₹${amount} added to your account permanently.`);
+    showLuxuryStatus(true, 'Voucher Redeemed!', data.message);
   } catch (e) {
-    alert('Server error while claiming code');
+    showLuxuryStatus(false, 'Error', 'Failed to redeem voucher');
   }
 }
 
-/* ========================================================= */
-/* 3. 7-DAY LOGIN STREAK (VISUAL TICKS & PERMANENT DB SYNC) */
-/* ========================================================= */
+/* 7-DAY STREAK */
 function updateStreakUI() {
   const isClaimedToday = userLastStreakDate === todayDateStr;
   const nextDayToClaim = userClaimedDays.length + 1;
@@ -1828,28 +1736,20 @@ function updateStreakUI() {
   for (let d = 1; d <= 7; d++) {
     const card = document.getElementById(`cardDay${d}`);
     if (!card) continue;
-    
-    if (userClaimedDays.includes(d)) {
-      card.className = 'streak-day-card claimed';
-    } else if (d === nextDayToClaim && !isClaimedToday) {
-      card.className = 'streak-day-card active-today';
-    } else {
-      card.className = 'streak-day-card';
-    }
+    if (userClaimedDays.includes(d)) card.className = 'streak-day-card claimed';
+    else if (d === nextDayToClaim && !isClaimedToday) card.className = 'streak-day-card active-today';
+    else card.className = 'streak-day-card';
   }
 
   const btn = document.getElementById('btnClaimDaily');
   if (isClaimedToday) {
     btn.innerText = 'ALREADY CLAIMED TODAY ✓';
-    btn.style.background = '#94a3b8';
+    btn.style.background = '#64748b';
     btn.disabled = true;
-    document.getElementById('streakStatusText').innerText = `Day ${userClaimedDays.length} Claimed ✓`;
   } else {
-    const todayPrize = streakPrizes[Math.min(7, nextDayToClaim)] || 10;
-    btn.innerText = `CLAIM DAY ${Math.min(7, nextDayToClaim)} REWARD (₹${todayPrize})`;
-    btn.style.background = 'linear-gradient(135deg, #ff444a, #b80d19)';
+    btn.innerText = `CLAIM DAY ${Math.min(7, nextDayToClaim)} REWARD (₹${streakPrizes[Math.min(7, nextDayToClaim)]})`;
+    btn.style.background = 'linear-gradient(135deg, #ef394e, #b91c1c)';
     btn.disabled = false;
-    document.getElementById('streakStatusText').innerText = `Ready to Claim Day ${Math.min(7, nextDayToClaim)}`;
   }
 }
 
@@ -1866,131 +1766,78 @@ async function claimDailyRewardStreak() {
     const res = await fetch('/api/wallet/claim-reward', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        userId: currentUser.id,
-        type: 'daily_streak',
-        day: nextDayToClaim,
-        amount: prize,
-        targetWallet: 'bonus'
-      })
+      body: JSON.stringify({ userId: currentUser.id, type: 'daily_streak', day: nextDayToClaim, amount: prize, targetWallet: 'bonus' })
     });
     const data = await res.json();
-    if (!res.ok) return alert(data.error);
+    if (!res.ok) return showLuxuryStatus(false, 'Streak Error', data.error);
 
-    playTickBeep(880);
     syncWalletBalances();
-    alert(`🎉 Day ${nextDayToClaim} Streak Bonus claimed! ₹${prize} permanently added to your wallet.`);
     closeDrawer('vipModal');
+    showLuxuryStatus(true, 'Streak Claimed!', `₹${prize} added to your bonus wallet!`);
   } catch (e) {
-    alert('Server connection error');
+    showLuxuryStatus(false, 'Error', 'Streak connection failed');
   }
 }
 
-/* ========================================================= */
-/* 4. REBATE CASH CLAIM & REFERRAL COMMISSION */
-/* ========================================================= */
-function openRebatesModal() {
-  document.getElementById('rebatesModal').classList.add('open');
-}
-
-async function claimRebateCash() {
-  const rebateAmt = 12.50;
+/* REAL REFERRAL COMMISSION */
+async function claimRealReferralCommission() {
   try {
     const res = await fetch('/api/wallet/claim-reward', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        userId: currentUser.id,
-        type: 'rebate',
-        amount: rebateAmt,
-        targetWallet: 'winning'
-      })
+      body: JSON.stringify({ userId: currentUser.id, type: 'claim_referral', targetWallet: 'winning' })
     });
     const data = await res.json();
-    if (!res.ok) return alert(data.error);
+    if (!res.ok) return showLuxuryStatus(false, 'Referral Notice', data.error);
 
-    playTickBeep(880);
     syncWalletBalances();
-    alert(`🎉 ₹${rebateAmt.toFixed(2)} Turnover Rebate credited directly to your Withdrawable Cash Balance!`);
-    closeDrawer('rebatesModal');
+    showLuxuryStatus(true, 'Commission Claimed!', data.message);
   } catch (e) {
-    alert('Connection error');
+    showLuxuryStatus(false, 'Error', 'Failed to claim commission');
   }
 }
 
-function openInviteModal() {
-  document.getElementById('inviteModal').classList.add('open');
+function copyInviteLink() {
+  const link = document.getElementById('promoRefLink');
+  link.select();
+  navigator.clipboard.writeText(link.value);
+  showLuxuryStatus(true, 'Link Copied', 'Your referral link has been copied!');
 }
 
-async function claimReferralCommission() {
-  const commAmt = 35.00;
-  try {
-    const res = await fetch('/api/wallet/claim-reward', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        userId: currentUser.id,
-        type: 'referral_comm',
-        amount: commAmt,
-        targetWallet: 'winning'
-      })
-    });
-    const data = await res.json();
-    if (!res.ok) return alert(data.error);
-
-    playTickBeep(880);
-    syncWalletBalances();
-    alert(`🎉 ₹${commAmt.toFixed(2)} Referral Commission claimed to your Withdrawable Balance!`);
-    closeDrawer('inviteModal');
-  } catch (e) {
-    alert('Connection error');
-  }
-}
-
-function copyReferralLink() {
-  const linkInput = document.getElementById('refLinkInput');
-  linkInput.select();
-  navigator.clipboard.writeText(linkInput.value);
-  alert('📋 Referral link copied to clipboard!');
-}
-
-function shareWhatsapp() {
-  const link = document.getElementById('refLinkInput').value;
-  const msg = encodeURIComponent(`Join HueRush - Win real cash playing 30-sec Color Parity! Use my link: ${link}`);
+function shareWhatsappInvite() {
+  const link = document.getElementById('promoRefLink').value;
+  const msg = encodeURIComponent(`Join HueRush - Play 30s Color Parity & Win Instant Cash! Sign up with my link: ${link}`);
   window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
+}
+
+function openVipClubModal() {
+  document.getElementById('vipClubModal').classList.add('open');
 }
 
 function openSupportDrawer() {
   document.getElementById('supportDrawer').classList.add('open');
 }
 
-// DEPOSIT & WITHDRAW
+/* RECHARGE & WITHDRAWAL */
 async function fetchUpiData() {
   try {
     const res = await fetch('/api/wallet/upi-config');
     upiInfo = await res.json();
-    refreshQrImg();
+    refreshQrDisplay();
   } catch(e) {}
 }
 
-function openDepositDrawer() {
-  refreshQrImg();
-  document.getElementById('depDrawer').classList.add('open');
-}
-function openWithdrawDrawer() {
-  document.getElementById('wdDrawer').classList.add('open');
-}
-
-function refreshQrImg() {
-  const amt = Math.max(10, +document.getElementById('inDepAmt').value || 100);
+function refreshQrDisplay() {
+  const amt = Math.max(10, +document.getElementById('inWalletDepAmt').value || 100);
   const upiUrl = `upi://pay?pa=${upiInfo.upiId}&pn=${encodeURIComponent(upiInfo.name)}&am=${amt}&cu=INR`;
-  document.getElementById('qrImgSrc').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(upiUrl)}`;
+  document.getElementById('qrLuxuryImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(upiUrl)}`;
 }
 
-async function submitUtrReceipt() {
-  const amt = Number(document.getElementById('inDepAmt').value);
-  const utr = document.getElementById('inUtr').value.trim();
-  if (!utr || utr.length < 8) return alert('Enter valid 12-digit UTR!');
+async function submitWalletDeposit() {
+  const amt = Number(document.getElementById('inWalletDepAmt').value);
+  const utr = document.getElementById('inWalletUtr').value.trim();
+  if (amt < 10 || amt > 1000) return showLuxuryStatus(false, 'Limit Notice', 'Deposit must be between ₹10 and ₹1,000!');
+  if (!utr || utr.length < 8) return showLuxuryStatus(false, 'UTR Missing', 'Please enter valid 12-digit UTR!');
 
   const res = await fetch('/api/wallet/submit-deposit', {
     method:'POST',
@@ -1998,17 +1845,16 @@ async function submitUtrReceipt() {
     body:JSON.stringify({ userId: currentUser.id, amount: amt, utrNumber: utr })
   });
   const data = await res.json();
-  if (!res.ok) return alert(data.error);
+  if (!res.ok) return showLuxuryStatus(false, 'Deposit Error', data.error);
 
-  document.getElementById('inUtr').value = '';
-  closeDrawer('depDrawer');
-  alert('Deposit submitted for verification!');
+  document.getElementById('inWalletUtr').value = '';
+  showLuxuryStatus(true, 'Verification Pending', 'Deposit submitted! Credited once verified.');
 }
 
-async function submitWdOrder() {
-  const amt = Number(document.getElementById('inWdAmt').value);
-  const upi = document.getElementById('inWdUpi').value.trim();
-  if (!amt || !upi) return alert('Fill amount and receiving UPI ID!');
+async function submitWalletWithdraw() {
+  const amt = Number(document.getElementById('inWalletWdAmt').value);
+  const upi = document.getElementById('inWalletWdUpi').value.trim();
+  if (!amt || !upi) return showLuxuryStatus(false, 'Fields Required', 'Enter cashout amount and receiving UPI ID!');
 
   const res = await fetch('/api/wallet/withdraw-request', {
     method:'POST',
@@ -2016,11 +1862,10 @@ async function submitWdOrder() {
     body:JSON.stringify({ userId: currentUser.id, amount: amt, upiId: upi })
   });
   const data = await res.json();
-  if (!res.ok) return alert(data.error);
+  if (!res.ok) return showLuxuryStatus(false, 'Cashout Failed', data.error);
 
-  closeDrawer('wdDrawer');
   syncWalletBalances();
-  alert(data.message);
+  showLuxuryStatus(true, 'Request Submitted', data.message);
 }
 
 async function fetchWithdrawalHistory() {
@@ -2032,35 +1877,19 @@ async function fetchWithdrawalHistory() {
     const box = document.getElementById('myWdList');
 
     if (!wds.length) {
-      box.innerHTML = '<p style="text-align:center;padding:16px;font-size:0.75rem;color:var(--text-muted);">No withdrawals recorded.</p>';
+      box.innerHTML = '<p style="text-align:center;padding:16px;font-size:0.75rem;color:var(--text-secondary);">No withdrawals recorded.</p>';
       return;
     }
     box.innerHTML = wds.map(w => `
-      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #edf2f7;font-size:0.8rem;">
-        <div><b>₹${w.amount.toFixed(2)}</b><div style="font-size:0.65rem;color:var(--text-muted);">${w.upiId}</div></div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--glass-border);font-size:0.8rem;">
+        <div><b>₹${w.amount.toFixed(2)}</b><div style="font-size:0.65rem;color:var(--text-secondary);">${w.upiId}</div></div>
         <div><span style="color:${w.status==='approved'?'#10b981':w.status==='rejected'?'#ef4444':'#f59e0b'};font-weight:900;">${w.status.toUpperCase()}</span></div>
       </div>
     `).join('');
   } catch(e) {}
 }
 
-function renderPersonalBets(bets) {
-  const box = document.getElementById('myBetsList');
-  if (!bets.length) {
-    box.innerHTML = '<p style="text-align:center;padding:16px;font-size:0.75rem;color:var(--text-muted);">No bets placed yet.</p>';
-    return;
-  }
-  box.innerHTML = bets.map(b => `
-    <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #edf2f7;font-size:0.8rem;">
-      <div><b>Target: ${String(b.target).toUpperCase()}</b><div style="font-size:0.65rem;color:var(--text-muted);">${b.period} • Result: ${b.winningNum}</div></div>
-      <div style="text-align:right;"><b style="color:${b.status==='won'?'#10b981':'#ef4444'};">${b.status==='won'?'+':'-'}₹${b.status==='won'?b.winAmount.toFixed(2):b.amount}</b><div style="font-size:0.65rem;color:var(--text-muted);">${b.status.toUpperCase()}</div></div>
-    </div>
-  `).join('');
-}
-
-/* ========================================================= */
-/* 🎯 EXACT SAME ATM RECEIPT DISPENSER MODAL (WIN VS LOSS) */
-/* ========================================================= */
+/* ATM OUTCOME POPUP (IDENTICAL WIN VS LOSS) */
 function toggleAutoClose() {
   autoCloseActive = !autoCloseActive;
   const box = document.getElementById('atmToggleBox');
@@ -2082,7 +1911,6 @@ function triggerAtmOutcomeModal(isWin, amount, resultMeta, periodCode) {
     cashVal.className = 'receipt-cash-val val-win';
     playTickBeep(880, 0.4);
   } else {
-    // EXACT SAME TEMPLATE, ROCKET & RIBBON — ONLY HEADER & VALUE CHANGE
     mainHead.innerText = 'Better luck next time';
     subHead.innerText = 'you lost';
     tagLbl.innerText = 'debit';
@@ -2092,11 +1920,9 @@ function triggerAtmOutcomeModal(isWin, amount, resultMeta, periodCode) {
   }
 
   document.getElementById('atmWinIssue').innerText = `Issue: ${curRoom} Quick ${periodCode}`;
-
   const colTag = document.getElementById('atmWinCol');
   colTag.innerText = resultMeta.color;
   colTag.className = `pill-badge pill-${resultMeta.color}`;
-
   document.getElementById('atmWinNum').innerText = resultMeta.number;
   document.getElementById('atmWinSize').innerText = resultMeta.number >= 5 ? 'Big' : 'Small';
 
@@ -2106,11 +1932,7 @@ function triggerAtmOutcomeModal(isWin, amount, resultMeta, periodCode) {
   if (autoCloseClock) clearTimeout(autoCloseClock);
   if (autoCloseActive) {
     document.getElementById('atmToggleBox').classList.add('toggle-active');
-    autoCloseClock = setTimeout(() => {
-      modal.classList.remove('open');
-    }, 3000);
-  } else {
-    document.getElementById('atmToggleBox').classList.remove('toggle-active');
+    autoCloseClock = setTimeout(() => modal.classList.remove('open'), 3000);
   }
 }
 
@@ -2121,7 +1943,7 @@ document.getElementById('atmCashModal').addEventListener('click', (e) => {
   }
 });
 
-// REALTIME ENGINE LOOP
+// REALTIME ENGINE POLLING
 setInterval(async () => {
   try {
     const res = await fetch('/api/game/all-rooms');
@@ -2155,8 +1977,8 @@ setInterval(async () => {
         <tr>
           <td>${String(h.period).slice(-4)}</td>
           <td><div class="micro-ball ${bClass}" style="width:24px;height:24px;font-size:0.75rem;margin:0 auto;">${h.number}</div></td>
-          <td><span class="size-badge" style="background:${szColor}">${h.size.toUpperCase()}</span></td>
-          <td style="color:var(--text-muted);text-transform:capitalize;">${h.color}</td>
+          <td><span style="padding:2px 8px;border-radius:100px;color:#fff;font-size:0.65rem;background:${szColor}">${h.size.toUpperCase()}</span></td>
+          <td style="color:var(--text-secondary);text-transform:capitalize;">${h.color}</td>
         </tr>
       `;
     }).join('');
@@ -2188,7 +2010,6 @@ setInterval(async () => {
           } else {
             triggerAtmOutcomeModal(false, matchBet.amount, latest, latest.period);
           }
-
           playerPendingBets = playerPendingBets.filter(b => String(b.period) !== String(latest.period));
         }
       } else if (lastRecordedPeriod === null) {
