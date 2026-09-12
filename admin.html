@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WinGo Master Admin Console</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: #070c16; color: #fff; padding: 24px; }
+    .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 14px; margin-bottom: 20px; }
+    .brand { font-size: 1.4rem; font-weight: 800; color: #f59e0b; }
+    .grid-rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .card { background: #0f172a; border: 1px solid #1e293d; border-radius: 12px; padding: 16px; }
+    .card-title { font-size: 0.9rem; font-weight: 700; color: #94a3b8; margin-bottom: 8px; }
+    .timer { font-size: 1.8rem; font-weight: 800; color: #38bdf8; }
+    .control-row { display: flex; gap: 8px; margin-top: 12px; }
+    .input-num { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid #334155; background: #030712; color: #fff; text-align: center; font-weight: 700; }
+    .btn-force { padding: 8px 14px; background: #ef4444; border: none; border-radius: 6px; color: #fff; font-weight: 700; cursor: pointer; }
+    .btn-force:hover { background: #dc2626; }
+    
+    .table-container { margin-top: 24px; background: #0f172a; border: 1px solid #1e293d; border-radius: 12px; padding: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px; }
+    th, td { padding: 10px; text-align: left; border-bottom: 1px solid #1e293b; }
+    th { color: #94a3b8; font-weight: 600; }
+    .btn-approve { background: #10b981; border: none; padding: 6px 12px; border-radius: 4px; color: white; cursor: pointer; font-weight: 700; margin-right: 6px; }
+    .btn-reject { background: #64748b; border: none; padding: 6px 12px; border-radius: 4px; color: white; cursor: pointer; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand"><i class="fa-solid fa-shield-halved"></i> WinGo Parity Controller (God Mode)</div>
+    <a href="/index.html" style="color:#94a3b8; text-decoration:none; font-size:0.85rem;"><i class="fa-solid fa-arrow-left"></i> Back to Game Arena</a>
+  </div>
+
+  <h3 style="font-size:1rem; margin-bottom:12px; color:#cbd5e1;">Live Room Controllers & Predictors</h3>
+  <div class="grid-rooms" id="roomsContainer"></div>
+
+  <div class="table-container">
+    <h3 style="font-size:1rem; color:#cbd5e1;">Pending Real Withdrawal Requests</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Amount</th>
+          <th>Receiving UPI ID</th>
+          <th>Time</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="txBody">
+        <tr><td colspan="5" style="text-align:center; color:#64748b;">No pending withdrawal tickets</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    async function fetchOverview() {
+      try {
+        const res = await fetch('/api/admin/overview');
+        const data = await res.json();
+
+        // Render Rooms
+        const rc = document.getElementById('roomsContainer');
+        rc.innerHTML = '';
+        for (const [key, room] of Object.entries(data.roomControls)) {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <div class="card-title">Room: ${key.toUpperCase()} (Period: ${room.period})</div>
+            <div class="timer">${room.timeLeft}s</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-top:4px;">Override Status: <strong style="color:#f59e0b;">${room.manualOverride !== null ? room.manualOverride : 'Auto Random'}</strong></div>
+            <div class="control-row">
+              <input type="number" min="0" max="9" class="input-num" id="input_${key}" placeholder="0-9" />
+              <button class="btn-force" onclick="forceNumber('${key}')">Lock Number</button>
+            </div>
+          `;
+          rc.appendChild(card);
+        }
+
+        // Render Withdrawals
+        const tb = document.getElementById('txBody');
+        if (data.transactions && data.transactions.length > 0) {
+          tb.innerHTML = '';
+          data.transactions.forEach(t => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${t.userId ? t.userId.name : 'Player'} (${t.userId ? t.userId.email : ''})</td>
+              <td style="color:#4ade80; font-weight:700;">₹${t.amount.toFixed(2)}</td>
+              <td style="color:#38bdf8;">${t.upiId}</td>
+              <td>${new Date(t.createdAt).toLocaleTimeString()}</td>
+              <td>
+                <button class="btn-approve" onclick="resolveTx('${t._id}', 'approved')">Approve Payout</button>
+                <button class="btn-reject" onclick="resolveTx('${t._id}', 'rejected')">Reject</button>
+              </td>
+            `;
+            tb.appendChild(tr);
+          });
+        } else {
+          tb.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#64748b;">No pending withdrawal tickets</td></tr>`;
+        }
+      } catch (err) {}
+    }
+
+    async function forceNumber(roomKey) {
+      const val = document.getElementById(`input_${roomKey}`).value;
+      if (val === '' || val < 0 || val > 9) return alert('Enter a single digit from 0 to 9');
+      const res = await fetch('/api/admin/override-result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomKey, forcedNumber: Number(val) })
+      });
+      const d = await res.json();
+      alert(d.message);
+      fetchOverview();
+    }
+
+    async function resolveTx(txId, status) {
+      const res = await fetch('/api/admin/process-tx', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ txId, status })
+      });
+      const d = await res.json();
+      alert(d.message);
+      fetchOverview();
+    }
+
+    setInterval(fetchOverview, 1500);
+    fetchOverview();
+  </script>
+</body>
+</html>

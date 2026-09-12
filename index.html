@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<title>HueRush — Colour Prediction Game</title>
+<meta name="description" content="HueRush - Play colour prediction, win real rewards. Green Violet Red, Numbers, Big Small.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --red:#d81f2d;--red-dark:#a8121d;--red-light:#ff4d5a;
+  --green:#16b560;--green-dark:#0e8a47;
+  --violet:#7c3aed;--violet-dark:#5b21b6;
+  --orange:#f59e0b;--blue:#3b82f6;
+  --bg:#eef1f6;--card:#ffffff;--text:#151a26;--muted:#7a8499;--line:#e8ecf2;
+  --gold:#fbbf24;--shadow:0 8px 24px rgba(0,0,0,.08);
+  --r:18px;
+}
+html, body{width:100%;height:100%;overflow-x:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial,sans-serif;background:#0f1117;color:var(--text);display:flex;justify-content:center}
+.bg-decor{position:fixed;inset:0;background:radial-gradient(900px 500px at 10% -5%,#d81f2d33,transparent),radial-gradient(800px 500px at 95% 15%,#7c3aed33,transparent),linear-gradient(180deg,#0f1117,#151a27);z-index:0}
+.page-wrap{position:relative;z-index:1;width:100%;max-width:1180px;display:flex;gap:32px;align-items:stretch;justify-content:center;padding:0;margin:0 auto;min-height:100dvh}
+.promo-side{display:none}
+@media(min-width:1024px){
+  .promo-side{display:flex;flex-direction:column;justify-content:center;color:#fff;max-width:460px;padding:48px 12px 48px 32px}
+  .promo-side h1{font-size:50px;line-height:.95;font-weight:900;letter-spacing:-1.5px}
+  .promo-side h1 span{background:linear-gradient(90deg,#ff6b6b,#fbbf24,#a78bfa,#34d399);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .promo-side p{color:#aab1c5;margin:16px 0 24px;line-height:1.6}
+  .promo-feats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .promo-feat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px}
+  .promo-feat b{display:block;font-size:14px;margin:6px 0 3px}
+  .promo-feat small{color:#9aa3bb;font-size:12px;line-height:1.4;display:block}
+}
+
+/* NATIVE MOBILE APP SHELL */
+.mobile-shell{
+  position:relative;width:100%;max-width:440px;background:var(--bg);min-height:100dvh;display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 0 0 1px rgba(255,255,255,.08),0 30px 80px rgba(0,0,0,.5);
+}
+@media(min-width:768px){
+  .mobile-shell{margin:16px 0;border-radius:32px;min-height:calc(100dvh - 32px);max-height:calc(100dvh - 32px);border:1px solid rgba(255,255,255,.12)}
+  .page-wrap{align-items:center}
+}
+.hidden{display:none!important}
+
+/* AUTHENTICATION */
+#authView{flex:1;display:flex;flex-direction:column;background:linear-gradient(180deg,#d81f2d 0%,#b3121f 34%,var(--bg) 34%);overflow-y:auto;position:relative}
+.auth-top{padding:30px 22px 20px;color:#fff;text-align:center}
+.auth-logo{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:8px 14px 8px 8px;border-radius:100px}
+.logo-dots{display:flex}
+.logo-dots i{width:22px;height:22px;border-radius:50%;border:2px solid #fff;margin-left:-7px;display:block}
+.logo-dots i:first-child{margin-left:0}
+.auth-top h2{font-size:32px;font-weight:900;letter-spacing:-1px;margin-top:14px}
+.auth-top h2 em{font-style:normal;background:linear-gradient(90deg,#ffe27a,#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.auth-top p{font-size:13px;opacity:.9;margin-top:6px}
+.auth-card{margin:6px 14px 20px;background:#fff;border-radius:24px;padding:20px 18px;box-shadow:var(--shadow)}
+.auth-tabs{display:flex;background:#f1f3f8;border-radius:14px;padding:4px;margin-bottom:18px}
+.auth-tabs button{flex:1;border:0;background:transparent;padding:11px;border-radius:11px;font-weight:800;font-size:14px;color:var(--muted);cursor:pointer}
+.auth-tabs button.active{background:var(--red);color:#fff;box-shadow:0 4px 14px rgba(216,31,45,.3)}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:11px;font-weight:800;color:#3a4155;margin-bottom:6px;letter-spacing:.3px;text-transform:uppercase}
+.inp-wrap input{width:100%;border:1.5px solid var(--line);background:#f8f9fc;border-radius:14px;padding:13px 14px;font-size:15px;outline:none;font-weight:600;color:var(--text)}
+.inp-wrap input:focus{border-color:var(--red);background:#fff}
+.btn{width:100%;border:0;border-radius:14px;padding:14px;font-size:15px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-red{background:linear-gradient(135deg,#ff3b47,#c30f1d);color:#fff;box-shadow:0 10px 22px rgba(216,31,45,.35)}
+.btn-ghost{background:#f1f3f8;color:var(--text)}
+.btn-green{background:linear-gradient(135deg,#22c55e,#0e8a47);color:#fff}
+
+/* MAIN VIEW & HEADER */
+#mainView{flex:1;display:flex;flex-direction:column;min-height:0;position:relative}
+.app-header{background:linear-gradient(135deg,#e82635 0%,#b80f1d 60%,#8f0b16 100%);color:#fff;padding:14px 16px 54px;position:relative;overflow:hidden;flex-shrink:0}
+.app-header::before{content:"";position:absolute;width:220px;height:220px;background:rgba(255,255,255,.08);border-radius:50%;right:-60px;top:-80px}
+.hd-row{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+.brand{display:flex;align-items:center;gap:9px;font-weight:900;font-size:20px;color:#fff}
+.brand-mark{width:34px;height:34px;border-radius:11px;background:#fff;display:grid;place-items:center;font-size:18px}
+.user-strip{display:flex;align-items:center;gap:10px;margin-top:14px;position:relative;z-index:2}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#ffe27a,#ff9d5c);display:grid;place-items:center;font-weight:900;color:#7a2d00;font-size:17px;border:2px solid rgba(255,255,255,.6);flex-shrink:0}
+.user-strip div b{font-size:14px;display:block;line-height:1.2}
+.user-strip div span{font-size:12px;opacity:.85}
+.bal-pill{margin-left:auto;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.25);padding:7px 12px;border-radius:100px;font-size:13px;font-weight:800;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.marquee{background:#151a26;color:#ffe27a;font-size:12px;font-weight:600;padding:8px 0;overflow:hidden;white-space:nowrap;flex-shrink:0}
+.marquee-inner{display:inline-block;padding-left:100%;animation:mq 22s linear infinite}
+@keyframes mq{to{transform:translateX(-100%)}}
+.app-scroll{flex:1;overflow-y:auto;padding:0 14px 90px;margin-top:-38px;position:relative;z-index:3;-webkit-overflow-scrolling:touch}
+
+/* WALLET CARD */
+.wallet-card{background:linear-gradient(135deg,#ff5a5a 0%,#e52433 40%,#9d0e1b 100%);border-radius:22px;color:#fff;padding:18px;position:relative;overflow:hidden;box-shadow:0 16px 34px rgba(216,31,45,.35);border:1px solid rgba(255,255,255,.2)}
+.w-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:700;opacity:.95;text-transform:uppercase}
+.w-bal{font-size:36px;font-weight:900;margin:6px 0 2px;letter-spacing:-1px}
+.w-bal small{font-size:16px;opacity:.9}
+.w-id{font-size:11px;opacity:.85;font-weight:700}
+.w-stats{display:flex;gap:10px;margin:12px 0}
+.w-stats div{flex:1;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:8px 10px}
+.w-stats div span{font-size:10px;text-transform:uppercase;opacity:.85;font-weight:700;display:block}
+.w-stats div b{font-size:14px;display:block;margin-top:1px}
+.w-btns{display:flex;gap:10px;margin-top:4px}
+.w-btns button{flex:1;border:0;border-radius:14px;padding:12px;font-weight:900;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-withdraw{background:#fff;color:var(--red)}
+.btn-deposit{background:#151a26;color:#fff}
+
+/* ROOM BAR & GAME */
+.room-tabs-bar{display:flex;background:#fff;border-radius:14px;padding:4px;margin-top:14px;gap:4px;box-shadow:var(--shadow)}
+.room-tab-btn{flex:1;border:none;background:transparent;padding:10px 4px;font-size:12px;font-weight:800;color:var(--muted);border-radius:10px;cursor:pointer}
+.room-tab-btn.active{background:var(--red);color:#fff}
+
+.game-card{background:#fff;border-radius:22px;margin-top:12px;padding:16px;box-shadow:var(--shadow)}
+.g-head{display:flex;justify-content:space-between;align-items:flex-start}
+.g-period span{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase}
+.g-period b{font-size:17px;font-weight:900;margin-top:2px;display:block}
+.timer-box{background:#151a26;color:#fff;border-radius:14px;padding:6px 14px;margin-top:4px;display:inline-flex;align-items:center;gap:8px}
+.timer-box .t{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums}
+.status-dot{width:9px;height:9px;border-radius:50%;background:#22ff88}
+.status-dot.locked{background:#ff3b47}
+.progress{height:8px;background:#eef1f6;border-radius:100px;margin-top:12px;overflow:hidden}
+.progress i{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,#22c55e,#eab308,#ef4444);transition:width .25s linear}
+.status-line{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:12px;font-weight:800}
+.status-open{color:var(--green)} .status-lock{color:var(--red)}
+.recent-bar{display:flex;gap:8px;overflow-x:auto;padding:8px 2px 4px;-webkit-overflow-scrolling:touch}
+.r-ball{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:14px;color:#fff;flex-shrink:0}
+
+/* BET SECTIONS */
+.bet-sec{background:#fff;border-radius:22px;margin-top:12px;padding:16px;box-shadow:var(--shadow)}
+.bet-sec h4{font-size:13px;font-weight:900;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.color-row{display:flex;gap:10px}
+.color-btn{flex:1;border:0;border-radius:16px;padding:15px 6px;font-weight:900;font-size:14px;color:#fff;cursor:pointer}
+.color-btn small{display:block;font-size:10px;font-weight:700;opacity:.85;margin-top:2px}
+.color-btn:disabled{opacity:.5;filter:grayscale(.4);cursor:not-allowed}
+.c-green{background:linear-gradient(135deg,#22c55e,#0a7a3e)} .c-violet{background:linear-gradient(135deg,#a78bfa,#6d28d9)} .c-red{background:linear-gradient(135deg,#ff6b6b,#c30f1d)}
+
+.num-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:4px}
+.num-ball{aspect-ratio:1;border-radius:50%;border:0;font-size:19px;font-weight:900;color:#fff;cursor:pointer;position:relative}
+.num-ball small{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--muted);font-weight:800}
+.num-ball:disabled{opacity:.5;filter:grayscale(.5);cursor:not-allowed}
+.n-green{background:radial-gradient(circle at 30% 30%,#4ade80,#16a34a 70%)}
+.n-red{background:radial-gradient(circle at 30% 30%,#ff8080,#dc2626 70%)}
+.n-red-violet{background:conic-gradient(#dc2626 0 50%,#7c3aed 50% 100%)}
+.n-green-violet{background:conic-gradient(#16a34a 0 50%,#7c3aed 50% 100%)}
+
+.size-row{display:flex;gap:10px}
+.size-btn{flex:1;border:0;border-radius:16px;padding:14px;font-weight:900;font-size:15px;color:#fff;cursor:pointer}
+.size-btn small{display:block;font-size:11px;font-weight:700;opacity:.9}
+.size-btn:disabled{opacity:.5;filter:grayscale(.4);cursor:not-allowed}
+.s-big{background:linear-gradient(135deg,#fbbf24,#ea580c)} .s-small{background:linear-gradient(135deg,#60a5fa,#1d4ed8)}
+
+/* TABS CARD & MULTI-VIEW */
+.tabs-card{background:#fff;border-radius:22px;margin-top:12px;box-shadow:var(--shadow);overflow:hidden}
+.tabs-head{display:flex;background:#f1f3f8;margin:12px 12px 0;border-radius:14px;padding:4px}
+.tabs-head button{flex:1;border:0;background:transparent;padding:10px 4px;border-radius:10px;font-weight:900;font-size:12px;color:var(--muted);cursor:pointer}
+.tabs-head button.active{background:var(--red);color:#fff}
+.tab-body{padding:12px}
+.hist-table{width:100%;border-collapse:collapse;font-size:13px}
+.hist-table th{font-size:10px;text-transform:uppercase;color:var(--muted);padding:8px 6px;border-bottom:1px solid var(--line);text-align:center}
+.hist-table td{padding:9px 6px;border-bottom:1px solid #f1f3f8;text-align:center;font-weight:700}
+.num-mini{width:30px;height:30px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;font-weight:900;font-size:13px}
+.dot{width:14px;height:14px;border-radius:50%;display:inline-block;border:2px solid #fff}
+.d-g{background:#22c55e}.d-r{background:#ef4444}.d-v{background:#8b5cf6}
+.sz-badge{font-size:10px;font-weight:900;padding:3px 8px;border-radius:100px;color:#fff}
+.sz-big{background:#ea580c}.sz-small{background:#2563eb}
+
+.bet-card-item{display:flex;justify-content:space-between;align-items:center;padding:11px 12px;border-radius:12px;margin-bottom:8px;border:1px solid var(--line);background:#fbfcfe}
+.bet-card-item.won{border-left:4px solid var(--green);background:#f0fdf4}
+.bet-card-item.lost{border-left:4px solid var(--red);background:#fef2f2}
+.tag-badge{display:inline-block;font-size:10px;font-weight:800;padding:2px 7px;border-radius:6px;text-transform:uppercase}
+.tag-won{background:#dcfce7;color:#15803d}
+.tag-lost{background:#fee2e2;color:#b91c1c}
+.tag-pending{background:#fef3c7;color:#b45309}
+.tag-approved{background:#dcfce7;color:#15803d}
+.tag-rejected{background:#fee2e2;color:#b91c1c}
+
+/* DEDICATED ACCOUNT VIEW */
+#accountViewSection{margin-top:14px}
+.profile-card{background:#fff;border-radius:22px;padding:20px;box-shadow:var(--shadow);text-align:center}
+.prof-avatar{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#ffe27a,#ff9d5c);display:grid;place-items:center;font-size:28px;font-weight:900;color:#7a2d00;margin:0 auto 10px;border:3px solid #fde68a}
+.prof-name{font-size:18px;font-weight:900;color:var(--text)}
+.prof-email{font-size:12px;color:var(--muted);font-weight:700;margin-top:2px}
+.prof-uid{display:inline-block;background:#f1f3f8;color:#3b82f6;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;margin-top:8px}
+.acc-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.acc-stat{background:#fff;border-radius:18px;padding:16px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.acc-stat span{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;display:block}
+.acc-stat b{font-size:20px;font-weight:900;color:var(--text);margin-top:4px;display:block}
+.acc-actions{background:#fff;border-radius:22px;margin-top:14px;box-shadow:var(--shadow);overflow:hidden}
+.acc-item{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #f1f3f8;cursor:pointer;font-weight:800;font-size:14px}
+.acc-item i{color:var(--muted);font-size:14px}
+.acc-item:last-child{border-bottom:none}
+.btn-logout{background:#fee2e2;color:#dc2626;border-radius:18px;margin-top:16px;padding:14px;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;border:none;width:100%}
+
+/* FIXED BOTTOM APP BAR */
+.bottom-nav{position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;padding:8px 6px calc(8px + env(safe-area-inset-bottom));z-index:20;box-shadow:0 -8px 24px rgba(0,0,0,.08)}
+@media(min-width:768px){.bottom-nav{border-radius:0 0 32px 32px}}
+.nav-item{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:800;color:var(--muted);cursor:pointer;padding:6px;border-radius:12px;text-decoration:none}
+.nav-item.active{color:var(--red)}
+.nav-item i{font-size:16px}
+
+/* DRAWERS & MODALS */
+.sheet-overlay{position:absolute;inset:0;background:rgba(10,12,20,.6);backdrop-filter:blur(3px);z-index:50;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+.sheet-overlay.open{opacity:1;pointer-events:auto}
+@media(min-width:768px){.sheet-overlay{align-items:center;padding:20px}}
+.sheet{background:#fff;width:100%;max-width:440px;border-radius:26px 26px 0 0;padding:12px 18px calc(20px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .32s cubic-bezier(.32,.72,.35,1);max-height:92%;overflow-y:auto;position:relative}
+@media(min-width:768px){.sheet{border-radius:24px;transform:translateY(30px) scale(.97)} .sheet-overlay.open .sheet{transform:none!important}}
+.sheet-overlay.open .sheet{transform:translateY(0)}
+.grab{width:44px;height:5px;background:#e2e8f0;border-radius:100px;margin:2px auto 12px}
+.sheet h3{font-size:17px;font-weight:900;display:flex;align-items:center;gap:8px}
+.sheet .sub{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px}
+.sel-banner{display:flex;align-items:center;gap:10px;background:#f8fafc;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;margin:12px 0}
+.sel-preview{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px;flex-shrink:0}
+.amt-row{display:flex;align-items:center;gap:10px;margin:12px 0}
+.amt-btn{width:44px;height:48px;border-radius:14px;border:1.5px solid var(--line);background:#f8f9fc;font-size:22px;font-weight:900;cursor:pointer;color:var(--text)}
+.amt-input{flex:1;text-align:center;border:2px solid var(--red);border-radius:14px;padding:12px;font-size:20px;font-weight:900;outline:none;width:100%;color:var(--text)}
+.mult-row{display:flex;gap:8px;margin-bottom:12px}
+.mult-row button{flex:1;border:1.5px solid var(--line);background:#f8f9fc;border-radius:12px;padding:10px;font-weight:900;font-size:13px;cursor:pointer;color:var(--muted)}
+.mult-row button.active{background:var(--red);color:#fff;border-color:var(--red)}
+.total-box{background:#151a26;color:#fff;border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sheet-btns{display:flex;gap:10px}
+
+/* ========================================================= */
+/* DEAD CENTERED ATM CASH RECEIPT WINNING MODAL */
+/* ========================================================= */
+.atm-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(6px);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.25s ease;
+}
+.atm-overlay.open{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.atm-card{
+  width:100%;
+  max-width:330px;
+  background:linear-gradient(180deg,#ff6d43 0%,#ff4f3b 100%);
+  border-radius:28px;
+  padding:72px 18px 24px;
+  position:relative;
+  box-shadow:0 24px 60px rgba(255,79,59,0.45);
+  text-align:center;
+  margin:auto;
+  animation:cardPop 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes cardPop{0%{transform:scale(0.8);opacity:0}100%{transform:scale(1);opacity:1}}
+
+.atm-ribbon{
+  position:absolute;
+  top:-34px;
+  left:50%;
+  transform:translateX(-50%);
+  width:220px;
+  height:76px;
+  background:radial-gradient(circle at center,#ffe485 0%,#f59e0b 80%);
+  border-radius:100px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+  border:3px solid #ffcc33;
+}
+.ribbon-wings{
+  position:absolute;
+  width:270px;
+  height:36px;
+  top:18px;
+  left:-25px;
+  background:linear-gradient(90deg,transparent,#f59e0b 20%,#ffaa00 80%,transparent);
+  z-index:-1;
+  border-radius:100px;
+}
+.atm-rocket{
+  font-size:2rem;
+  color:#fff;
+  animation:rocketFloat 1.8s ease-in-out infinite alternate;
+}
+@keyframes rocketFloat{0%{transform:translateY(0)}100%{transform:translateY(-5px)}}
+
+.atm-title{font-size:1.35rem;font-weight:900;color:#fff;line-height:1.2}
+.atm-sub{font-size:1.1rem;font-weight:900;color:#fff;margin-top:2px}
+.atm-tags{display:flex;align-items:center;justify-content:center;gap:6px;margin:14px 0 16px;font-size:0.78rem;font-weight:800}
+.tag-lbl{color:#ffdcd4}
+.tag-pill{padding:3px 10px;border-radius:6px;color:#fff;font-weight:900;font-size:0.75rem}
+.tag-green{background:#10b981}
+.tag-red{background:#f43f5e}
+.tag-violet{background:#8b5cf6}
+.tag-num{background:#10b981}
+.tag-big{background:#10b981}
+.atm-dispenser{background:#b92716;border-radius:100px;height:14px;width:92%;margin:0 auto;box-shadow:inset 0 3px 6px rgba(0,0,0,0.6)}
+.atm-receipt{
+  position:relative;
+  width:90%;
+  margin:-6px auto 0;
+  background:#ffffff;
+  border-radius:0 0 16px 16px;
+  padding:16px 12px 14px;
+  box-shadow:0 12px 28px rgba(0,0,0,0.25);
+  color:#1e293b;
+  animation:printSlide 0.5s cubic-bezier(0.2,0.8,0.2,1);
+  transform-origin:top;
+}
+@keyframes printSlide{0%{transform:scaleY(0);opacity:0}100%{transform:scaleY(1);opacity:1}}
+
+.receipt-label{font-size:0.8rem;color:#ef4444;font-weight:800;text-transform:lowercase}
+.receipt-amt{font-size:1.85rem;font-weight:900;color:#f43f5e;margin:2px 0 6px}
+.receipt-issue{font-size:0.65rem;color:#64748b;font-weight:700}
+.atm-footer{display:flex;align-items:center;gap:8px;margin-top:20px;padding-left:14px;font-size:0.78rem;font-weight:800;color:#ffdcd4;cursor:pointer}
+.toggle-dot{width:16px;height:16px;border-radius:50%;background:#ff9179;display:inline-block}
+.toggle-active .toggle-dot{background:#fff;box-shadow:0 0 8px #fff}
+
+#toastContainer{position:absolute;top:12px;left:12px;right:12px;z-index:100;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:#151a26;color:#fff;border-radius:14px;padding:12px 14px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:10px}
+.toast.success{border-left:4px solid #22c55e} .toast.error{border-left:4px solid #ef4444}
+#confettiCanvas{position:absolute;inset:0;pointer-events:none;z-index:90;width:100%;height:100%}
+</style>
+</head>
+<body>
+<div class="bg-decor"></div>
+<div class="page-wrap">
+
+  <aside class="promo-side">
+    <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.2);padding:6px 12px;border-radius:100px;font-size:12px;font-weight:700;margin-bottom:14px;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#22ff88"></span> 12,483 players online
+    </div>
+    <h1>Predict the colour.<br><span>Rush the win.</span></h1>
+    <p>HueRush is an enterprise parity prediction platform with real-time multi-tier rooms, instant dual-wallet settlement, and live UPI gateways.</p>
+    <div class="promo-feats">
+      <div class="promo-feat"><b>⚡ 4 Parity Rooms</b><small>30s, 90s, 3m & 5m rooms.</small></div>
+      <div class="promo-feat"><b>🎁 ₹50 Bonus Wallet</b><small>Instant signup bonus.</small></div>
+      <div class="promo-feat"><b>💳 Fast Wallet Topup</b><small>Direct Scan & Pay Gateway.</small></div>
+    </div>
+  </aside>
+
+  <div class="mobile-shell">
+
+    <!-- AUTH VIEW -->
+    <div id="authView">
+      <div class="auth-top">
+        <div class="auth-logo">
+          <span class="logo-dots"><i style="background:#22c55e"></i><i style="background:#8b5cf6"></i><i style="background:#ef4444"></i></span>
+          <span style="font-weight:900;letter-spacing:.3px">HueRush</span>
+        </div>
+        <h2>Hue<em>Rush</em></h2>
+        <p>🎯 Predict Colour • Win Cash • 15-sec rounds</p>
+      </div>
+
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <button id="tabLogin" class="active" onclick="switchAuth('login')">Login</button>
+          <button id="tabSignup" onclick="switchAuth('signup')">Sign Up</button>
+        </div>
+
+        <form id="loginForm" onsubmit="return handleLogin(event)">
+          <div class="field">
+            <label>Email Address</label>
+            <div class="inp-wrap">
+              <input type="email" id="loginEmail" placeholder="you@example.com" required value="vip@player.com">
+            </div>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="inp-wrap">
+              <input type="password" id="loginPass" placeholder="••••••••" required value="123456">
+            </div>
+          </div>
+          <button class="btn btn-red" type="submit">Login to HueRush →</button>
+        </form>
+
+        <form id="signupForm" class="hidden" onsubmit="return handleSignup(event)">
+          <div class="field">
+            <label>Full Name</label>
+            <div class="inp-wrap"><input id="suName" placeholder="e.g. Player" required></div>
+          </div>
+          <div class="field">
+            <label>Email Address</label>
+            <div class="inp-wrap"><input id="suEmail" type="email" placeholder="you@example.com" required></div>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="inp-wrap"><input id="suPass" type="password" placeholder="Min 6 chars" required minlength="6"></div>
+          </div>
+          <button class="btn btn-red" type="submit">Create Account + Claim ₹50 🎁</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MAIN APP VIEW -->
+    <div id="mainView" class="hidden">
+      <header class="app-header">
+        <div class="hd-row">
+          <div class="brand"><span class="brand-mark">🎨</span> HueRush</div>
+        </div>
+        <div class="user-strip">
+          <div class="avatar" id="userAvatar">U</div>
+          <div><b id="userName">User</b><span id="userEmail">player@mail.com</span></div>
+          <div class="bal-pill">💰 <span id="headBalance">₹0</span></div>
+        </div>
+      </header>
+
+      <div class="marquee"><span class="marquee-inner">🏆 Live Multi-Room Parity Engine • Fast Payouts • Instant Wallet Credit • </span></div>
+
+      <main class="app-scroll" id="appScroll">
+
+        <!-- 1. GAME VIEW CONTAINER -->
+        <div id="gameViewSection">
+          <div class="wallet-card">
+            <div class="w-top"><span>💳 Dual-Asset Wallet</span></div>
+            <div class="w-bal"><small>₹</small> <span id="walletTotal">0.00</span></div>
+            <div class="w-id">ID: <span id="walletId">HR001</span> • Verified ✓</div>
+            <div class="w-stats">
+              <div><span>Bonus (Bet Only)</span><b id="bonusBal" style="color:#7dd3fc">₹50.00</b></div>
+              <div><span>Winning (Cash)</span><b id="winningBal" style="color:#86efac">₹0.00</b></div>
+            </div>
+            <div class="w-btns">
+              <button class="btn-withdraw" onclick="openSheet('withdrawModal')"><i class="fa-solid fa-arrow-up"></i> Withdraw</button>
+              <button class="btn-deposit" onclick="openDepositModal()"><i class="fa-solid fa-arrow-down"></i> Deposit</button>
+            </div>
+          </div>
+
+          <div class="room-tabs-bar">
+            <button class="room-tab-btn active" onclick="changeRoom('30s', this)">30s Quick</button>
+            <button class="room-tab-btn" onclick="changeRoom('90s', this)">1.5 Min</button>
+            <button class="room-tab-btn" onclick="changeRoom('3m', this)">3 Min</button>
+            <button class="room-tab-btn" onclick="changeRoom('5m', this)">5 Min</button>
+          </div>
+
+          <div class="game-card">
+            <div class="g-head">
+              <div class="g-period">
+                <span>⏱ Current Period</span>
+                <b id="periodId">—</b>
+              </div>
+              <div style="text-align:right">
+                <span style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;">Time Left</span><br>
+                <div class="timer-box"><span class="status-dot" id="statusDot"></span><span class="t" id="countdown">00:30</span></div>
+              </div>
+            </div>
+            <div class="progress"><i id="timeBar" style="width:100%"></i></div>
+            <div class="status-line"><span id="betStatus" class="status-open">● BETTING OPEN</span><span style="color:var(--muted);font-size:11px" id="roundInfo">Closes in 30s</span></div>
+            <div class="recent-bar" id="recentBar" style="margin-top:10px;"></div>
+          </div>
+
+          <div class="bet-sec">
+            <h4><i class="fa-solid fa-droplet" style="color:var(--green)"></i> Pick a Colour <span style="margin-left:auto;font-size:11px;color:var(--muted)">2x • Violet 4.5x</span></h4>
+            <div class="color-row">
+              <button class="color-btn c-green" onclick="openBet('color','green')">Green<small>1 • 3 • 7 • 9</small></button>
+              <button class="color-btn c-violet" onclick="openBet('color','violet')">Violet<small>0 • 5</small></button>
+              <button class="color-btn c-red" onclick="openBet('color','red')">Red<small>2 • 4 • 6 • 8</small></button>
+            </div>
+          </div>
+
+          <div class="bet-sec">
+            <h4><i class="fa-solid fa-arrow-up-9-1" style="color:var(--red)"></i> Pick a Number <span style="margin-left:auto;font-size:11px;color:var(--muted)">Payout 9x</span></h4>
+            <div class="num-grid" id="numGrid"></div>
+            <div style="height:14px"></div>
+          </div>
+
+          <div class="bet-sec">
+            <h4><i class="fa-solid fa-chart-simple" style="color:var(--orange)"></i> Big / Small <span style="margin-left:auto;font-size:11px;color:var(--muted)">Payout 2x</span></h4>
+            <div class="size-row">
+              <button class="size-btn s-small" onclick="openBet('size','small')">SMALL<small>0 – 4</small></button>
+              <button class="size-btn s-big" onclick="openBet('size','big')">BIG<small>5 – 9</small></button>
+            </div>
+          </div>
+
+          <!-- PARITY RECORD TABS -->
+          <div class="tabs-card">
+            <div class="tabs-head">
+              <button class="active" onclick="switchSubTab('game', this)">🏆 Game Record</button>
+              <button onclick="switchSubTab('bets', this)">📝 My Bets</button>
+              <button onclick="switchSubTab('withdrawals', this)">🏦 Withdrawals</button>
+            </div>
+            <div class="tab-body">
+              <div id="viewGameRecord">
+                <table class="hist-table">
+                  <thead><tr><th>Period</th><th>Number</th><th>Result</th></tr></thead>
+                  <tbody id="historyBody"></tbody>
+                </table>
+              </div>
+
+              <div id="viewMyBets" class="hidden">
+                <div id="myBetsContainer"><p style="text-align:center;color:var(--muted);font-size:12px;padding:16px;">No bets yet.</p></div>
+              </div>
+
+              <div id="viewWithdrawals" class="hidden">
+                <div id="myWdContainer"><p style="text-align:center;color:var(--muted);font-size:12px;padding:16px;">No withdrawal records.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. DEDICATED ACCOUNT VIEW SECTION -->
+        <div id="accountViewSection" class="hidden">
+          <div class="profile-card">
+            <div class="prof-avatar" id="accAvatar">U</div>
+            <div class="prof-name" id="accName">Player Name</div>
+            <div class="prof-email" id="accEmail">player@example.com</div>
+            <div class="prof-uid">USER ID: <span id="accUid">HR83921</span></div>
+          </div>
+
+          <div class="acc-stats-grid">
+            <div class="acc-stat">
+              <span>Total Balance</span>
+              <b style="color:var(--red);">₹<span id="accTotalBal">0.00</span></b>
+            </div>
+            <div class="acc-stat">
+              <span>Cash Payout</span>
+              <b style="color:var(--green);">₹<span id="accWinBal">0.00</span></b>
+            </div>
+          </div>
+
+          <div class="acc-actions">
+            <div class="acc-item" onclick="openDepositModal()">
+              <span><i class="fa-solid fa-wallet" style="color:var(--green);margin-right:10px;"></i> Deposit Funds</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div class="acc-item" onclick="openSheet('withdrawModal')">
+              <span><i class="fa-solid fa-money-bill-transfer" style="color:var(--red);margin-right:10px;"></i> Withdraw Money</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div class="acc-item" onclick="navToBets()">
+              <span><i class="fa-solid fa-receipt" style="color:var(--blue);margin-right:10px;"></i> Betting History</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div class="acc-item" onclick="navToWithdraws()">
+              <span><i class="fa-solid fa-building-columns" style="color:var(--orange);margin-right:10px;"></i> Withdrawal Ledger</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+
+          <button class="btn-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Sign Out Account</button>
+        </div>
+
+      </main>
+
+      <!-- FIXED BOTTOM NAVIGATION BAR -->
+      <nav class="bottom-nav">
+        <button class="nav-item active" id="navBtnGame" onclick="showAppTab('game')">
+          <i class="fa-solid fa-gamepad"></i>WinGo
+        </button>
+        <button class="nav-item" onclick="openDepositModal()">
+          <i class="fa-solid fa-wallet"></i>Deposit
+        </button>
+        <button class="nav-item" id="navBtnAcc" onclick="showAppTab('account')">
+          <i class="fa-solid fa-circle-user"></i>Account
+        </button>
+      </nav>
+    </div>
+
+    <!-- BET SHEET -->
+    <div class="sheet-overlay" id="betModal">
+      <div class="sheet">
+        <div class="grab"></div>
+        <h3>🎯 Place Your Bet</h3>
+        <div class="sub">Period <b id="betPeriod" style="color:var(--red)">—</b></div>
+        <div class="sel-banner">
+          <div class="sel-preview" id="betPreview">7</div>
+          <div><b id="betSelName" style="font-size:15px">Green</b><br><span id="betSelPayout" style="font-size:12px;color:var(--muted);font-weight:700">Payout 2x</span></div>
+        </div>
+        <label style="font-size:11px;font-weight:800;color:#3a4155;text-transform:uppercase;">Amount (₹)</label>
+        <div class="amt-row">
+          <button class="amt-btn" onclick="adjBet(-10)">−</button>
+          <input class="amt-input" id="betAmount" type="number" value="10" min="10" max="100000" oninput="updateBetTotal()">
+          <button class="amt-btn" onclick="adjBet(10)">+</button>
+        </div>
+        <label style="font-size:11px;font-weight:800;color:#3a4155;text-transform:uppercase;">Multiplier</label>
+        <div class="mult-row" style="margin-top:8px">
+          <button class="active" onclick="setMult(1,this)">x1</button>
+          <button onclick="setMult(5,this)">x5</button>
+          <button onclick="setMult(10,this)">x10</button>
+          <button onclick="setMult(20,this)">x20</button>
+        </div>
+        <div class="total-box"><span>Total Bet</span><b id="betTotal">₹10</b></div>
+        <div class="sheet-btns">
+          <button class="btn btn-ghost" onclick="closeSheet('betModal')">Cancel</button>
+          <button class="btn btn-red" onclick="confirmRealBet()">Confirm Bet</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZERO-DISCLOSURE ANONYMOUS DEPOSIT MODAL -->
+    <div class="sheet-overlay" id="depositModal">
+      <div class="sheet">
+        <div class="grab"></div>
+        <h3>⬇ Instant Wallet Recharge</h3>
+        <div class="sub">Scan QR Code using PhonePe, Google Pay, or Paytm</div>
+        <div style="margin:12px 0;">
+          <input class="inp-wrap" id="depAmount" type="number" value="100" min="10" placeholder="Enter Amount (₹)" style="width:100%;font-size:20px;font-weight:800;text-align:center;padding:12px;border:1.5px solid var(--line);border-radius:14px;" oninput="updateQrCode()">
+        </div>
+        <div style="text-align:center;background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:18px;">
+          <img id="upiQrImg" src="" alt="Merchant Gateway QR" style="width:170px;height:170px;border-radius:10px;margin:0 auto;display:block;border:1px solid #cbd5e1;">
+          <div style="margin-top:10px;font-size:12px;color:#15803d;font-weight:800;">🛡️ Verified Merchant Gateway</div>
+        </div>
+        <label style="font-size:11px;font-weight:800;color:#3a4155;display:block;margin-top:14px;text-transform:uppercase;">Enter 12-Digit UTR / Ref No.</label>
+        <input class="inp-wrap" id="depUtr" placeholder="Enter UTR from payment receipt" style="width:100%;padding:12px;border:1.5px solid var(--line);border-radius:14px;margin-top:6px;font-weight:700;letter-spacing:1px;">
+        <div class="sheet-btns" style="margin-top:14px;">
+          <button class="btn btn-ghost" onclick="closeSheet('depositModal')">Cancel</button>
+          <button class="btn btn-green" onclick="submitDepositUtr()">Submit Verification</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- WITHDRAW SHEET -->
+    <div class="sheet-overlay" id="withdrawModal">
+      <div class="sheet">
+        <div class="grab"></div>
+        <h3>⬆ Withdraw Winning Money</h3>
+        <div class="sub">Only winning balance is withdrawable (Bonus locked for betting).</div>
+        <div class="total-box" style="margin-top:12px"><span>Withdrawable Amount</span><b id="wdBal" style="color:#86efac">₹0.00</b></div>
+        <label style="font-size:11px;font-weight:800;color:#3a4155;text-transform:uppercase;">Amount (₹)</label>
+        <input class="inp-wrap" id="wdAmount" type="number" value="50" min="10" style="width:100%;font-size:22px;font-weight:900;text-align:center;padding:12px;border:2px solid var(--line);border-radius:14px;margin-top:6px">
+        <label style="font-size:11px;font-weight:800;color:#3a4155;display:block;margin-top:10px;text-transform:uppercase;">Receiving UPI ID</label>
+        <input class="inp-wrap" id="wdUpi" placeholder="e.g. username@upi" style="width:100%;padding:12px;border:1.5px solid var(--line);border-radius:14px;margin-top:6px">
+        <div class="sheet-btns" style="margin-top:14px">
+          <button class="btn btn-ghost" onclick="closeSheet('withdrawModal')">Cancel</button>
+          <button class="btn btn-red" onclick="handleRealWithdraw()">Submit Request</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- EXACT SCREENSHOT: CENTERED ATM CASH RECEIPT WINNING MODAL -->
+    <!-- ========================================================= -->
+    <div class="atm-overlay" id="atmWinModal">
+      <div class="atm-card">
+        <div class="atm-ribbon">
+          <div class="ribbon-wings"></div>
+          <i class="fa-solid fa-rocket atm-rocket"></i>
+        </div>
+        <div class="atm-title">Congratulations on your</div>
+        <div class="atm-sub">winning</div>
+        <div class="atm-tags">
+          <span class="tag-lbl">lottery result</span>
+          <span class="tag-pill tag-green" id="atmResColor">green</span>
+          <span class="tag-pill tag-num" id="atmResNum">9</span>
+          <span class="tag-pill tag-big" id="atmResSize">Big</span>
+        </div>
+        <div class="atm-dispenser"></div>
+        <div class="atm-receipt">
+          <div class="receipt-label">bonus</div>
+          <div class="receipt-amt" id="atmWinAmount">₹0.00</div>
+          <div class="receipt-issue" id="atmIssueCode">Issue: Trx Win 30 Seconds</div>
+        </div>
+        <div class="atm-footer" id="atmToggleBtn" onclick="toggleAutoShut()">
+          <span class="toggle-dot"></span>
+          <span>3s auto shut off</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="toastContainer"></div>
+    <canvas id="confettiCanvas"></canvas>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let activeUser = JSON.parse(localStorage.getItem('user') || 'null');
+let currentRoom = '30s';
+let activeBetType = null, activeBetTarget = null, betMultiplier = 1;
+let lastSettledPeriod = null;
+let activeBetsPlaced = [];
+let currentUpiConfig = { upiId: 'merchantpay@upi', name: 'HueRush' };
+let currentSubTab = 'game';
+let autoShut = true;
+let autoShutTimer = null;
+
+let AC = null;
+function ac(){ try{ if(!AC) AC = new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==='suspended') AC.resume(); return AC;}catch(e){return null;} }
+function playBeep(f){
+  const c = ac(); if(!c) return;
+  const o = c.createOscillator(), g = c.createGain();
+  o.connect(g); g.connect(c.destination); o.frequency.value = f || 600; o.type = 'sine';
+  g.gain.setValueAtTime(.12, c.currentTime); g.gain.exponentialRampToValueAtTime(.001, c.currentTime + .15);
+  o.start(); o.stop(c.currentTime + .16);
+}
+
+function showToast(msg, type='info'){
+  const icons = {success:'✅', error:'❌', info:'ℹ️'};
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+  $('toastContainer').appendChild(t);
+  setTimeout(()=>{ t.remove(); }, 2600);
+}
+
+function switchAuth(which){
+  const login = which === 'login';
+  $('loginForm').classList.toggle('hidden', !login);
+  $('signupForm').classList.toggle('hidden', login);
+  $('tabLogin').className = login ? 'active' : '';
+  $('tabSignup').className = !login ? 'active' : '';
+}
+
+async function handleLogin(e){
+  e.preventDefault();
+  const email = $('loginEmail').value.trim();
+  const password = $('loginPass').value;
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ email, password })
+    });
+    const d = await res.json();
+    if(!res.ok) return showToast(d.error || 'Login failed', 'error');
+    activeUser = d.user;
+    localStorage.setItem('user', JSON.stringify(d.user));
+    enterApp();
+    showToast('Welcome back, ' + d.user.name + '!', 'success');
+  } catch(err) {
+    showToast('Cannot connect to server', 'error');
+  }
+  return false;
+}
+
+async function handleSignup(e){
+  e.preventDefault();
+  const name = $('suName').value.trim();
+  const email = $('suEmail').value.trim();
+  const password = $('suPass').value;
+  try {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ name, email, password, role: 'user' })
+    });
+    const d = await res.json();
+    if(!res.ok) return showToast(d.error || 'Signup failed', 'error');
+    showToast('Account Created! ₹50 Bonus Credited.', 'success');
+    $('loginEmail').value = email;
+    $('loginPass').value = password;
+    switchAuth('login');
+  } catch(err) {
+    showToast('Connection error', 'error');
+  }
+  return false;
+}
+
+function logout(){
+  localStorage.clear();
+  location.reload();
+}
+
+function enterApp(){
+  $('authView').classList.add('hidden');
+  $('mainView').classList.remove('hidden');
+  $('userName').textContent = activeUser.name;
+  $('userEmail').textContent = activeUser.email;
+  $('userAvatar').textContent = activeUser.name.charAt(0).toUpperCase();
+
+  // Account Tab Meta
+  $('accName').textContent = activeUser.name;
+  $('accEmail').textContent = activeUser.email;
+  $('accAvatar').textContent = activeUser.name.charAt(0).toUpperCase();
+  $('accUid').textContent = 'HR' + (activeUser.id ? activeUser.id.slice(-6).toUpperCase() : '83921');
+
+  refreshBalances();
+  buildNumGrid();
+  fetchUpiConfig();
+  showAppTab('game');
+}
+
+/* --- TAB ROUTER: WINGO VS ACCOUNT --- */
+function showAppTab(tab){
+  const isGame = tab === 'game';
+  $('gameViewSection').classList.toggle('hidden', !isGame);
+  $('accountViewSection').classList.toggle('hidden', isGame);
+
+  $('navBtnGame').classList.toggle('active', isGame);
+  $('navBtnAcc').classList.toggle('active', !isGame);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function navToBets(){
+  showAppTab('game');
+  switchSubTab('bets', document.querySelectorAll('.tabs-head button')[1]);
+}
+function navToWithdraws(){
+  showAppTab('game');
+  switchSubTab('withdrawals', document.querySelectorAll('.tabs-head button')[2]);
+}
+
+function refreshBalances(){
+  if(!activeUser) return;
+  fetch('/api/game/my-bets/' + activeUser.id)
+    .then(r => r.json())
+    .then(d => {
+      activeUser.bonusBalance = d.bonusBalance;
+      activeUser.winningBalance = d.winningBalance;
+      localStorage.setItem('user', JSON.stringify(activeUser));
+      const total = d.bonusBalance + d.winningBalance;
+
+      $('walletTotal').textContent = total.toFixed(2);
+      $('headBalance').textContent = '₹' + Math.floor(total);
+      $('bonusBal').textContent = '₹' + d.bonusBalance.toFixed(2);
+      $('winningBal').textContent = '₹' + d.winningBalance.toFixed(2);
+      $('wdBal').textContent = '₹' + d.winningBalance.toFixed(2);
+
+      $('accTotalBal').textContent = total.toFixed(2);
+      $('accWinBal').textContent = d.winningBalance.toFixed(2);
+
+      if(currentSubTab === 'bets') renderMyBetsView(d.bets || []);
+    })
+    .catch(()=>{});
+}
+
+function openSheet(id){ $(id).classList.add('open'); }
+function closeSheet(id){ $(id).classList.remove('open'); }
+
+function buildNumGrid(){
+  const g = $('numGrid'); g.innerHTML = '';
+  for(let n=0; n<=9; n++){
+    const b = document.createElement('button');
+    let cls = 'n-red';
+    if(n === 0) cls = 'n-red-violet';
+    else if(n === 5) cls = 'n-green-violet';
+    else if([1,3,7,9].includes(n)) cls = 'n-green';
+    b.className = 'num-ball ' + cls;
+    b.innerHTML = n + '<small>' + (n<=4?'SMALL':'BIG') + '</small>';
+    b.onclick = () => openBet('number', n);
+    g.appendChild(b);
+  }
+}
+
+function changeRoom(key, btn){
+  currentRoom = key;
+  document.querySelectorAll('.room-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function openBet(type, target){
+  activeBetType = type;
+  activeBetTarget = target;
+  $('betPeriod').textContent = $('periodId').textContent;
+  $('betSelName').textContent = String(target).toUpperCase();
+  $('betPreview').textContent = target;
+  let cls = 'n-red';
+  if(target === 'green' || [1,3,7,9].includes(target)) cls = 'n-green';
+  if(target === 'violet') cls = 'n-red-violet';
+  $('betPreview').className = 'sel-preview ' + cls;
+  updateBetTotal();
+  openSheet('betModal');
+}
+
+function setMult(m, btn){
+  betMultiplier = m;
+  document.querySelectorAll('.mult-row button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  updateBetTotal();
+}
+function adjBet(d){
+  const el = $('betAmount');
+  el.value = Math.max(10, (+el.value||10)+d);
+  updateBetTotal();
+}
+function updateBetTotal(){
+  const amt = Math.max(10, +$('betAmount').value||10);
+  $('betTotal').textContent = '₹' + (amt * betMultiplier);
+}
+
+async function confirmRealBet(){
+  const amt = Math.max(10, +$('betAmount').value||10) * betMultiplier;
+  const totalFunds = activeUser.bonusBalance + activeUser.winningBalance;
+  if(totalFunds < amt) return showToast('Insufficient funds! Please deposit.', 'error');
+
+  const res = await fetch('/api/game/bet', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      userId: activeUser.id,
+      roomType: currentRoom,
+      target: activeBetTarget,
+      type: activeBetType,
+      amount: amt
+    })
+  });
+  const d = await res.json();
+  if(!res.ok) return showToast(d.error, 'error');
+
+  activeBetsPlaced.push({
+    period: $('periodId').textContent,
+    type: activeBetType,
+    target: activeBetTarget,
+    amount: amt
+  });
+
+  closeSheet('betModal');
+  showToast('Bet placed for ₹' + amt + '!', 'success');
+  playBeep(660);
+  refreshBalances();
+}
+
+function switchSubTab(tab, btn) {
+  currentSubTab = tab;
+  document.querySelectorAll('.tabs-head button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  $('viewGameRecord').classList.toggle('hidden', tab !== 'game');
+  $('viewMyBets').classList.toggle('hidden', tab !== 'bets');
+  $('viewWithdrawals').classList.toggle('hidden', tab !== 'withdrawals');
+
+  if (tab === 'bets') loadMyBetsHistory();
+  if (tab === 'withdrawals') loadWithdrawalHistory();
+}
+
+async function loadMyBetsHistory() {
+  if (!activeUser) return;
+  try {
+    const res = await fetch(`/api/game/my-bets/${activeUser.id}`);
+    const data = await res.json();
+    renderMyBetsView(data.bets || []);
+  } catch (e) {}
+}
+
+function renderMyBetsView(bets) {
+  const container = $('myBetsContainer');
+  if (!bets || bets.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:12px;padding:18px;">No bets placed yet.</p>';
+    return;
+  }
+  container.innerHTML = bets.map(b => {
+    const isWon = b.status === 'won';
+    return `
+      <div class="bet-card-item ${isWon ? 'won' : 'lost'}">
+        <div>
+          <div style="font-weight:800;font-size:13px;">Target: <span style="color:var(--red);text-transform:uppercase;">${b.target}</span> (${b.roomType})</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Period: ${b.period} • Result: <b>${b.winningNum}</b></div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-weight:900;font-size:14px;color:${isWon?'#15803d':'#b91c1c'};">${isWon?'+':'-'}₹${isWon?b.winAmount.toFixed(2):b.amount.toFixed(2)}</div>
+          <span class="tag-badge ${isWon?'tag-won':'tag-lost'}">${isWon?'WON':'LOST'}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function loadWithdrawalHistory() {
+  if (!activeUser) return;
+  try {
+    const res = await fetch(`/api/wallet/user-transactions/${activeUser.id}`);
+    const data = await res.json();
+    const container = $('myWdContainer');
+    const wds = (data || []).filter(t => t.type === 'withdraw');
+
+    if (wds.length === 0) {
+      container.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:12px;padding:18px;">No withdrawal requests found.</p>';
+      return;
+    }
+
+    container.innerHTML = wds.map(w => `
+      <div class="bet-card-item">
+        <div>
+          <div style="font-weight:800;font-size:13px;">UPI: <span style="color:var(--text);">${w.upiId}</span></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">${new Date(w.createdAt).toLocaleDateString()}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-weight:900;font-size:14px;">₹${w.amount.toFixed(2)}</div>
+          <span class="tag-badge tag-${w.status}">${w.status.toUpperCase()}</span>
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {}
+}
+
+async function fetchUpiConfig() {
+  try {
+    const res = await fetch('/api/wallet/upi-config');
+    currentUpiConfig = await res.json();
+    updateQrCode();
+  } catch(e) {}
+}
+
+function openDepositModal() {
+  updateQrCode();
+  openSheet('depositModal');
+}
+
+function updateQrCode() {
+  const amt = Math.max(10, +$('depAmount').value || 100);
+  const upiUrl = `upi://pay?pa=${currentUpiConfig.upiId}&pn=${encodeURIComponent(currentUpiConfig.name)}&am=${amt}&cu=INR`;
+  $('upiQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+}
+
+async function submitDepositUtr() {
+  const amt = Number($('depAmount').value);
+  const utr = $('depUtr').value.trim();
+  if(!amt || amt <= 0) return showToast('Enter valid amount', 'error');
+  if(!utr || utr.length < 8) return showToast('Enter valid 12-digit UTR', 'error');
+
+  const res = await fetch('/api/wallet/submit-deposit', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ userId: activeUser.id, amount: amt, utrNumber: utr })
+  });
+  const d = await res.json();
+  if(!res.ok) return showToast(d.error, 'error');
+
+  $('depUtr').value = '';
+  closeSheet('depositModal');
+  showToast('Payment submitted! Verifying UTR...', 'success');
+}
+
+async function handleRealWithdraw(){
+  const amt = Number($('wdAmount').value);
+  const upi = $('wdUpi').value.trim();
+  if(!amt || amt <= 0) return showToast('Enter valid amount', 'error');
+  if(!upi) return showToast('Enter receiving UPI ID', 'error');
+
+  const res = await fetch('/api/wallet/withdraw-request', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ userId: activeUser.id, amount: amt, upiId: upi })
+  });
+  const d = await res.json();
+  if(!res.ok) return showToast(d.error, 'error');
+
+  closeSheet('withdrawModal');
+  showToast(d.message, 'success');
+  refreshBalances();
+}
+
+function toggleAutoShut() {
+  autoShut = !autoShut;
+  const btn = $('atmToggleBtn');
+  if (autoShut) btn.classList.add('toggle-active');
+  else btn.classList.remove('toggle-active');
+}
+
+function triggerAtmWinPopup(winAmount, winningMeta, periodId) {
+  $('atmWinAmount').innerText = `₹${winAmount.toFixed(2)}`;
+  $('atmIssueCode').innerText = `Issue: ${currentRoom} Parity ${periodId}`;
+  
+  const colTag = $('atmResColor');
+  colTag.innerText = winningMeta.color;
+  colTag.className = `tag-pill tag-${winningMeta.color}`;
+
+  $('atmResNum').innerText = winningMeta.number;
+  $('atmResSize').innerText = winningMeta.number >= 5 ? 'Big' : 'Small';
+
+  const modal = $('atmWinModal');
+  modal.classList.add('open');
+
+  playBeep(880);
+  fireConfetti();
+
+  if (autoShutTimer) clearTimeout(autoShutTimer);
+  if (autoShut) {
+    $('atmToggleBtn').classList.add('toggle-active');
+    autoShutTimer = setTimeout(() => {
+      modal.classList.remove('open');
+    }, 3000);
+  } else {
+    $('atmToggleBtn').classList.remove('toggle-active');
+  }
+}
+
+document.getElementById('atmWinModal').addEventListener('click', (e) => {
+  if (e.target.id === 'atmWinModal') {
+    document.getElementById('atmWinModal').classList.remove('open');
+    if (autoShutTimer) clearTimeout(autoShutTimer);
+  }
+});
+
+setInterval(async () => {
+  try {
+    const res = await fetch('/api/game/all-rooms');
+    const data = await res.json();
+    const r = data[currentRoom];
+
+    $('periodId').textContent = r.currentPeriod;
+    const mins = Math.floor(r.timeLeft / 60);
+    const secs = r.timeLeft % 60;
+    $('countdown').textContent = String(mins).padStart(2,'0') + ':' + String(secs).padStart(2,'0');
+    $('timeBar').style.width = (r.timeLeft / r.duration * 100) + '%';
+
+    const locked = r.timeLeft <= 5;
+    $('statusDot').classList.toggle('locked', locked);
+    $('betStatus').className = locked ? 'status-lock' : 'status-open';
+    $('betStatus').textContent = locked ? '🔒 LOCKED — Settling result' : '● BETTING OPEN';
+    $('roundInfo').textContent = locked ? 'Drawing...' : 'Closes in ' + r.timeLeft + 's';
+    document.querySelectorAll('.color-btn, .num-ball, .size-btn').forEach(b => b.disabled = locked);
+
+    if(locked && r.timeLeft <= 3 && r.timeLeft > 0) playBeep(440);
+
+    $('recentBar').innerHTML = (r.history || []).slice(0, 10).map(h => {
+      let cls = h.number === 0 ? 'n-red-violet' : h.number === 5 ? 'n-green-violet' : (h.color === 'green' ? 'n-green' : 'n-red');
+      return `<div class="r-ball ${cls}">${h.number}</div>`;
+    }).join('');
+
+    $('historyBody').innerHTML = (r.history || []).slice(0, 10).map(h => {
+      let cls = h.number === 0 ? 'n-red-violet' : h.number === 5 ? 'n-green-violet' : (h.color === 'green' ? 'n-green' : 'n-red');
+      let sz = h.number >= 5 ? 'BIG' : 'SMALL';
+      return `<tr>
+        <td>${h.period}</td>
+        <td><span class="num-mini ${cls}">${h.number}</span></td>
+        <td><span style="display:flex;align-items:center;justify-content:center;gap:5px;"><span class="dot d-${h.color.charAt(0)}"></span><span class="sz-badge ${sz==='BIG'?'sz-big':'sz-small'}">${sz}</span></span></td>
+      </tr>`;
+    }).join('');
+
+    if (r.history && r.history.length > 0) {
+      const latest = r.history[0];
+      if (lastSettledPeriod !== null && lastSettledPeriod !== latest.period) {
+        lastSettledPeriod = latest.period;
+        refreshBalances();
+
+        const placedBet = activeBetsPlaced.find(b => String(b.period) === String(latest.period));
+        if (placedBet) {
+          let isWin = false;
+          let mult = 0;
+          if (placedBet.type === 'color' && (placedBet.target === latest.color || (latest.number===0&&placedBet.target==='red') || (latest.number===5&&placedBet.target==='green'))) {
+            isWin = true;
+            mult = placedBet.target === 'violet' ? 4.5 : 2;
+          } else if (placedBet.type === 'number' && Number(placedBet.target) === latest.number) {
+            isWin = true;
+            mult = 9;
+          } else if (placedBet.type === 'size' && placedBet.target === latest.size) {
+            isWin = true;
+            mult = 2;
+          }
+
+          if (isWin) {
+            const winAmount = placedBet.amount * mult * 0.98;
+            triggerAtmWinPopup(winAmount, latest, latest.period);
+          }
+          activeBetsPlaced = activeBetsPlaced.filter(b => String(b.period) !== String(latest.period));
+        }
+      } else if (lastSettledPeriod === null) {
+        lastSettledPeriod = latest.period;
+      }
+    }
+  } catch(e) {}
+}, 1000);
+
+const cvs = $('confettiCanvas'), ctx = cvs.getContext('2d');
+let parts = [];
+function sizeCanvas(){ cvs.width = cvs.parentElement.clientWidth; cvs.height = cvs.parentElement.clientHeight; }
+window.addEventListener('resize', sizeCanvas); setTimeout(sizeCanvas, 200);
+
+function fireConfetti(){
+  sizeCanvas();
+  const colors = ['#22c55e','#8b5cf6','#ef4444','#fbbf24','#3b82f6'];
+  for(let i=0; i<80; i++) parts.push({x: cvs.width/2, y: cvs.height*0.35, vx:(Math.random()-.5)*10, vy:Math.random()*-8-2, g:.3, c:colors[i%colors.length], l:1});
+  (function loop(){
+    ctx.clearRect(0,0,cvs.width,cvs.height);
+    parts = parts.filter(p => p.l > 0);
+    parts.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += p.g; p.l -= .015; ctx.fillStyle = p.c; ctx.fillRect(p.x, p.y, 6, 6); });
+    if(parts.length) requestAnimationFrame(loop);
+  })();
+}
+
+if(activeUser) enterApp();
+</script>
+</body>
+</html>
