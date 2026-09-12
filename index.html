@@ -3,115 +3,145 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>HueRush — VIP Colour Trading</title>
+<title>HueRush — Enterprise Parity Trading</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --app-red:#f53d43;
-  --app-red-dark:#c8191f;
-  --app-green:#16b560;
-  --app-violet:#7c3aed;
-  --app-bg:#f1f3f8;
+  --red-main:#e52433;
+  --red-dark:#b3121f;
+  --green-main:#10b981;
+  --violet-main:#8b5cf6;
+  --gold-grad:linear-gradient(135deg, #fbbf24, #d97706);
   --card-bg:#ffffff;
-  --text-main:#1e2532;
-  --text-muted:#8894a8;
-  --line-border:#e9ecf2;
-  --gold:#fbbf24;
+  --bg-app:#f3f5f9;
+  --text-dark:#111827;
+  --text-muted:#6b7280;
+  --border-light:#e5e7eb;
 }
 
-html, body {
-  width:100%;
-  min-height:100%;
-  background:#090b10;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+body{
+  background:#090d16;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  color:var(--text-dark);
   display:flex;
   justify-content:center;
-  color:var(--text-main);
-  overflow-x:hidden;
+  min-height:100vh;
 }
 
-/* 100% NATIVE MOBILE FRAME LIKE TIRANGA / DAMAN */
-.app-container {
+.mobile-shell{
   width:100%;
   max-width:440px;
+  background:var(--bg-app);
   min-height:100vh;
-  background:var(--app-bg);
   position:relative;
   display:flex;
   flex-direction:column;
-  box-shadow:0 0 40px rgba(0,0,0,0.6);
-  padding-bottom:76px;
+  padding-bottom:85px;
+  box-shadow:0 0 50px rgba(0,0,0,0.6);
+  overflow-x:hidden;
 }
 
-.hidden { display:none!important; }
+.hidden{display:none!important;}
 
-/* HEADER BRAND */
-.app-topbar {
-  background:linear-gradient(135deg, #ff4d52 0%, #c8191f 100%);
-  padding:14px 16px 54px;
+/* ========================================================= */
+/* HEADER WITH CUSTOM INLINE VECTOR BRAND LOGO (NO VIP TAG) */
+/* ========================================================= */
+.app-header-strip{
+  background:linear-gradient(135deg, #ff444a 0%, #b80d19 100%);
+  padding:16px 16px 56px;
   color:#fff;
+  border-bottom-left-radius:28px;
+  border-bottom-right-radius:28px;
   position:relative;
-  border-bottom-left-radius:24px;
-  border-bottom-right-radius:24px;
 }
-.brand-row {
+
+.brand-bar{
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
-.brand-name {
-  font-size:1.25rem;
-  font-weight:900;
-  letter-spacing:-0.5px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-.brand-name i { color:#ffe600; font-size:1.15rem; }
-.vip-badge {
-  background:rgba(255,255,255,0.22);
-  border:1px solid rgba(255,255,255,0.4);
-  padding:3px 10px;
-  border-radius:20px;
-  font-size:0.75rem;
-  font-weight:800;
-}
 
-.user-quick-profile {
+.huerush-vector-logo{
   display:flex;
   align-items:center;
   gap:10px;
+}
+
+.logo-symbol{
+  width:36px;
+  height:36px;
+  background:#ffffff;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 14px rgba(0,0,0,0.25);
+}
+
+.logo-text-title{
+  font-size:1.35rem;
+  font-weight:900;
+  letter-spacing:-0.5px;
+  color:#ffffff;
+  display:flex;
+  align-items:center;
+}
+.logo-text-title span{
+  color:#ffd24d;
+}
+
+.top-right-help-btn{
+  background:rgba(255,255,255,0.18);
+  border:1px solid rgba(255,255,255,0.3);
+  color:#fff;
+  border-radius:50%;
+  width:34px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:0.9rem;
+  cursor:pointer;
+}
+
+.user-quick-ribbon{
+  display:flex;
+  align-items:center;
+  gap:12px;
   margin-top:14px;
 }
-.user-avatar-circle {
-  width:42px;
-  height:42px;
+
+.user-badge-avatar{
+  width:44px;
+  height:44px;
   border-radius:50%;
-  background:linear-gradient(135deg, #ffd05b, #ff7a00);
-  border:2px solid #ffffff;
+  background:linear-gradient(135deg, #ffe066, #ff7700);
+  border:2px solid #fff;
   display:flex;
   align-items:center;
   justify-content:center;
   font-weight:900;
   color:#5a1e00;
-  font-size:1.1rem;
+  font-size:1.2rem;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
 }
-.user-meta-name { font-size:0.95rem; font-weight:800; }
-.user-meta-id { font-size:0.72rem; opacity:0.85; }
 
-/* WALLET CARD - OVERLAPPING */
-.wallet-card-wrap {
-  margin:-38px 14px 12px;
+/* ========================================================= */
+/* GLOSSY DUAL WALLET PORTAL */
+/* ========================================================= */
+.wallet-board-card{
+  margin:-40px 14px 14px;
   background:#fff;
-  border-radius:20px;
+  border-radius:22px;
   padding:18px 16px;
-  box-shadow:0 8px 24px rgba(200,25,31,0.15);
-  border:1px solid #fce8e9;
+  box-shadow:0 12px 30px rgba(184,13,25,0.15);
+  border:1px solid #ffeaeb;
   position:relative;
   z-index:10;
 }
-.wallet-card-header {
+
+.wallet-subhead{
   display:flex;
   justify-content:space-between;
   font-size:0.75rem;
@@ -119,91 +149,144 @@ html, body {
   color:var(--text-muted);
   text-transform:uppercase;
 }
-.wallet-huge-amount {
-  font-size:2.2rem;
+
+.wallet-master-sum{
+  font-size:2.3rem;
   font-weight:900;
-  color:var(--app-red-dark);
+  color:var(--red-dark);
   margin:4px 0 10px;
   letter-spacing:-1px;
 }
-.wallet-duo-breakdown {
+
+.wallet-columns-duo{
   display:flex;
-  gap:8px;
+  gap:10px;
   background:#f9fafc;
   padding:10px 12px;
-  border-radius:12px;
+  border-radius:14px;
   margin-bottom:14px;
 }
-.duo-box { flex:1; }
-.duo-box span { font-size:0.68rem; color:var(--text-muted); font-weight:800; text-transform:uppercase; display:block; }
-.duo-box b { font-size:0.98rem; font-weight:800; }
-.duo-box.right { text-align:right; }
 
-.wallet-action-row {
+.w-col{flex:1;}
+.w-col span{font-size:0.68rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;display:block;}
+.w-col b{font-size:1.05rem;font-weight:900;}
+
+.wallet-ctrl-btns{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
 }
-.w-action-btn {
+
+.btn-w-ctrl{
   border:none;
-  padding:12px 0;
   border-radius:12px;
+  padding:13px 0;
   font-weight:900;
-  font-size:0.88rem;
+  font-size:0.9rem;
   cursor:pointer;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:8px;
-  transition:transform 0.1s;
 }
-.w-action-btn:active { transform:scale(0.97); }
-.btn-deposit-red {
+.btn-deposit-green{
   background:linear-gradient(135deg, #10b981, #059669);
   color:#fff;
-  box-shadow:0 4px 14px rgba(16,185,129,0.3);
+  box-shadow:0 6px 16px rgba(16,185,129,0.3);
 }
-.btn-withdraw-dark {
-  background:#1a202c;
+.btn-withdraw-dark{
+  background:#111827;
   color:#fff;
-  box-shadow:0 4px 14px rgba(0,0,0,0.15);
+  box-shadow:0 6px 16px rgba(0,0,0,0.15);
 }
 
-/* MARQUEE RUNNER */
-.live-broadcast {
+/* ========================================================= */
+/* SERVICE SHORTCUTS & VIP UTILITIES */
+/* ========================================================= */
+.service-shortcuts-row{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:8px;
+  margin:0 14px 14px;
+}
+.service-icon-box{
   background:#fff;
-  margin:0 14px 12px;
+  border-radius:14px;
+  padding:12px 6px;
+  text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.03);
+  cursor:pointer;
+}
+.service-icon-box i{
+  font-size:1.3rem;
+  margin-bottom:5px;
+  display:block;
+}
+.service-icon-box span{
+  font-size:0.68rem;
+  font-weight:800;
+  color:var(--text-dark);
+}
+
+/* LIVE JACKPOT & WINNERS TICKER */
+.jackpot-banner-card{
+  margin:0 14px 14px;
+  background:linear-gradient(135deg, #1e1b4b, #312e81);
+  border-radius:18px;
+  padding:14px 16px;
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 8px 20px rgba(49,46,129,0.25);
+  position:relative;
+  overflow:hidden;
+}
+.jackpot-banner-card::after{
+  content:"";
+  position:absolute;
+  width:80px;
+  height:80px;
+  background:rgba(255,255,255,0.08);
+  border-radius:50%;
+  right:-20px;
+  bottom:-20px;
+}
+.jackpot-content small{font-size:0.7rem;font-weight:800;color:#a5b4fc;text-transform:uppercase;letter-spacing:0.5px;}
+.jackpot-content b{font-size:1.5rem;font-weight:900;color:#fde047;display:block;}
+.jackpot-btn{background:var(--gold-grad);color:#000;border:none;border-radius:10px;padding:8px 14px;font-size:0.75rem;font-weight:900;cursor:pointer;}
+
+/* RUNNING WINNERS MARQUEE */
+.live-stream-ticker{
+  margin:0 14px 14px;
+  background:#fff;
   border-radius:12px;
   padding:8px 12px;
   font-size:0.75rem;
   font-weight:700;
-  color:var(--text-muted);
   display:flex;
   align-items:center;
   gap:8px;
+  color:var(--text-muted);
   overflow:hidden;
   white-space:nowrap;
-  box-shadow:0 2px 8px rgba(0,0,0,0.03);
+  box-shadow:0 2px 8px rgba(0,0,0,0.04);
 }
-.live-broadcast i { color:var(--gold); }
-.marquee-text {
-  display:inline-block;
-  padding-left:100%;
-  animation:mqRoll 20s linear infinite;
-}
-@keyframes mqRoll { to { transform:translateX(-100%); } }
+.live-stream-ticker i{color:#f59e0b;}
+.scrolling-winners{display:inline-block;padding-left:100%;animation:tickerScroll 22s linear infinite;}
+@keyframes tickerScroll{to{transform:translateX(-100%);}}
 
-/* ROOM TIMERS TABS */
-.room-selector-strip {
+/* ROOM SELECTION TABS */
+.parity-room-strip{
   display:flex;
   margin:0 14px 12px;
   background:#fff;
   padding:4px;
   border-radius:14px;
   gap:4px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.04);
+  box-shadow:0 2px 10px rgba(0,0,0,0.03);
 }
-.room-tab-pill {
+.p-room-tab{
   flex:1;
   text-align:center;
   padding:10px 2px;
@@ -213,58 +296,42 @@ html, body {
   color:var(--text-muted);
   cursor:pointer;
 }
-.room-tab-pill.active {
-  background:linear-gradient(135deg, #ff4d52, #c8191f);
+.p-room-tab.active{
+  background:linear-gradient(135deg, #ff444a, #b80d19);
   color:#fff;
-  box-shadow:0 4px 12px rgba(200,25,31,0.25);
+  box-shadow:0 4px 12px rgba(184,13,25,0.25);
 }
 
-/* MAIN STAGE / COUNTDOWN */
-.stage-card {
-  margin:0 14px 12px;
+/* ARENA TIMER STAGE */
+.stage-period-box{
+  margin:0 14px 14px;
   background:#fff;
-  border-radius:18px;
+  border-radius:20px;
   padding:16px;
-  box-shadow:0 4px 18px rgba(0,0,0,0.05);
+  box-shadow:0 4px 20px rgba(0,0,0,0.04);
 }
-.stage-header {
+.stage-head-row{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
 }
-.period-badge-sub { font-size:0.7rem; color:var(--text-muted); font-weight:800; text-transform:uppercase; }
-.period-huge-id { font-size:1.15rem; font-weight:900; color:var(--text-main); margin-top:2px; }
-.timer-digital-box {
+.issue-tag-sub{font-size:0.7rem;color:var(--text-muted);font-weight:800;text-transform:uppercase;}
+.issue-large-code{font-size:1.15rem;font-weight:900;color:var(--text-dark);margin-top:2px;}
+.countdown-box-black{
+  background:#0f172a;
+  padding:6px 12px;
+  border-radius:12px;
   display:flex;
   align-items:center;
   gap:4px;
-  background:#0f172a;
-  padding:6px 10px;
-  border-radius:10px;
 }
-.time-digit-block {
-  font-size:1.35rem;
-  font-weight:900;
-  color:#38bdf8;
-  font-family:monospace;
-}
-.time-colon { color:#fff; font-weight:900; }
+.countdown-digit{font-size:1.4rem;font-weight:900;color:#38bdf8;font-family:monospace;}
+.countdown-colon{color:#fff;font-weight:900;}
 
-.timer-fill-track {
-  height:6px;
-  background:#edf2f7;
-  border-radius:10px;
-  margin-top:12px;
-  overflow:hidden;
-}
-.timer-fill-bar {
-  height:100%;
-  width:100%;
-  background:linear-gradient(90deg, #10b981, #f59e0b, #ef4444);
-  transition:width 0.25s linear;
-}
+.progress-track{height:6px;background:#edf2f7;border-radius:10px;margin-top:12px;overflow:hidden;}
+.progress-bar-glow{height:100%;width:100%;background:linear-gradient(90deg, #10b981, #f59e0b, #ef4444);transition:width 0.25s linear;}
 
-.history-strip-balls {
+.recent-strip-scroller{
   display:flex;
   gap:8px;
   margin-top:14px;
@@ -272,8 +339,8 @@ html, body {
   padding:4px 2px;
   scrollbar-width:none;
 }
-.history-strip-balls::-webkit-scrollbar { display:none; }
-.micro-ball {
+.recent-strip-scroller::-webkit-scrollbar{display:none;}
+.micro-ball{
   width:32px;
   height:32px;
   border-radius:50%;
@@ -287,24 +354,24 @@ html, body {
   box-shadow:0 3px 8px rgba(0,0,0,0.15);
 }
 
-/* ======================================================= */
-/* 0–9 NUMBER GRID: ZERO OVERLAPPING & PERFECT BALANCED */
-/* ======================================================= */
-.bet-matrix-card {
-  margin:0 14px 12px;
+/* ========================================================= */
+/* 0–9 EXACT CASINO MATRIX (ZERO OVERLAPPING GUARANTEE) */
+/* ========================================================= */
+.betting-matrix-card{
+  margin:0 14px 14px;
   background:#fff;
-  border-radius:18px;
+  border-radius:20px;
   padding:16px;
-  box-shadow:0 4px 18px rgba(0,0,0,0.05);
+  box-shadow:0 4px 20px rgba(0,0,0,0.04);
 }
 
-/* Primary Colors Row */
-.color-action-row {
+/* Colors Bar */
+.color-action-row{
   display:flex;
   gap:10px;
   margin-bottom:14px;
 }
-.color-btn-block {
+.btn-color-pick{
   flex:1;
   border:none;
   border-radius:12px;
@@ -318,19 +385,19 @@ html, body {
   flex-direction:column;
   align-items:center;
 }
-.color-btn-block span { font-size:0.65rem; opacity:0.85; margin-top:2px; font-weight:700; }
-.btn-green-par { background:linear-gradient(135deg, #16b560, #0a8643); }
-.btn-violet-par { background:linear-gradient(135deg, #8b5cf6, #6d28d9); }
-.btn-red-par { background:linear-gradient(135deg, #ff4d52, #c8191f); }
+.btn-color-pick span{font-size:0.65rem;opacity:0.85;margin-top:2px;font-weight:700;}
+.pick-green{background:linear-gradient(135deg, #10b981, #059669);}
+.pick-violet{background:linear-gradient(135deg, #8b5cf6, #6d28d9);}
+.pick-red{background:linear-gradient(135deg, #ff444a, #b80d19);}
 
-/* PERFECT AUTO-FIT NUMBERS GRID (NEVER OVERLAPS) */
-.exact-numbers-grid {
+/* Numbers Grid (Aspect Ratio Clean Split) */
+.exact-number-grid{
   display:grid;
   grid-template-columns:repeat(5, 1fr);
   gap:10px;
   margin-bottom:14px;
 }
-.ball-btn-exact {
+.ball-btn{
   width:100%;
   aspect-ratio:1;
   border-radius:50%;
@@ -344,29 +411,20 @@ html, body {
   font-weight:900;
   cursor:pointer;
   box-shadow:0 4px 10px rgba(0,0,0,0.12);
-  transition:transform 0.1s;
 }
-.ball-btn-exact:active { transform:scale(0.92); }
-.ball-btn-exact sub {
-  font-size:0.6rem;
-  font-weight:800;
-  margin-top:-2px;
-  opacity:0.9;
-  text-transform:uppercase;
-}
+.ball-btn sub{font-size:0.6rem;font-weight:800;margin-top:-2px;opacity:0.9;text-transform:uppercase;}
 
-/* Exact Official Color Splits */
-.ball-green { background:radial-gradient(circle at 35% 35%, #4ade80, #15803d); }
-.ball-red { background:radial-gradient(circle at 35% 35%, #f87171, #b91c1c); }
-.ball-split-0 { background:conic-gradient(#b91c1c 0% 50%, #6d28d9 50% 100%); }
-.ball-split-5 { background:conic-gradient(#15803d 0% 50%, #6d28d9 50% 100%); }
+.ball-green{background:radial-gradient(circle at 35% 35%, #4ade80, #15803d);}
+.ball-red{background:radial-gradient(circle at 35% 35%, #f87171, #b91c1c);}
+.ball-split-0{background:conic-gradient(#b91c1c 0% 50%, #6d28d9 50% 100%);}
+.ball-split-5{background:conic-gradient(#15803d 0% 50%, #6d28d9 50% 100%);}
 
-/* Big Small Duo */
-.big-small-duo {
+/* Big Small */
+.big-small-row{
   display:flex;
   gap:10px;
 }
-.bs-btn-block {
+.bs-btn{
   flex:1;
   border:none;
   border-radius:12px;
@@ -376,32 +434,65 @@ html, body {
   color:#fff;
   cursor:pointer;
 }
-.btn-big-orange { background:linear-gradient(135deg, #f59e0b, #d97706); }
-.btn-small-blue { background:linear-gradient(135deg, #3b82f6, #1d4ed8); }
+.pick-big{background:linear-gradient(135deg, #f59e0b, #d97706);}
+.pick-small{background:linear-gradient(135deg, #3b82f6, #1d4ed8);}
 
-.stage-locked-mask .color-btn-block,
-.stage-locked-mask .ball-btn-exact,
-.stage-locked-mask .bs-btn-block {
+.locked-arena .btn-color-pick,
+.locked-arena .ball-btn,
+.locked-arena .bs-btn{
   opacity:0.4;
   pointer-events:none;
 }
 
-/* RECORD TABS */
-.ledger-tabs-card {
-  margin:0 14px 12px;
+/* ========================================================= */
+/* LIVE TREND MATRIX & TREND ROADMAP */
+/* ========================================================= */
+.trend-roadmap-card{
+  margin:0 14px 14px;
   background:#fff;
   border-radius:18px;
   padding:14px;
-  box-shadow:0 4px 18px rgba(0,0,0,0.05);
+  box-shadow:0 4px 18px rgba(0,0,0,0.04);
 }
-.ledger-header-nav {
+.trend-title{
+  display:flex;
+  justify-content:space-between;
+  font-size:0.8rem;
+  font-weight:900;
+  margin-bottom:10px;
+}
+.trend-stats-bars{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
+}
+.trend-stat-box{
+  flex:1;
+  background:#f8fafc;
+  padding:8px;
+  border-radius:10px;
+  border:1px solid #edf2f7;
+  text-align:center;
+}
+.trend-stat-box span{font-size:0.65rem;color:var(--text-muted);font-weight:800;display:block;}
+.trend-stat-box b{font-size:0.9rem;font-weight:900;}
+
+/* LEDGER TABS */
+.ledger-container-card{
+  margin:0 14px 14px;
+  background:#fff;
+  border-radius:20px;
+  padding:14px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.04);
+}
+.ledger-tabs-nav{
   display:flex;
   background:#f1f3f8;
   padding:4px;
   border-radius:12px;
   margin-bottom:12px;
 }
-.ledger-tab-btn {
+.l-tab-btn{
   flex:1;
   border:none;
   background:none;
@@ -412,110 +503,43 @@ html, body {
   color:var(--text-muted);
   cursor:pointer;
 }
-.ledger-tab-btn.active {
-  background:var(--app-red);
+.l-tab-btn.active{
+  background:var(--red-main);
   color:#fff;
-  box-shadow:0 2px 8px rgba(245,61,67,0.3);
+  box-shadow:0 2px 8px rgba(229,36,51,0.3);
 }
 
-.table-parity {
-  width:100%;
-  border-collapse:collapse;
-  font-size:0.8rem;
-}
-.table-parity th {
-  padding:8px 4px;
-  color:var(--text-muted);
-  border-bottom:1px solid #edf2f7;
-  font-weight:800;
-}
-.table-parity td {
-  padding:10px 4px;
-  border-bottom:1px solid #f8fafc;
-  text-align:center;
-  font-weight:800;
-}
-.tag-size-pill {
-  padding:2px 8px;
-  border-radius:100px;
-  color:#fff;
-  font-size:0.65rem;
-}
+.table-custom{width:100%;border-collapse:collapse;font-size:0.8rem;}
+.table-custom th{padding:8px 4px;color:var(--text-muted);border-bottom:1px solid #edf2f7;font-weight:800;}
+.table-custom td{padding:10px 4px;border-bottom:1px solid #f8fafc;text-align:center;font-weight:800;}
+.size-badge{padding:2px 8px;border-radius:100px;color:#fff;font-size:0.65rem;}
 
-/* VIP ACCOUNT VIEW */
-#accountViewScreen {
-  padding:0 14px;
-}
-.profile-card-native {
-  background:#fff;
-  border-radius:20px;
-  padding:24px 16px;
-  text-align:center;
-  box-shadow:0 4px 18px rgba(0,0,0,0.05);
-}
-.profile-avatar-big {
-  width:74px;
-  height:74px;
-  border-radius:50%;
-  background:linear-gradient(135deg, #ffd05b, #ff7a00);
-  margin:0 auto 12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:2rem;
-  font-weight:900;
-  color:#fff;
-  box-shadow:0 6px 16px rgba(255,122,0,0.25);
-}
-.acc-grid-boxes {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin:14px 0;
-}
-.acc-box-item {
-  background:#fff;
-  border-radius:16px;
-  padding:14px;
-  border:1px solid var(--line-border);
-}
-.acc-box-item span { font-size:0.7rem; color:var(--text-muted); font-weight:800; text-transform:uppercase; display:block; }
-.acc-box-item b { font-size:1.15rem; font-weight:900; display:block; margin-top:4px; }
-
-.acc-action-list {
+/* PROMOTION ACCORDIONS & GAME RULES */
+.promo-guide-card{
+  margin:0 14px 14px;
   background:#fff;
   border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 4px 18px rgba(0,0,0,0.05);
+  padding:16px;
+  box-shadow:0 4px 18px rgba(0,0,0,0.04);
 }
-.acc-list-item {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 18px;
-  border-bottom:1px solid #f1f3f8;
-  font-size:0.9rem;
-  font-weight:800;
-  cursor:pointer;
-}
-.acc-list-item:last-child { border-bottom:none; }
-.acc-list-item i { color:var(--text-muted); font-size:0.85rem; }
+.promo-guide-card h4{font-size:0.85rem;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.promo-guide-card p{font-size:0.72rem;color:var(--text-muted);line-height:1.5;}
 
-/* BOTTOM FIXED DOCK */
-.app-bottom-bar {
+/* BOTTOM FIXED BAR */
+.dock-nav-bottom{
   position:fixed;
   bottom:0;
   width:100%;
   max-width:440px;
   background:#fff;
-  border-top:1px solid var(--line-border);
+  border-top:1px solid var(--border-light);
   display:flex;
   justify-content:space-around;
   padding:8px 0 calc(8px + env(safe-area-inset-bottom));
   z-index:90;
-  box-shadow:0 -4px 18px rgba(0,0,0,0.06);
+  box-shadow:0 -4px 20px rgba(0,0,0,0.06);
 }
-.dock-nav-btn {
+.dock-btn{
   border:none;
   background:none;
   display:flex;
@@ -527,52 +551,13 @@ html, body {
   font-weight:800;
   cursor:pointer;
 }
-.dock-nav-btn.active { color:var(--app-red); }
-.dock-nav-btn i { font-size:1.25rem; }
-
-/* ORDER DRAWER */
-.drawer-backdrop {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.65);
-  backdrop-filter:blur(3px);
-  z-index:100;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 0.25s;
-}
-.drawer-backdrop.open { opacity:1; pointer-events:auto; }
-.bottom-drawer {
-  width:100%;
-  max-width:440px;
-  background:#fff;
-  border-radius:24px 24px 0 0;
-  padding:16px 20px calc(20px + env(safe-area-inset-bottom));
-  transform:translateY(100%);
-  transition:transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.drawer-backdrop.open .bottom-drawer { transform:translateY(0); }
-.drawer-notch { width:40px; height:4px; background:#e2e8f0; border-radius:100px; margin:0 auto 14px; }
-.btn-confirm-order {
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:14px;
-  background:linear-gradient(135deg, #ff4d52, #c8191f);
-  color:#fff;
-  font-size:1rem;
-  font-weight:900;
-  cursor:pointer;
-  box-shadow:0 6px 18px rgba(200,25,31,0.3);
-}
+.dock-btn.active{color:var(--red-main);}
+.dock-btn i{font-size:1.2rem;}
 
 /* ========================================================= */
 /* DEAD-CENTERED ATM CASH RECEIPT DISPENSER WINNING MODAL */
 /* ========================================================= */
-.atm-viewport-overlay {
+.atm-viewport-overlay{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.85);
@@ -586,9 +571,9 @@ html, body {
   pointer-events:none;
   transition:opacity 0.25s ease;
 }
-.atm-viewport-overlay.open { opacity:1; pointer-events:auto; }
+.atm-viewport-overlay.open{opacity:1;pointer-events:auto;}
 
-.atm-pop-container {
+.atm-pop-container{
   width:100%;
   max-width:330px;
   background:linear-gradient(180deg, #ff6d43 0%, #ff4f3b 100%);
@@ -600,9 +585,9 @@ html, body {
   margin:auto;
   animation:atmPopIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-@keyframes atmPopIn { 0%{transform:scale(0.8);opacity:0;} 100%{transform:scale(1);opacity:1;} }
+@keyframes atmPopIn{0%{transform:scale(0.8);opacity:0;}100%{transform:scale(1);opacity:1;}}
 
-.atm-gold-ribbon {
+.atm-gold-ribbon{
   position:absolute;
   top:-34px;
   left:50%;
@@ -617,7 +602,7 @@ html, body {
   box-shadow:0 8px 24px rgba(0,0,0,0.3);
   border:3px solid #ffcc33;
 }
-.ribbon-lateral-wings {
+.ribbon-lateral-wings{
   position:absolute;
   width:270px;
   height:36px;
@@ -627,40 +612,21 @@ html, body {
   z-index:-1;
   border-radius:100px;
 }
-.atm-flight-rocket {
-  font-size:2rem;
-  color:#fff;
-  animation:rocketFloat 1.8s ease-in-out infinite alternate;
-}
-@keyframes rocketFloat { 0%{transform:translateY(0);} 100%{transform:translateY(-5px);} }
+.atm-flight-rocket{font-size:2rem;color:#fff;animation:rocketFloat 1.8s ease-in-out infinite alternate;}
+@keyframes rocketFloat{0%{transform:translateY(0);}100%{transform:translateY(-5px);}}
 
-.atm-heading-congrats { font-size:1.35rem; font-weight:900; color:#fff; line-height:1.2; }
-.atm-subheading-win { font-size:1.1rem; font-weight:900; color:#fff; margin-top:2px; }
+.atm-heading-congrats{font-size:1.35rem;font-weight:900;color:#fff;line-height:1.2;}
+.atm-subheading-win{font-size:1.1rem;font-weight:900;color:#fff;margin-top:2px;}
 
-.atm-result-pill-row {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  margin:14px 0 16px;
-  font-size:0.78rem;
-  font-weight:800;
-}
-.pill-label-tag { color:#ffdcd4; }
-.pill-badge { padding:3px 10px; border-radius:6px; color:#fff; font-weight:900; font-size:0.75rem; }
-.pill-green { background:#10b981; }
-.pill-red { background:#f43f5e; }
-.pill-violet { background:#8b5cf6; }
+.atm-result-pill-row{display:flex;align-items:center;justify-content:center;gap:6px;margin:14px 0 16px;font-size:0.78rem;font-weight:800;}
+.pill-label-tag{color:#ffdcd4;}
+.pill-badge{padding:3px 10px;border-radius:6px;color:#fff;font-weight:900;font-size:0.75rem;}
+.pill-green{background:#10b981;}
+.pill-red{background:#f43f5e;}
+.pill-violet{background:#8b5cf6;}
 
-.atm-cutter-slot {
-  background:#b92716;
-  border-radius:100px;
-  height:14px;
-  width:92%;
-  margin:0 auto;
-  box-shadow:inset 0 3px 6px rgba(0,0,0,0.6);
-}
-.atm-slide-receipt {
+.atm-cutter-slot{background:#b92716;border-radius:100px;height:14px;width:92%;margin:0 auto;box-shadow:inset 0 3px 6px rgba(0,0,0,0.6);}
+.atm-slide-receipt{
   position:relative;
   width:90%;
   margin:-6px auto 0;
@@ -672,38 +638,66 @@ html, body {
   animation:slideCashPaper 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   transform-origin:top;
 }
-@keyframes slideCashPaper { 0%{transform:scaleY(0);opacity:0;} 100%{transform:scaleY(1);opacity:1;} }
+@keyframes slideCashPaper{0%{transform:scaleY(0);opacity:0;}100%{transform:scaleY(1);opacity:1;}}
 
-.receipt-bonus-lbl { font-size:0.8rem; color:#ef4444; font-weight:800; text-transform:lowercase; }
-.receipt-cash-val { font-size:1.85rem; font-weight:900; color:#f43f5e; margin:2px 0 6px; }
-.receipt-issue-id { font-size:0.65rem; color:#64748b; font-weight:700; }
+.receipt-bonus-lbl{font-size:0.8rem;color:#ef4444;font-weight:800;text-transform:lowercase;}
+.receipt-cash-val{font-size:1.85rem;font-weight:900;color:#f43f5e;margin:2px 0 6px;}
+.receipt-issue-id{font-size:0.65rem;color:#64748b;font-weight:700;}
 
-.atm-auto-close-toggle {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-top:20px;
-  padding-left:14px;
-  font-size:0.78rem;
-  font-weight:800;
-  color:#ffdcd4;
-  cursor:pointer;
-}
-.close-dot-indicator { width:16px; height:16px; border-radius:50%; background:#ff9179; display:inline-block; }
-.toggle-active .close-dot-indicator { background:#fff; box-shadow:0 0 8px #fff; }
+.atm-auto-close-toggle{display:flex;align-items:center;gap:8px;margin-top:20px;padding-left:14px;font-size:0.78rem;font-weight:800;color:#ffdcd4;cursor:pointer;}
+.close-dot-indicator{width:16px;height:16px;border-radius:50%;background:#ff9179;display:inline-block;}
+.toggle-active .close-dot-indicator{background:#fff;box-shadow:0 0 8px #fff;}
 
-/* AUTH FULLSCREEN */
-.auth-gate-view {
+/* BOTTOM DRAWERS */
+.drawer-backdrop{
   position:fixed;
   inset:0;
-  background:#0b0f17;
+  background:rgba(0,0,0,0.65);
+  backdrop-filter:blur(3px);
+  z-index:100;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.25s;
+}
+.drawer-backdrop.open{opacity:1;pointer-events:auto;}
+.bottom-drawer{
+  width:100%;
+  max-width:440px;
+  background:#fff;
+  border-radius:24px 24px 0 0;
+  padding:16px 20px calc(20px + env(safe-area-inset-bottom));
+  transform:translateY(100%);
+  transition:transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.drawer-backdrop.open .bottom-drawer{transform:translateY(0);}
+.btn-confirm-order{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg, #ff444a, #b80d19);
+  color:#fff;
+  font-size:1rem;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(184,13,25,0.3);
+}
+
+/* AUTH OVERLAY */
+.auth-gate-view{
+  position:fixed;
+  inset:0;
+  background:#090d16;
   z-index:200;
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
 }
-.auth-box-modal {
+.auth-box-modal{
   background:#fff;
   border-radius:24px;
   padding:24px 20px;
@@ -711,9 +705,9 @@ html, body {
   max-width:380px;
   box-shadow:0 20px 50px rgba(0,0,0,0.4);
 }
-.auth-input-field {
+.auth-input-field{
   width:100%;
-  border:1.5px solid var(--line-border);
+  border:1.5px solid var(--border-light);
   background:#f8fafc;
   padding:14px;
   border-radius:14px;
@@ -726,13 +720,23 @@ html, body {
 </head>
 <body>
 
-<div class="app-container">
+<div class="mobile-shell">
 
   <!-- AUTH SCREEN -->
   <div class="auth-gate-view" id="authGate">
     <div class="auth-box-modal">
       <div style="text-align:center;margin-bottom:20px;">
-        <div style="font-size:2.2rem;color:var(--app-red);">🎨</div>
+        <svg width="48" height="48" viewBox="0 0 100 100" style="margin-bottom:6px;">
+          <defs>
+            <linearGradient id="gLogo" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff444a"/>
+              <stop offset="50%" stop-color="#8b5cf6"/>
+              <stop offset="100%" stop-color="#10b981"/>
+            </linearGradient>
+          </defs>
+          <polygon points="50,5 95,28 95,72 50,95 5,72 5,28" fill="url(#gLogo)"/>
+          <path d="M32 30 L44 30 L44 45 L56 45 L56 30 L68 30 L68 70 L56 70 L56 55 L44 55 L44 70 L32 70 Z" fill="#ffffff"/>
+        </svg>
         <h2 id="authTitle" style="font-weight:900;">HueRush VIP</h2>
         <p style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Predict Colour • Win Instant Cash</p>
       </div>
@@ -746,122 +750,178 @@ html, body {
     </div>
   </div>
 
-  <!-- MAIN APP SCREEN -->
+  <!-- MAIN APP PORTAL -->
   <div id="mainScreen" class="hidden">
     
-    <!-- TOP BRAND BAR -->
-    <div class="app-topbar">
-      <div class="brand-row">
-        <div class="brand-name"><i class="fa-solid fa-crown"></i> HUERUSH VIP</div>
-        <div class="vip-badge">VIP 1</div>
+    <!-- TOP BRAND HEADER (NO VIP 1 TAG) -->
+    <div class="app-header-strip">
+      <div class="brand-bar">
+        <div class="huerush-vector-logo">
+          <!-- CUSTOM EMBEDDED LOGO ICON -->
+          <div class="logo-symbol">
+            <svg width="26" height="26" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ff444a"/>
+                  <stop offset="50%" stop-color="#8b5cf6"/>
+                  <stop offset="100%" stop-color="#10b981"/>
+                </linearGradient>
+              </defs>
+              <polygon points="50,5 95,28 95,72 50,95 5,72 5,28" fill="url(#logoGrad)"/>
+              <path d="M32 30 L44 30 L44 45 L56 45 L56 30 L68 30 L68 70 L56 70 L56 55 L44 55 L44 70 L32 70 Z" fill="#ffffff"/>
+            </svg>
+          </div>
+          <div class="logo-text-title">Hue<span>Rush</span></div>
+        </div>
+        <div class="top-right-help-btn" onclick="openDepositDrawer()"><i class="fa-solid fa-headset"></i></div>
       </div>
-      <div class="user-quick-profile">
-        <div class="user-avatar-circle" id="topAvatar">P</div>
+
+      <div class="user-quick-ribbon">
+        <div class="user-badge-avatar" id="topAvatar">P</div>
         <div>
-          <div class="user-meta-name" id="topName">Player</div>
-          <div class="user-meta-id">ID: <span id="topUid">HR8899</span></div>
+          <div style="font-size:0.95rem;font-weight:900;" id="topName">Player</div>
+          <div style="font-size:0.72rem;opacity:0.85;">ID: <span id="topUid">HR8899</span></div>
         </div>
       </div>
     </div>
 
-    <!-- 1. LIVE WINGO SCREEN -->
-    <div id="wingoScreen">
-      <!-- DUAL WALLET CARD -->
-      <div class="wallet-card-wrap">
-        <div class="wallet-card-header">
+    <!-- 1. LIVE WINGO CASINO HUB -->
+    <div id="wingoHub">
+      <!-- GLOSSY WALLET -->
+      <div class="wallet-board-card">
+        <div class="wallet-subhead">
           <span>Available Assets</span>
-          <span>100% Guaranteed</span>
+          <span>100% Encrypted</span>
         </div>
-        <div class="wallet-huge-amount">₹<span id="totBal">50.00</span></div>
-        <div class="wallet-duo-breakdown">
-          <div class="duo-box">
-            <span>Bonus (Bets Only)</span>
+        <div class="wallet-master-sum">₹<span id="totBal">50.00</span></div>
+        <div class="wallet-columns-duo">
+          <div class="w-col">
+            <span>Bonus (Play Bets)</span>
             <b style="color:#0284c7;">₹<span id="bonBal">50.00</span></b>
           </div>
-          <div class="duo-box right">
+          <div class="w-col" style="text-align:right;">
             <span>Winning (Cashout)</span>
             <b style="color:#10b981;">₹<span id="winBal">0.00</span></b>
           </div>
         </div>
-        <div class="wallet-action-row">
-          <button class="w-action-btn btn-deposit-red" onclick="openDepositDrawer()"><i class="fa-solid fa-arrow-down"></i> Deposit</button>
-          <button class="w-action-btn btn-withdraw-dark" onclick="openWithdrawDrawer()"><i class="fa-solid fa-arrow-up"></i> Withdraw</button>
+        <div class="wallet-ctrl-btns">
+          <button class="btn-w-ctrl btn-deposit-green" onclick="openDepositDrawer()"><i class="fa-solid fa-arrow-down"></i> Deposit</button>
+          <button class="btn-w-ctrl btn-withdraw-dark" onclick="openWithdrawDrawer()"><i class="fa-solid fa-arrow-up"></i> Withdraw</button>
         </div>
       </div>
 
-      <!-- MARQUEE -->
-      <div class="live-broadcast">
-        <i class="fa-solid fa-bullhorn"></i>
-        <div class="marquee-text">🏆 Real-time Parity Engine Active • Fast UPI Deposit & Instant Settlements •</div>
+      <!-- SERVICE SHORTCUTS -->
+      <div class="service-shortcuts-row">
+        <div class="service-icon-box" onclick="openDepositDrawer()">
+          <i class="fa-solid fa-gift" style="color:#f59e0b;"></i>
+          <span>Recharge</span>
+        </div>
+        <div class="service-icon-box" onclick="switchAppTab('account')">
+          <i class="fa-solid fa-award" style="color:#ef4444;"></i>
+          <span>VIP Perks</span>
+        </div>
+        <div class="service-icon-box" onclick="switchAppTab('account')">
+          <i class="fa-solid fa-hand-holding-dollar" style="color:#10b981;"></i>
+          <span>Rebates</span>
+        </div>
+        <div class="service-icon-box" onclick="openDepositDrawer()">
+          <i class="fa-solid fa-shield-halved" style="color:#8b5cf6;"></i>
+          <span>Security</span>
+        </div>
       </div>
 
-      <!-- ROOM TIME TABS -->
-      <div class="room-selector-strip">
-        <div class="room-tab-pill active" onclick="switchParityRoom('30s', this)">30s Quick</div>
-        <div class="room-tab-pill" onclick="switchParityRoom('90s', this)">1.5 Min</div>
-        <div class="room-tab-pill" onclick="switchParityRoom('3m', this)">3 Min</div>
-        <div class="room-tab-pill" onclick="switchParityRoom('5m', this)">5 Min</div>
+      <!-- JACKPOT BANNER -->
+      <div class="jackpot-banner-card">
+        <div class="jackpot-content">
+          <small>Mega Parity Pool</small>
+          <b>₹4,892,100</b>
+        </div>
+        <button class="jackpot-btn" onclick="prepareBetContract('color','green')">JOIN RUSH</button>
       </div>
 
-      <!-- COUNTDOWN STAGE -->
-      <div class="stage-card">
-        <div class="stage-header">
+      <!-- TICKER STREAM -->
+      <div class="live-stream-ticker">
+        <i class="fa-solid fa-bolt"></i>
+        <div class="scrolling-winners">🏆 Player User***39 won ₹4,900 on 30s • User***91 won ₹9,800 on Number 7 • User***02 won ₹1,960 on Red • </div>
+      </div>
+
+      <!-- ROOM TIME SELECTORS -->
+      <div class="parity-room-strip">
+        <div class="p-room-tab active" onclick="switchParityRoom('30s', this)">30s Quick</div>
+        <div class="p-room-tab" onclick="switchParityRoom('90s', this)">1.5 Min</div>
+        <div class="p-room-tab" onclick="switchParityRoom('3m', this)">3 Min</div>
+        <div class="p-room-tab" onclick="switchParityRoom('5m', this)">5 Min</div>
+      </div>
+
+      <!-- COUNTDOWN ARENA -->
+      <div class="stage-period-box">
+        <div class="stage-head-row">
           <div>
-            <div class="period-badge-sub">Current Issue</div>
-            <div class="period-huge-id" id="displayPeriod">20260901001</div>
+            <div class="issue-tag-sub">Active Period</div>
+            <div class="issue-large-code" id="displayPeriod">20260901001</div>
           </div>
           <div style="text-align:right;">
-            <div class="period-badge-sub">Time Remaining</div>
-            <div class="timer-digital-box">
-              <span class="time-digit-block" id="boxMin">00</span>
-              <span class="time-colon">:</span>
-              <span class="time-digit-block" id="boxSec">30</span>
+            <div class="issue-tag-sub">Time Remaining</div>
+            <div class="countdown-box-black">
+              <span class="countdown-digit" id="boxMin">00</span>
+              <span class="countdown-colon">:</span>
+              <span class="countdown-digit" id="boxSec">30</span>
             </div>
           </div>
         </div>
-        <div class="timer-fill-track"><div class="timer-fill-bar" id="fillBar"></div></div>
-        <div class="history-strip-balls" id="stripRecentBalls"></div>
+        <div class="progress-track"><div class="progress-bar-glow" id="fillBar"></div></div>
+        <div class="recent-strip-scroller" id="stripRecentBalls"></div>
       </div>
 
-      <!-- EXACT PERFECT BETTING GRID -->
-      <div class="bet-matrix-card" id="betBoardArena">
-        <!-- 3 Colors -->
+      <!-- 0–9 BETTING BOARD -->
+      <div class="betting-matrix-card" id="betBoardArena">
         <div class="color-action-row">
-          <button class="color-btn-block btn-green-par" onclick="prepareBetContract('color', 'green')">Green <span>2X</span></button>
-          <button class="color-btn-block btn-violet-par" onclick="prepareBetContract('color', 'violet')">Violet <span>4.5X</span></button>
-          <button class="color-btn-block btn-red-par" onclick="prepareBetContract('color', 'red')">Red <span>2X</span></button>
+          <button class="btn-color-pick pick-green" onclick="prepareBetContract('color', 'green')">Green <span>2X</span></button>
+          <button class="btn-color-pick pick-violet" onclick="prepareBetContract('color', 'violet')">Violet <span>4.5X</span></button>
+          <button class="btn-color-pick pick-red" onclick="prepareBetContract('color', 'red')">Red <span>2X</span></button>
         </div>
 
-        <!-- 0–9 Numbers Grid (No Overlap Guaranteed) -->
-        <div class="exact-numbers-grid">
-          <button class="ball-btn-exact ball-split-0" onclick="prepareBetContract('number', 0)">0<sub>Red/Vio</sub></button>
-          <button class="ball-btn-exact ball-green" onclick="prepareBetContract('number', 1)">1<sub>Green</sub></button>
-          <button class="ball-btn-exact ball-red" onclick="prepareBetContract('number', 2)">2<sub>Red</sub></button>
-          <button class="ball-btn-exact ball-green" onclick="prepareBetContract('number', 3)">3<sub>Green</sub></button>
-          <button class="ball-btn-exact ball-red" onclick="prepareBetContract('number', 4)">4<sub>Red</sub></button>
-          <button class="ball-btn-exact ball-split-5" onclick="prepareBetContract('number', 5)">5<sub>Grn/Vio</sub></button>
-          <button class="ball-btn-exact ball-red" onclick="prepareBetContract('number', 6)">6<sub>Red</sub></button>
-          <button class="ball-btn-exact ball-green" onclick="prepareBetContract('number', 7)">7<sub>Green</sub></button>
-          <button class="ball-btn-exact ball-red" onclick="prepareBetContract('number', 8)">8<sub>Red</sub></button>
-          <button class="ball-btn-exact ball-green" onclick="prepareBetContract('number', 9)">9<sub>Green</sub></button>
+        <div class="exact-number-grid">
+          <button class="ball-btn ball-split-0" onclick="prepareBetContract('number', 0)">0<sub>Red/Vio</sub></button>
+          <button class="ball-btn ball-green" onclick="prepareBetContract('number', 1)">1<sub>Green</sub></button>
+          <button class="ball-btn ball-red" onclick="prepareBetContract('number', 2)">2<sub>Red</sub></button>
+          <button class="ball-btn ball-green" onclick="prepareBetContract('number', 3)">3<sub>Green</sub></button>
+          <button class="ball-btn ball-red" onclick="prepareBetContract('number', 4)">4<sub>Red</sub></button>
+          <button class="ball-btn ball-split-5" onclick="prepareBetContract('number', 5)">5<sub>Grn/Vio</sub></button>
+          <button class="ball-btn ball-red" onclick="prepareBetContract('number', 6)">6<sub>Red</sub></button>
+          <button class="ball-btn ball-green" onclick="prepareBetContract('number', 7)">7<sub>Green</sub></button>
+          <button class="ball-btn ball-red" onclick="prepareBetContract('number', 8)">8<sub>Red</sub></button>
+          <button class="ball-btn ball-green" onclick="prepareBetContract('number', 9)">9<sub>Green</sub></button>
         </div>
 
-        <!-- Big / Small -->
-        <div class="big-small-duo">
-          <button class="bs-btn-block btn-big-orange" onclick="prepareBetContract('size', 'big')">BIG (5-9) 2X</button>
-          <button class="bs-btn-block btn-small-blue" onclick="prepareBetContract('size', 'small')">SMALL (0-4) 2X</button>
+        <div class="big-small-row">
+          <button class="bs-btn pick-big" onclick="prepareBetContract('size', 'big')">BIG (5-9) 2X</button>
+          <button class="bs-btn pick-small" onclick="prepareBetContract('size', 'small')">SMALL (0-4) 2X</button>
+        </div>
+      </div>
+
+      <!-- LIVE TREND ROADMAP -->
+      <div class="trend-roadmap-card">
+        <div class="trend-title">
+          <span>📊 Live Parity Analytics</span>
+          <span style="color:#10b981;">● Online Sync</span>
+        </div>
+        <div class="trend-stats-bars">
+          <div class="trend-stat-box"><span>Green Ratio</span><b style="color:#10b981;">48%</b></div>
+          <div class="trend-stat-box"><span>Red Ratio</span><b style="color:#ef4444;">44%</b></div>
+          <div class="trend-stat-box"><span>Violet Hits</span><b style="color:#8b5cf6;">8%</b></div>
         </div>
       </div>
 
       <!-- LEDGER TABLES -->
-      <div class="ledger-tabs-card">
-        <div class="ledger-header-nav">
-          <button class="ledger-tab-btn active" onclick="switchLedgerTab('records', this)">Game History</button>
-          <button class="ledger-tab-btn" onclick="switchLedgerTab('mybets', this)">My Bets</button>
-          <button class="ledger-tab-btn" onclick="switchLedgerTab('withdrawals', this)">Withdrawals</button>
+      <div class="ledger-container-card">
+        <div class="ledger-tabs-nav">
+          <button class="l-tab-btn active" onclick="switchLedgerTab('records', this)">Game History</button>
+          <button class="l-tab-btn" onclick="switchLedgerTab('mybets', this)">My Bets</button>
+          <button class="l-tab-btn" onclick="switchLedgerTab('withdrawals', this)">Withdrawals</button>
         </div>
         <div id="paneRecords">
-          <table class="table-parity">
+          <table class="table-custom">
             <thead><tr><th>Issue</th><th>Number</th><th>Size</th><th>Colour</th></tr></thead>
             <tbody id="histRows"></tbody>
           </table>
@@ -873,53 +933,58 @@ html, body {
           <div id="myWdList"><p style="text-align:center;padding:16px;font-size:0.75rem;color:var(--text-muted);">No withdrawals recorded.</p></div>
         </div>
       </div>
+
+      <!-- GAME RULES & FAQ -->
+      <div class="promo-guide-card">
+        <h4><i class="fa-solid fa-circle-question" style="color:var(--red-main);"></i> How to Play & Win</h4>
+        <p>1. Choose a room (30s, 90s, 3m, 5m).<br>
+        2. Predict color (Green, Red, Violet), individual number (0-9), or Size (Big/Small).<br>
+        3. 5 seconds before timer ends, order lock triggers. Payouts are directly credited to your Winning Balance immediately.</p>
+      </div>
+
     </div>
 
     <!-- 2. VIP ACCOUNT SCREEN -->
-    <div id="accountViewScreen" class="hidden">
-      <div class="profile-card-native">
-        <div class="profile-avatar-big" id="accAvatar">P</div>
-        <h3 id="accName" style="font-weight:900;">Abhishek</h3>
+    <div id="accountViewScreen" class="hidden" style="padding:0 14px;">
+      <div style="background:#fff;border-radius:20px;padding:24px 16px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,0.04);margin-top:14px;">
+        <div class="user-badge-avatar" style="width:74px;height:74px;margin:0 auto 12px;font-size:2rem;" id="accAvatar">P</div>
+        <h3 id="accName" style="font-weight:900;">Player Name</h3>
         <p id="accEmail" style="font-size:0.8rem;color:var(--text-muted);">vip@player.com</p>
         <span style="display:inline-block;background:#eef2ff;color:#4f46e5;padding:3px 12px;border-radius:20px;font-size:0.75rem;font-weight:800;margin-top:8px;">ID: <span id="accUid">HR8899</span></span>
       </div>
 
-      <div class="acc-grid-boxes">
-        <div class="acc-box-item">
-          <span>Total Balance</span>
-          <b style="color:var(--app-red);">₹<span id="accTot">0.00</span></b>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;">
+        <div style="background:#fff;border-radius:16px;padding:14px;border:1px solid var(--border-light);">
+          <span style="font-size:0.7rem;color:var(--text-muted);font-weight:800;text-transform:uppercase;">Total Balance</span>
+          <b style="font-size:1.15rem;font-weight:900;color:var(--red-main);margin-top:4px;display:block;">₹<span id="accTot">0.00</span></b>
         </div>
-        <div class="acc-box-item">
-          <span>Withdrawable Cash</span>
-          <b style="color:var(--app-green);">₹<span id="accWin">0.00</span></b>
+        <div style="background:#fff;border-radius:16px;padding:14px;border:1px solid var(--border-light);">
+          <span style="font-size:0.7rem;color:var(--text-muted);font-weight:800;text-transform:uppercase;">Withdrawable Cash</span>
+          <b style="font-size:1.15rem;font-weight:900;color:var(--green-main);margin-top:4px;display:block;">₹<span id="accWin">0.00</span></b>
         </div>
       </div>
 
-      <div class="acc-action-list">
-        <div class="acc-list-item" onclick="openDepositDrawer()">
-          <span><i class="fa-solid fa-wallet" style="color:var(--app-green);margin-right:10px;"></i> Deposit Funds</span>
-          <i class="fa-solid fa-chevron-right"></i>
+      <div style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,0.04);">
+        <div style="display:flex;justify-content:space-between;padding:16px;border-bottom:1px solid #f1f3f8;font-weight:800;font-size:0.9rem;cursor:pointer;" onclick="openDepositDrawer()">
+          <span><i class="fa-solid fa-wallet" style="color:var(--green-main);margin-right:10px;"></i> Deposit Funds</span>
+          <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
         </div>
-        <div class="acc-list-item" onclick="openWithdrawDrawer()">
-          <span><i class="fa-solid fa-arrow-up-from-bracket" style="color:var(--app-red);margin-right:10px;"></i> Withdraw Winning</span>
-          <i class="fa-solid fa-chevron-right"></i>
+        <div style="display:flex;justify-content:space-between;padding:16px;border-bottom:1px solid #f1f3f8;font-weight:800;font-size:0.9rem;cursor:pointer;" onclick="openWithdrawDrawer()">
+          <span><i class="fa-solid fa-money-bill-transfer" style="color:var(--red-main);margin-right:10px;"></i> Withdraw Money</span>
+          <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
         </div>
-        <div class="acc-list-item" onclick="switchAppTab('wingo');switchLedgerTab('mybets', document.querySelectorAll('.ledger-tab-btn')[1]);">
-          <span><i class="fa-solid fa-receipt" style="color:#0284c7;margin-right:10px;"></i> My Betting History</span>
-          <i class="fa-solid fa-chevron-right"></i>
-        </div>
-        <div class="acc-list-item" onclick="logoutApp()">
-          <span style="color:#dc2626;"><i class="fa-solid fa-power-off" style="margin-right:10px;"></i> Log Out</span>
-          <i class="fa-solid fa-chevron-right"></i>
+        <div style="display:flex;justify-content:space-between;padding:16px;font-weight:800;font-size:0.9rem;cursor:pointer;color:#dc2626;" onclick="logoutApp()">
+          <span><i class="fa-solid fa-power-off" style="margin-right:10px;"></i> Log Out</span>
+          <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
         </div>
       </div>
     </div>
 
-    <!-- BOTTOM APP BAR -->
-    <div class="app-bottom-bar">
-      <button class="dock-nav-btn active" id="btnDockWingo" onclick="switchAppTab('wingo')"><i class="fa-solid fa-gamepad"></i>WinGo</button>
-      <button class="dock-nav-btn" onclick="openDepositDrawer()"><i class="fa-solid fa-wallet"></i>Deposit</button>
-      <button class="dock-nav-btn" id="btnDockAcc" onclick="switchAppTab('account')"><i class="fa-solid fa-circle-user"></i>Account</button>
+    <!-- BOTTOM FIXED DOCK -->
+    <div class="dock-nav-bottom">
+      <button class="dock-btn active" id="btnDockWingo" onclick="switchAppTab('wingo')"><i class="fa-solid fa-gamepad"></i>WinGo</button>
+      <button class="dock-btn" onclick="openDepositDrawer()"><i class="fa-solid fa-wallet"></i>Deposit</button>
+      <button class="dock-btn" id="btnDockAcc" onclick="switchAppTab('account')"><i class="fa-solid fa-circle-user"></i>Account</button>
     </div>
 
   </div>
@@ -927,42 +992,42 @@ html, body {
   <!-- ORDER BET DRAWER -->
   <div class="drawer-backdrop" id="betDrawer" onclick="if(event.target===this)closeDrawer('betDrawer')">
     <div class="bottom-drawer">
-      <div class="drawer-notch"></div>
+      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <h3 id="contractLabel" style="font-weight:900;">Contract Order</h3>
         <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('betDrawer')"></i>
       </div>
       <div style="font-size:0.75rem;color:var(--text-muted);font-weight:800;">Contract Base Amount (₹)</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 14px;">
-        <button class="ledger-tab-btn active" onclick="setUnitVal(10,this)">₹10</button>
-        <button class="ledger-tab-btn" onclick="setUnitVal(100,this)">₹100</button>
-        <button class="ledger-tab-btn" onclick="setUnitVal(500,this)">₹500</button>
-        <button class="ledger-tab-btn" onclick="setUnitVal(1000,this)">₹1000</button>
+        <button class="l-tab-btn active" onclick="setUnitVal(10,this)">₹10</button>
+        <button class="l-tab-btn" onclick="setUnitVal(100,this)">₹100</button>
+        <button class="l-tab-btn" onclick="setUnitVal(500,this)">₹500</button>
+        <button class="l-tab-btn" onclick="setUnitVal(1000,this)">₹1000</button>
       </div>
       <div style="font-size:0.75rem;color:var(--text-muted);font-weight:800;">Multiplier</div>
       <div style="display:flex;gap:8px;margin:8px 0 14px;">
-        <button class="ledger-tab-btn active" onclick="setMultVal(1,this)">×1</button>
-        <button class="ledger-tab-btn" onclick="setMultVal(5,this)">×5</button>
-        <button class="ledger-tab-btn" onclick="setMultVal(10,this)">×10</button>
-        <button class="ledger-tab-btn" onclick="setMultVal(20,this)">×20</button>
+        <button class="l-tab-btn active" onclick="setMultVal(1,this)">×1</button>
+        <button class="l-tab-btn" onclick="setMultVal(5,this)">×5</button>
+        <button class="l-tab-btn" onclick="setMultVal(10,this)">×10</button>
+        <button class="l-tab-btn" onclick="setMultVal(20,this)">×20</button>
       </div>
-      <div style="display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--line-border);margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--border-light);margin-bottom:10px;">
         <span style="font-weight:800;color:var(--text-muted);">Total Order</span>
-        <b style="font-size:1.3rem;font-weight:900;color:var(--app-red);">₹<span id="calcTotal">10</span></b>
+        <b style="font-size:1.3rem;font-weight:900;color:var(--red-main);">₹<span id="calcTotal">10</span></b>
       </div>
-      <button class="btn-confirm-order" onclick="submitBetOrder()">CONFIRM BET</button>
+      <button class="btn-confirm-order" onclick="submitBetOrder()">CONFIRM PURCHASE</button>
     </div>
   </div>
 
   <!-- ANONYMOUS DEPOSIT DRAWER -->
   <div class="drawer-backdrop" id="depDrawer" onclick="if(event.target===this)closeDrawer('depDrawer')">
     <div class="bottom-drawer">
-      <div class="drawer-notch"></div>
+      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
       <h3 style="font-weight:900;margin-bottom:8px;">Fast Wallet Recharge</h3>
       <input type="number" id="inDepAmt" class="auth-input-field" value="100" min="10" placeholder="Recharge Amount (₹)" oninput="refreshQrImg()" style="text-align:center;font-size:1.2rem;font-weight:900;" />
-      <div style="text-align:center;background:#fff;border:1px solid var(--line-border);padding:14px;border-radius:14px;margin-bottom:12px;">
+      <div style="text-align:center;background:#fff;border:1px solid var(--border-light);padding:14px;border-radius:14px;margin-bottom:12px;">
         <img id="qrImgSrc" src="" alt="Payment Gateway QR" style="width:160px;height:160px;margin:0 auto;display:block;" />
-        <span style="display:block;font-size:0.75rem;font-weight:800;color:#10b981;margin-top:8px;">🛡️ 100% Encrypted Merchant Gateway</span>
+        <span style="display:block;font-size:0.75rem;font-weight:800;color:#10b981;margin-top:8px;">🛡️ 100% Encrypted Gateway</span>
       </div>
       <input type="text" id="inUtr" class="auth-input-field" placeholder="Enter 12-digit Receipt UTR" style="letter-spacing:1px;" />
       <button class="btn-confirm-order" onclick="submitUtrReceipt()">SUBMIT VERIFICATION</button>
@@ -972,9 +1037,9 @@ html, body {
   <!-- WITHDRAW DRAWER -->
   <div class="drawer-backdrop" id="wdDrawer" onclick="if(event.target===this)closeDrawer('wdDrawer')">
     <div class="bottom-drawer">
-      <div class="drawer-notch"></div>
+      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
       <h3 style="font-weight:900;margin-bottom:4px;">Cashout Winnings</h3>
-      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px;">Only winning wallet can be cashed out.</p>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px;">Only winning wallet balance can be withdrawn.</p>
       <input type="number" id="inWdAmt" class="auth-input-field" placeholder="Withdrawal Amount (₹)" />
       <input type="text" id="inWdUpi" class="auth-input-field" placeholder="Receiving UPI ID" />
       <button class="btn-confirm-order" onclick="submitWdOrder()">REQUEST CASHOUT</button>
@@ -982,7 +1047,7 @@ html, body {
   </div>
 
   <!-- ========================================================= -->
-  <!-- DEAD-CENTERED ATM CASH RECEIPT DISPENSER WINNING MODAL -->
+  <!-- DEAD-CENTERED ATM CASH RECEIPT WINNING MODAL -->
   <!-- ========================================================= -->
   <div class="atm-viewport-overlay" id="atmCashModal">
     <div class="atm-pop-container">
@@ -1112,7 +1177,7 @@ async function syncWalletBalances() {
 
 function switchAppTab(tab) {
   const isWingo = tab === 'wingo';
-  document.getElementById('wingoScreen').classList.toggle('hidden', !isWingo);
+  document.getElementById('wingoHub').classList.toggle('hidden', !isWingo);
   document.getElementById('accountViewScreen').classList.toggle('hidden', isWingo);
 
   document.getElementById('btnDockWingo').classList.toggle('active', isWingo);
@@ -1122,12 +1187,12 @@ function switchAppTab(tab) {
 
 function switchParityRoom(key, el) {
   curRoom = key;
-  document.querySelectorAll('.room-tab-pill').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.p-room-tab').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
 }
 
 function switchLedgerTab(pane, el) {
-  document.querySelectorAll('.ledger-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.l-tab-btn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
 
   document.getElementById('paneRecords').classList.toggle('hidden', pane !== 'records');
@@ -1286,7 +1351,7 @@ function renderPersonalBets(bets) {
   `).join('');
 }
 
-/* ATM WINNING MODAL */
+/* ATM WINNING MODAL CONTROLLER */
 function toggleAutoClose() {
   autoCloseActive = !autoCloseActive;
   const box = document.getElementById('atmToggleBox');
@@ -1326,7 +1391,7 @@ document.getElementById('atmCashModal').addEventListener('click', (e) => {
   }
 });
 
-/* LIVE REALTIME POLLING */
+/* LIVE ENGINE LOOP */
 setInterval(async () => {
   try {
     const res = await fetch('/api/game/all-rooms');
@@ -1341,8 +1406,8 @@ setInterval(async () => {
     document.getElementById('fillBar').style.width = ((r.timeLeft / r.duration) * 100) + '%';
 
     const arena = document.getElementById('betBoardArena');
-    if (r.timeLeft <= 5) arena.classList.add('stage-locked-mask');
-    else arena.classList.remove('stage-locked-mask');
+    if (r.timeLeft <= 5) arena.classList.add('locked-arena');
+    else arena.classList.remove('locked-arena');
 
     document.getElementById('stripRecentBalls').innerHTML = (r.history || []).slice(0, 10).map(h => {
       let bClass = h.number === 0 ? 'ball-split-0' : h.number === 5 ? 'ball-split-5' : (h.color === 'green' ? 'ball-green' : 'ball-red');
@@ -1356,7 +1421,7 @@ setInterval(async () => {
         <tr>
           <td>${String(h.period).slice(-4)}</td>
           <td><div class="micro-ball ${bClass}" style="width:24px;height:24px;font-size:0.75rem;margin:0 auto;">${h.number}</div></td>
-          <td><span class="tag-size-pill" style="background:${szColor}">${h.size.toUpperCase()}</span></td>
+          <td><span class="size-badge" style="background:${szColor}">${h.size.toUpperCase()}</span></td>
           <td style="color:var(--text-muted);text-transform:capitalize;">${h.color}</td>
         </tr>
       `;
