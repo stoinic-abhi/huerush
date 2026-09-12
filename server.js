@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: String, default: 'user' },
   bonusBalance: { type: Number, default: 50 },
-  winningBalance: { type: Number, default: 0 }
+  winningBalance: { type: Number, default: 0 },
+  totalDeposited: { type: Number, default: 0 }
 }, { timestamps: true });
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
@@ -37,11 +38,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Multi-path static support (chahe public folder ho ya root)
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname));
 
-// Smart file resolver
 function servePage(fileName, res) {
   const p1 = path.join(__dirname, 'public', fileName);
   const p2 = path.join(__dirname, fileName);
@@ -50,20 +49,11 @@ function servePage(fileName, res) {
   res.status(404).send(`<h3>${fileName} not found on server</h3>`);
 }
 
-// Root page -> index.html
-app.get('/', (req, res) => {
-  servePage('index.html', res);
-});
+app.get('/', (req, res) => servePage('index.html', res));
+app.get('/god-panel.html', (req, res) => servePage('god-panel.html', res));
 
-// Admin page -> god-panel.html
-app.get('/god-panel.html', (req, res) => {
-  servePage('god-panel.html', res);
-});
-
-// In-Memory Global Storage
 global.userBetLedger = {};
 
-// 4 Multi-Rooms State Engine
 global.rooms = {
   '30s': { duration: 30, timeLeft: 30, currentPeriod: 20260901001, history: [], activeBets: [], forcedResult: null },
   '90s': { duration: 90, timeLeft: 90, currentPeriod: 20260902001, history: [], activeBets: [], forcedResult: null },
@@ -78,7 +68,7 @@ function getNumberMeta(num) {
   return { num, color: num % 2 === 0 ? 'red' : 'green', size };
 }
 
-// Background Game Loops
+// Background Game Loops with Bonus-Drain Algorithm
 Object.keys(global.rooms).forEach(roomKey => {
   setInterval(async () => {
     const room = global.rooms[roomKey];
@@ -90,7 +80,24 @@ Object.keys(global.rooms).forEach(roomKey => {
         winningNum = Number(room.forcedResult);
         room.forcedResult = null;
       } else {
-        winningNum = Math.floor(Math.random() * 10);
+        // SMART ALGORITHM: Check if high volume of free bonus bets are placed
+        let totalFreeBonusBets = 0;
+        let colorPool = { green: 0, red: 0, violet: 0 };
+
+        room.activeBets.forEach(b => {
+          if (b.type === 'color') colorPool[b.target] = (colorPool[b.target] || 0) + b.amount;
+        });
+
+        // Agar zyada bets ek color par hain, toh opposite aane ke chances 70% badha do
+        if (colorPool.green > colorPool.red && Math.random() < 0.70) {
+          const redNumbers = [2, 4, 6, 8];
+          winningNum = redNumbers[Math.floor(Math.random() * redNumbers.length)];
+        } else if (colorPool.red > colorPool.green && Math.random() < 0.70) {
+          const greenNumbers = [1, 3, 7, 9];
+          winningNum = greenNumbers[Math.floor(Math.random() * greenNumbers.length)];
+        } else {
+          winningNum = Math.floor(Math.random() * 10);
+        }
       }
 
       const meta = getNumberMeta(winningNum);
@@ -161,7 +168,7 @@ app.post('/api/auth/register', async (req, res) => {
     if (user) return res.status(400).json({ error: 'Email already registered' });
 
     const hashedPassword = hashPassword(password);
-    user = await User.create({ name, email, password: hashedPassword, bonusBalance: 50, winningBalance: 0 });
+    user = await User.create({ name, email, password: hashedPassword, bonusBalance: 50, winningBalance: 0, totalDeposited: 0 });
     res.json({ message: 'User created successfully', user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -177,13 +184,12 @@ app.post('/api/auth/login', async (req, res) => {
     const isMatch = hashPassword(password) === user.password;
     if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
 
-    res.json({ user: { id: user._id, name: user.name, email: user.email, bonusBalance: user.bonusBalance, winningBalance: user.winningBalance } });
+    res.json({ user: { id: user._id, name: user.name, email: user.email, bonusBalance: user.bonusBalance, winningBalance: user.winningBalance, totalDeposited: user.totalDeposited } });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Room Info API
 app.get('/api/game/all-rooms', (req, res) => {
   const data = {};
   for (const [key, val] of Object.entries(global.rooms)) {
@@ -198,7 +204,6 @@ app.get('/api/game/all-rooms', (req, res) => {
   res.json(data);
 });
 
-// User Balances & Personal History
 app.get('/api/game/my-bets/:userId', async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
@@ -206,6 +211,7 @@ app.get('/api/game/my-bets/:userId', async (req, res) => {
     res.json({
       bonusBalance: user.bonusBalance,
       winningBalance: user.winningBalance,
+      totalDeposited: user.totalDeposited,
       bets: global.userBetLedger[req.params.userId] || []
     });
   } catch (err) {
@@ -213,7 +219,6 @@ app.get('/api/game/my-bets/:userId', async (req, res) => {
   }
 });
 
-// Place Bet API
 app.post('/api/game/bet', async (req, res) => {
   const { userId, roomType, target, type, amount } = req.body;
   const room = global.rooms[roomType];
@@ -239,7 +244,6 @@ app.post('/api/game/bet', async (req, res) => {
   res.json({ message: 'Bet accepted!', bonusBalance: user.bonusBalance, winningBalance: user.winningBalance });
 });
 
-// UPI Config
 app.get('/api/wallet/upi-config', (req, res) => {
   res.json({
     upiId: process.env.RECEIVING_UPI_ID || 'merchantpay@upi',
@@ -247,7 +251,6 @@ app.get('/api/wallet/upi-config', (req, res) => {
   });
 });
 
-// Submit Deposit
 app.post('/api/wallet/submit-deposit', async (req, res) => {
   const { userId, amount, utrNumber } = req.body;
   if (!utrNumber || utrNumber.length < 8) {
@@ -270,12 +273,17 @@ app.post('/api/wallet/submit-deposit', async (req, res) => {
   res.json({ message: 'Deposit submitted! Balance will be credited once verified.' });
 });
 
-// Withdraw Request
 app.post('/api/wallet/withdraw-request', async (req, res) => {
   const { userId, amount, upiId } = req.body;
   const user = await User.findById(userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
-  if (user.winningBalance < amount) return res.status(400).json({ error: 'Cannot withdraw bonus money! Insufficient winning balance.' });
+
+  // ANTI-EXPLOIT: User must have made at least one deposit to withdraw (Prevents Free Bonus exploit)
+  if (user.totalDeposited <= 0) {
+    return res.status(400).json({ error: 'Please make a minimum ₹100 deposit first to verify your account & activate withdrawals!' });
+  }
+
+  if (user.winningBalance < amount) return res.status(400).json({ error: 'Insufficient winning balance! Bonus cannot be withdrawn.' });
 
   user.winningBalance -= Number(amount);
   await user.save();
@@ -284,7 +292,6 @@ app.post('/api/wallet/withdraw-request', async (req, res) => {
   res.json({ message: 'Withdrawal submitted!', winningBalance: user.winningBalance });
 });
 
-// Transactions History
 app.get('/api/wallet/user-transactions/:userId', async (req, res) => {
   try {
     const txs = await Transaction.find({ userId: req.params.userId }).sort({ createdAt: -1 }).limit(30);
@@ -294,7 +301,7 @@ app.get('/api/wallet/user-transactions/:userId', async (req, res) => {
   }
 });
 
-// Admin Control APIs
+// Admin System Status & Audit
 app.post('/api/admin/force-number', (req, res) => {
   const { roomKey, number } = req.body;
   if (!global.rooms[roomKey]) return res.status(400).json({ error: 'Room not found' });
@@ -350,7 +357,9 @@ app.post('/api/admin/process-tx', async (req, res) => {
   await tx.save();
 
   if (tx.type === 'deposit' && status === 'approved') {
-    await User.findByIdAndUpdate(tx.userId, { $inc: { winningBalance: tx.amount } });
+    await User.findByIdAndUpdate(tx.userId, { 
+      $inc: { winningBalance: tx.amount, totalDeposited: tx.amount } 
+    });
   } else if (tx.type === 'withdraw' && status === 'rejected') {
     await User.findByIdAndUpdate(tx.userId, { $inc: { winningBalance: tx.amount } });
   }
@@ -358,20 +367,15 @@ app.post('/api/admin/process-tx', async (req, res) => {
   res.json({ message: `Transaction ${status}` });
 });
 
-// Boot Server
 async function startServer() {
   const mongoUri = process.env.MONGO_URI;
-  if (!mongoUri) {
-    console.error('❌ Error: MONGO_URI missing in Environment Variables!');
-    return;
-  }
+  if (!mongoUri) return console.error('❌ Error: MONGO_URI missing!');
 
   try {
     await mongoose.connect(mongoUri);
     console.log('✅ Permanent Cloud MongoDB Database Connected!');
   } catch (err) {
-    console.error('❌ MongoDB Connection Failed:', err.message);
-    return;
+    return console.error('❌ MongoDB Connection Failed:', err.message);
   }
 
   const PORT = process.env.PORT || 10000;
