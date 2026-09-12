@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>HueRush VIP — Enterprise Casino & Aviator</title>
+<title>HueRush VIP — Luxury Parity & Aviator</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg-primary:#07090e;
-  --bg-surface:#0f1523;
-  --bg-elevated:#182238;
+  --bg-base:#06080d;
+  --bg-surface:#0d1320;
+  --bg-elevated:#151d30;
   --neon-red:#ff2a55;
   --neon-green:#00e676;
   --neon-cyan:#00d2ff;
@@ -22,7 +22,7 @@
 }
 
 body{
-  background:#020407;
+  background:#020306;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   color:var(--text-main);
   display:flex;
@@ -33,21 +33,21 @@ body{
 .luxury-shell{
   width:100%;
   max-width:440px;
-  background:var(--bg-primary);
+  background:var(--bg-base);
   min-height:100vh;
   position:relative;
   display:flex;
   flex-direction:column;
   padding-bottom:88px;
-  box-shadow:0 0 50px rgba(0,0,0,0.9);
+  box-shadow:0 0 60px rgba(0,0,0,0.95);
   overflow-x:hidden;
 }
 
 .hidden{display:none!important;}
 
-/* LUXURY GLOW TOPBAR */
+/* LUXURY TOPBAR */
 .app-topbar{
-  background:linear-gradient(180deg, #141c2e 0%, #07090e 100%);
+  background:linear-gradient(180deg, #111827 0%, #06080d 100%);
   padding:14px 16px;
   border-bottom:1px solid var(--border-subtle);
   position:sticky;
@@ -58,14 +58,14 @@ body{
   align-items:center;
 }
 .brand-flex{display:flex;align-items:center;gap:10px;}
-.brand-gem-icon{
+.brand-shield{
   width:36px;height:36px;
   background:linear-gradient(135deg, var(--neon-red), var(--neon-cyan));
   border-radius:10px;
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 0 16px rgba(255,42,85,0.4);
 }
-.brand-name{font-size:1.3rem;font-weight:900;letter-spacing:-0.5px;}
+.brand-name{font-size:1.3rem;font-weight:900;}
 .brand-name span{background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
 .top-icons{display:flex;gap:8px;}
@@ -76,10 +76,10 @@ body{
   font-size:0.95rem;cursor:pointer;
 }
 
-/* UNIFIED MULTI-GAME WALLET */
+/* SHARED WALLET */
 .casino-wallet-card{
   margin:12px 14px;
-  background:linear-gradient(135deg, #182238 0%, #0f1523 100%);
+  background:linear-gradient(135deg, #182238 0%, #0d1320 100%);
   border:1px solid rgba(0,230,118,0.25);
   border-radius:22px;
   padding:18px;
@@ -89,7 +89,7 @@ body{
 .wallet-huge-amt{font-size:2.3rem;font-weight:900;color:#fff;margin:4px 0 10px;text-shadow:0 0 20px rgba(255,255,255,0.2);}
 .wallet-vault-duo{
   display:grid;grid-template-columns:1fr 1fr;gap:10px;
-  background:rgba(7,9,14,0.7);border:1px solid var(--border-subtle);
+  background:rgba(6,8,13,0.7);border:1px solid var(--border-subtle);
   padding:10px 12px;border-radius:14px;margin-bottom:14px;
 }
 .vault-col span{font-size:0.65rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;display:block;}
@@ -107,224 +107,65 @@ body{
   display:flex;align-items:center;justify-content:center;gap:6px;
 }
 
-/* 5 CASINO GAMES SWITCHER STRIP */
-.games-nav-strip{
-  display:flex;
-  gap:6px;
-  margin:0 14px 14px;
-  overflow-x:auto;
-  scrollbar-width:none;
-  padding-bottom:2px;
+/* QUICK TILES */
+.quick-matrix-grid{display:grid;grid-template-columns:repeat(4, 1fr);gap:8px;margin:0 14px 12px;}
+.tile-matte-box{
+  background:var(--bg-surface);border:1px solid var(--border-subtle);
+  border-radius:14px;padding:12px 6px;text-align:center;cursor:pointer;transition:transform 0.1s;
 }
-.games-nav-strip::-webkit-scrollbar{display:none;}
-.game-tab-pill{
-  flex-shrink:0;
-  background:var(--bg-surface);
-  border:1px solid var(--border-subtle);
-  border-radius:12px;
-  padding:9px 14px;
-  font-size:0.75rem;
-  font-weight:900;
-  color:var(--text-muted);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-.game-tab-pill.active{
-  background:linear-gradient(135deg, var(--neon-red), #991b1b);
-  border-color:var(--neon-red);
-  color:#fff;
-  box-shadow:0 0 14px rgba(255,42,85,0.4);
-}
+.tile-matte-box:active{transform:scale(0.94);}
+.tile-matte-box i{font-size:1.3rem;margin-bottom:5px;display:block;}
+.tile-matte-box span{font-size:0.68rem;font-weight:800;color:var(--text-main);}
 
-/* COMPACT LUCKY SPIN BANNER */
-.spin-banner-luxury{
-  margin:0 14px 14px;
-  background:linear-gradient(135deg, #4c1d95 0%, #2e1065 100%);
-  border:1px solid rgba(168,85,247,0.35);
-  border-radius:18px;
-  padding:12px 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  cursor:pointer;
-  box-shadow:0 8px 20px rgba(76,29,149,0.3);
+/* GAME SWITCHER STRIP */
+.games-switcher-bar{
+  display:flex;margin:0 14px 12px;background:var(--bg-surface);
+  padding:4px;border-radius:14px;gap:6px;border:1px solid var(--border-subtle);
 }
-.spin-banner-luxury b{font-size:1.15rem;font-weight:900;}
+.game-switch-tab{
+  flex:1;text-align:center;padding:10px 2px;border-radius:10px;
+  font-size:0.85rem;font-weight:900;color:var(--text-muted);cursor:pointer;
+}
+.game-switch-tab.active{
+  background:linear-gradient(135deg, var(--neon-red), #b91c1c);color:#fff;
+  box-shadow:0 0 15px rgba(255,42,85,0.4);
+}
 
 /* ========================================================= */
-/* ✈️ 1. PROFESSIONAL AVIATOR CRASH GAME (CANVAS ENGINE) */
+/* ✈️ PROFESSIONAL AVIATOR CRASH STAGE */
 /* ========================================================= */
 .aviator-game-wrapper{
   margin:0 14px 14px;
-  background:#090d16;
+  background:var(--bg-surface);
   border:1px solid rgba(255,42,85,0.3);
   border-radius:22px;
   padding:16px;
   box-shadow:0 10px 30px rgba(0,0,0,0.8);
 }
 .aviator-screen-box{
-  position:relative;
-  width:100%;
-  height:190px;
+  position:relative;width:100%;height:180px;
   background:radial-gradient(ellipse at bottom left, #1c1328 0%, #06080e 100%);
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid var(--border-subtle);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  border-radius:16px;overflow:hidden;border:1px solid var(--border-subtle);
+  display:flex;align-items:center;justify-content:center;
 }
-#aviatorCanvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-}
+#aviatorCanvas{position:absolute;inset:0;width:100%;height:100%;}
 .aviator-hud-multi{
-  position:relative;
-  z-index:10;
-  font-size:3.2rem;
-  font-weight:900;
-  color:#fff;
-  font-family:monospace;
-  text-shadow:0 0 25px rgba(255,255,255,0.6);
+  position:relative;z-index:10;font-size:3rem;font-weight:900;color:#fff;
+  font-family:monospace;text-shadow:0 0 25px rgba(255,255,255,0.6);
 }
-.hud-crashed{
-  color:var(--neon-red)!important;
-  text-shadow:0 0 25px rgba(255,42,85,0.8)!important;
-}
+.hud-crashed{color:var(--neon-red)!important;text-shadow:0 0 25px rgba(255,42,85,0.8)!important;}
 
-.aviator-chips-selector{
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  gap:6px;
-  margin:12px 0 8px;
+.av-bet-controls{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;
 }
-.av-chip-btn{
-  background:var(--bg-elevated);
-  border:1px solid var(--border-subtle);
-  color:#cbd5e1;
-  border-radius:10px;
-  padding:8px 0;
-  font-size:0.75rem;
-  font-weight:900;
-  cursor:pointer;
-}
-.av-chip-btn.active{
-  background:var(--neon-cyan);
-  color:#000;
-  border-color:var(--neon-cyan);
-}
-
-.av-bet-input-box{
-  display:flex;
-  align-items:center;
-  background:#04060a;
-  border:1.5px solid var(--border-subtle);
-  border-radius:12px;
-  padding:6px;
-  margin-bottom:12px;
-}
-.av-btn-step{
-  background:var(--bg-elevated);
-  border:none;color:#fff;
-  width:36px;height:36px;
-  border-radius:8px;
-  font-weight:900;
-  cursor:pointer;
-}
-.av-custom-in{
-  flex:1;background:none;border:none;color:#fff;text-align:center;font-size:1.3rem;font-weight:900;outline:none;font-family:monospace;
-}
-
 .btn-av-trigger{
   width:100%;padding:14px;border:none;border-radius:14px;
-  font-size:1.1rem;font-weight:900;cursor:pointer;
-  box-shadow:0 6px 20px rgba(0,0,0,0.5);
+  font-size:1rem;font-weight:900;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.5);
 }
 .btn-av-takeoff{background:linear-gradient(135deg, var(--neon-green), #047857);color:#000;}
-.btn-av-cashout{background:linear-gradient(135deg, #f59e0b, #d97706);color:#000;animation:pulseBtn 0.8s infinite alternate;}
-@keyframes pulseBtn{0%{transform:scale(1);}100%{transform:scale(1.02);}}
+.btn-av-cashout{background:linear-gradient(135deg, #f59e0b, #d97706);color:#000;}
 
-/* ========================================================= */
-/* 💣 2. MINES CASINO GAME (STAKE STYLE) */
-/* ========================================================= */
-.mines-card-wrapper{
-  margin:0 14px 14px;
-  background:var(--bg-surface);
-  border:1px solid var(--border-subtle);
-  border-radius:22px;
-  padding:16px;
-}
-.mines-5x5-grid{
-  display:grid;
-  grid-template-columns:repeat(5, 1fr);
-  gap:6px;
-  margin:14px 0;
-}
-.mine-tile{
-  width:100%;
-  aspect-ratio:1;
-  background:var(--bg-elevated);
-  border:1px solid var(--border-subtle);
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:1.4rem;
-  cursor:pointer;
-  transition:all 0.15s ease;
-}
-.mine-tile:active{transform:scale(0.92);}
-.mine-tile.gem-revealed{background:rgba(0,230,118,0.2);border-color:var(--neon-green);}
-.mine-tile.bomb-revealed{background:rgba(255,42,85,0.25);border-color:var(--neon-red);}
-
-/* ========================================================= */
-/* 🎲 3. DICE CASINO SLIDER GAME */
-/* ========================================================= */
-.dice-card-wrapper{
-  margin:0 14px 14px;
-  background:var(--bg-surface);
-  border:1px solid var(--border-subtle);
-  border-radius:22px;
-  padding:16px;
-  text-align:center;
-}
-.dice-result-sphere{
-  width:80px;height:80px;border-radius:50%;
-  background:linear-gradient(135deg, var(--neon-cyan), #0055ff);
-  margin:10px auto;
-  display:flex;align-items:center;justify-content:center;
-  font-size:2rem;font-weight:900;color:#fff;
-  box-shadow:0 0 25px rgba(0,210,255,0.4);
-}
-
-/* ========================================================= */
-/* 🪙 4. COIN FLIP (HEADS OR TAILS) */
-/* ========================================================= */
-.coin-card-wrapper{
-  margin:0 14px 14px;
-  background:var(--bg-surface);
-  border:1px solid var(--border-subtle);
-  border-radius:22px;
-  padding:16px;
-  text-align:center;
-}
-.coin-3d-coin{
-  width:90px;height:90px;border-radius:50%;
-  background:radial-gradient(circle, #ffd700 20%, #b8860b 90%);
-  margin:12px auto;
-  display:flex;align-items:center;justify-content:center;
-  font-size:2.4rem;font-weight:900;color:#5a3800;
-  border:4px solid #fff;
-  box-shadow:0 8px 25px rgba(255,215,0,0.3);
-}
-
-/* ========================================================= */
-/* 🎨 5. COLOR TRADING WINGO STAGE */
-/* ========================================================= */
+/* WINGO COLOR PARITY STAGE */
 .room-strip{display:flex;margin:0 14px 10px;background:var(--bg-surface);padding:4px;border-radius:12px;gap:4px;border:1px solid var(--border-subtle);}
 .room-pill{flex:1;text-align:center;padding:8px 2px;border-radius:8px;font-size:0.72rem;font-weight:800;color:var(--text-muted);cursor:pointer;}
 .room-pill.active{background:linear-gradient(135deg, var(--neon-red), #b91c1c);color:#fff;box-shadow:0 0 12px rgba(255,42,85,0.4);}
@@ -383,10 +224,10 @@ body{
 .table-luxury th{padding:6px 4px;color:var(--text-muted);border-bottom:1px solid var(--border-subtle);font-weight:800;}
 .table-luxury td{padding:8px 4px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:center;font-weight:800;}
 
-/* BOTTOM LUXURY DOCK */
+/* BOTTOM DOCK */
 .dock-bar{
   position:fixed;bottom:0;width:100%;max-width:440px;
-  background:rgba(15, 21, 35, 0.96);border-top:1px solid var(--border-subtle);
+  background:rgba(13, 19, 32, 0.96);border-top:1px solid var(--border-subtle);
   display:flex;justify-content:space-around;padding:8px 0 calc(8px + env(safe-area-inset-bottom));
   z-index:90;backdrop-filter:blur(16px);
 }
@@ -397,7 +238,7 @@ body{
 .dock-item.active{color:var(--neon-red);text-shadow:0 0 10px rgba(255,42,85,0.5);}
 .dock-item i{font-size:1.2rem;}
 
-/* MODALS & DRAWERS */
+/* RESTORED WINGO BET SLIP */
 .drawer-backdrop{
   position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);
   z-index:100;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s;
@@ -420,7 +261,20 @@ body{
   font-size:0.95rem;font-weight:900;cursor:pointer;box-shadow:0 5px 18px rgba(255,42,85,0.4);
 }
 
-/* COMPACT LUCKY SPIN */
+.bet-chips-grid{display:grid;grid-template-columns:repeat(5, 1fr);gap:6px;margin-bottom:12px;}
+.bet-chip{
+  background:#182238;border:1px solid var(--border-subtle);color:#cbd5e1;
+  border-radius:10px;padding:10px 0;font-size:0.8rem;font-weight:900;cursor:pointer;text-align:center;
+}
+.bet-chip.active{background:var(--neon-red);color:#fff;border-color:var(--neon-red);box-shadow:0 0 12px rgba(255,42,85,0.4);}
+.mult-pills-row{display:flex;gap:6px;margin-bottom:12px;}
+.mult-pill{
+  flex:1;background:#182238;border:1px solid var(--border-subtle);color:#cbd5e1;
+  border-radius:8px;padding:8px 0;font-size:0.75rem;font-weight:900;cursor:pointer;text-align:center;
+}
+.mult-pill.active{background:var(--neon-green);color:#000;border-color:var(--neon-green);}
+
+/* LUCKY SPIN */
 .wheel-wrapper{position:relative;width:240px;height:240px;margin:10px auto 14px;}
 .wheel-pointer{
   position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:0;height:0;
@@ -433,7 +287,7 @@ body{
 }
 #spinCanvas{width:100%;height:100%;border-radius:50%;box-shadow:0 6px 20px rgba(0,0,0,0.6);transition:transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);}
 
-/* ATM WIN/LOSS DISPENSER */
+/* ATM WIN/LOSS POPUP */
 .atm-viewport-overlay{
   position:fixed;inset:0;background:rgba(0,0,0,0.88);backdrop-filter:blur(8px);
   z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.25s;
@@ -463,7 +317,7 @@ body{
 }
 .luxury-modal-overlay.open{opacity:1;pointer-events:auto;}
 .luxury-status-box{
-  background:linear-gradient(135deg, #1c2436 0%, #111827 100%);border:1px solid var(--border-subtle);
+  background:linear-gradient(135deg, #111827 0%, #06080d 100%);border:1px solid var(--border-subtle);
   border-radius:22px;padding:24px 18px;text-align:center;max-width:310px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,0.8);
 }
 </style>
@@ -478,7 +332,7 @@ body{
       <div style="text-align:center;margin-bottom:20px;">
         <div style="font-size:2.4rem;color:var(--neon-red);">💎</div>
         <h2 style="font-weight:900;">HueRush VIP</h2>
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Elite Casino & Aviator Gaming</p>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Elite Parity & Aviator Gaming</p>
       </div>
       <input type="text" id="suName" class="input-luxury" placeholder="Full Name" style="display:none;" />
       <input type="email" id="authEmail" class="input-luxury" placeholder="Email Address" value="vip@player.com" />
@@ -497,7 +351,7 @@ body{
     <!-- TOP BAR -->
     <div class="app-topbar">
       <div class="brand-flex">
-        <div class="brand-gem-icon"><i class="fa-solid fa-gem" style="color:#fff;"></i></div>
+        <div class="brand-shield"><i class="fa-solid fa-gem" style="color:#fff;"></i></div>
         <div class="brand-name">Hue<span>Rush</span></div>
       </div>
       <div class="top-icons">
@@ -507,14 +361,14 @@ body{
     </div>
 
     <!-- ========================================================= -->
-    <!-- MULTI-GAME CASINO VIEW (PAGE 1: GAMES) -->
+    <!-- GAMES PAGE (AVIATOR & WINGO SWITCHER) -->
     <!-- ========================================================= -->
     <div id="pageGames">
-      <!-- SHARED DUAL WALLET -->
+      <!-- SHARED WALLET -->
       <div class="casino-wallet-card">
         <div class="wallet-subhead">
           <span>Unified Casino Assets</span>
-          <span style="color:var(--neon-green);">● Shared Balance Active</span>
+          <span style="color:var(--neon-green);">● Live Synced</span>
         </div>
         <div class="wallet-huge-amt">₹<span id="totBal">50.00</span></div>
         <div class="wallet-vault-duo">
@@ -533,56 +387,49 @@ body{
         </div>
       </div>
 
-      <!-- COMPACT LUCKY SPIN BANNER -->
+      <!-- LUCKY SPIN BANNER -->
       <div class="spin-banner-luxury" onclick="openLuckySpinModal()">
         <div>
           <small style="color:#d8b4fe;font-size:0.65rem;text-transform:uppercase;font-weight:800;">Free Daily Roulette</small>
-          <b style="display:block;">LUCKY SPIN WHEEL</b>
+          <b style="display:block;font-size:1.1rem;">LUCKY SPIN WHEEL</b>
         </div>
         <button style="background:var(--gold-grad);color:#000;border:none;border-radius:10px;padding:8px 14px;font-size:0.75rem;font-weight:900;cursor:pointer;">SPIN →</button>
       </div>
 
-      <!-- 5 CASINO GAMES SWITCHER STRIP -->
-      <div class="games-nav-strip">
-        <div class="game-tab-pill active" onclick="switchGameMode('aviator', this)">✈️ Aviator</div>
-        <div class="game-tab-pill" onclick="switchGameMode('wingo', this)">🎨 Color Parity</div>
-        <div class="game-tab-pill" onclick="switchGameMode('mines', this)">💣 Mines (5x5)</div>
-        <div class="game-tab-pill" onclick="switchGameMode('dice', this)">🎲 Dice 98%</div>
-        <div class="game-tab-pill" onclick="switchGameMode('coin', this)">🪙 Coin Flip</div>
+      <!-- GAME SWITCHER (AVIATOR VS WINGO) -->
+      <div class="games-switcher-bar">
+        <div class="game-switch-tab active" id="tabSwitchAviator" onclick="switchGameMode('aviator')">✈️ Aviator Crash</div>
+        <div class="game-switch-tab" id="tabSwitchWingo" onclick="switchGameMode('wingo')">🎨 Color Parity</div>
       </div>
 
       <!-- ========================================================= -->
-      <!-- GAME 1: ✈️ AVIATOR SPRIBE CLONE WITH REAL CANVAS -->
+      <!-- GAME 1: ✈️ AVIATOR (CONTROLLED HOUSE CRASH) -->
       <!-- ========================================================= -->
       <div id="gameAviator">
         <div class="aviator-game-wrapper">
           <div class="aviator-screen-box">
-            <canvas id="aviatorCanvas" width="400" height="200"></canvas>
+            <canvas id="aviatorCanvas" width="400" height="180"></canvas>
             <div class="aviator-hud-multi" id="aviatorMultiText">1.00x</div>
           </div>
 
-          <!-- BET CHIP SELECTORS -->
-          <div class="aviator-chips-selector">
-            <button class="av-chip-btn" onclick="selectAviatorChip(10, this)">₹10</button>
-            <button class="av-chip-btn active" onclick="selectAviatorChip(50, this)">₹50</button>
-            <button class="av-chip-btn" onclick="selectAviatorChip(100, this)">₹100</button>
-            <button class="av-chip-btn" onclick="selectAviatorChip(500, this)">₹500</button>
+          <div style="display:flex;justify-content:space-between;margin:12px 0 6px;font-size:0.75rem;color:var(--text-muted);font-weight:800;">
+            <span>Bet Amount (₹):</span>
+            <b style="color:var(--neon-cyan);">₹<span id="displayAvBet">50</span></b>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;">
+            <button class="l-btn" style="background:#182238;border-radius:8px;padding:8px 0;font-weight:900;color:#fff;" onclick="setAviatorChip(10)">₹10</button>
+            <button class="l-btn active" style="background:var(--neon-red);border-radius:8px;padding:8px 0;font-weight:900;color:#fff;" onclick="setAviatorChip(50)">₹50</button>
+            <button class="l-btn" style="background:#182238;border-radius:8px;padding:8px 0;font-weight:900;color:#fff;" onclick="setAviatorChip(100)">₹100</button>
+            <button class="l-btn" style="background:#182238;border-radius:8px;padding:8px 0;font-weight:900;color:#fff;" onclick="setAviatorChip(500)">₹500</button>
           </div>
 
-          <!-- MANUAL STEPPER BOX -->
-          <div class="av-bet-input-box">
-            <button class="av-btn-step" onclick="stepAviatorBet(-10)">-10</button>
-            <input type="number" id="inAviatorBet" class="av-custom-in" value="50" min="10" oninput="onAviatorCustomInput()" />
-            <button class="av-btn-step" onclick="stepAviatorBet(10)">+10</button>
-          </div>
-
-          <button class="btn-av-trigger btn-av-takeoff" id="btnAviatorBet" onclick="placeAviatorFlightBet()">PLACE BET</button>
+          <button class="btn-av-trigger btn-av-takeoff" id="btnAviatorBet" onclick="placeAviatorFlightBet()">PLACE BET (₹50)</button>
           <button class="btn-av-trigger btn-av-cashout hidden" id="btnAviatorCashout" onclick="cashoutAviatorFlight()">CASHOUT ₹<span id="cashoutPotentialAmt">0.00</span></button>
         </div>
       </div>
 
       <!-- ========================================================= -->
-      <!-- GAME 2: 🎨 COLOR PARITY (WINGO) -->
+      <!-- GAME 2: 🎨 COLOR PARITY (RESTORED CLEAN CHIPS & MULTIPLIERS) -->
       <!-- ========================================================= -->
       <div id="gameWingo" class="hidden">
         <div class="room-strip">
@@ -638,46 +485,7 @@ body{
         </div>
       </div>
 
-      <!-- ========================================================= -->
-      <!-- GAME 3: 💣 MINES (5X5 CASINO GRID) -->
-      <!-- ========================================================= -->
-      <div id="gameMines" class="hidden">
-        <div class="mines-card-wrapper">
-          <div style="display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-weight:900;">💣 Mines Field (3 Mines)</span>
-            <b style="color:var(--neon-green);" id="minesMultiTag">1.00x</b>
-          </div>
-          <div class="mines-5x5-grid" id="minesGridArena"></div>
-          <button class="btn-action-main" id="btnMinesAction" onclick="startOrCashoutMines()">START MINES (₹50)</button>
-        </div>
-      </div>
-
-      <!-- ========================================================= -->
-      <!-- GAME 4: 🎲 DICE (98% RTP SLIDER) -->
-      <!-- ========================================================= -->
-      <div id="gameDice" class="hidden">
-        <div class="dice-card-wrapper">
-          <div style="font-size:0.75rem;color:var(--text-muted);font-weight:800;">ROLL OVER 50 TO WIN (1.96X)</div>
-          <div class="dice-result-sphere" id="diceSphere">50</div>
-          <button class="btn-action-main" style="background:linear-gradient(135deg, var(--neon-cyan), #0055ff);color:#fff;" onclick="rollDiceCasino()">ROLL DICE (₹50)</button>
-        </div>
-      </div>
-
-      <!-- ========================================================= -->
-      <!-- GAME 5: 🪙 COIN FLIP (HEADS OR TAILS) -->
-      <!-- ========================================================= -->
-      <div id="gameCoin" class="hidden">
-        <div class="coin-card-wrapper">
-          <div style="font-size:0.75rem;color:var(--text-muted);font-weight:800;">SELECT SIDE & FLIP (1.96X)</div>
-          <div class="coin-3d-coin" id="coinSphere">H</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;">
-            <button class="btn-action-main" style="background:var(--bg-elevated);border:1px solid var(--border-subtle);" onclick="flipCoinCasino('H')">HEADS (₹50)</button>
-            <button class="btn-action-main" style="background:var(--bg-elevated);border:1px solid var(--border-subtle);" onclick="flipCoinCasino('T')">TAILS (₹50)</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 100% PERSISTENT LEDGER (FROM MONGODB) -->
+      <!-- PERSISTENT LEDGER -->
       <div class="ledger-card">
         <div class="ledger-tabs">
           <button class="l-btn active" onclick="switchLedgerTab('records', this)">Game History</button>
@@ -699,9 +507,7 @@ body{
       </div>
     </div>
 
-    <!-- ========================================================= -->
-    <!-- PAGE 2: ACTIVITY & 7-DAY STREAK -->
-    <!-- ========================================================= -->
+    <!-- PAGE 2: ACTIVITY -->
     <div id="pageActivity" class="hidden" style="padding:14px;">
       <h3 style="font-weight:900;margin-bottom:12px;">Activity Rewards Center</h3>
       <div class="casino-wallet-card" style="margin:0 0 14px;cursor:pointer;" onclick="openVipModal()">
@@ -714,9 +520,7 @@ body{
       </div>
     </div>
 
-    <!-- ========================================================= -->
-    <!-- PAGE 3: PROMOTION / REAL INVITE -->
-    <!-- ========================================================= -->
+    <!-- PAGE 3: PROMOTION -->
     <div id="pagePromotion" class="hidden" style="padding:14px;">
       <h3 style="font-weight:900;margin-bottom:12px;">Affiliate Agency Center</h3>
       <div class="casino-wallet-card" style="margin:0 0 14px;">
@@ -745,9 +549,7 @@ body{
       <button class="btn-action-main" onclick="claimRealReferralCommission()">CLAIM COMMISSION TO WALLET</button>
     </div>
 
-    <!-- ========================================================= -->
-    <!-- PAGE 4: WALLET VAULT -->
-    <!-- ========================================================= -->
+    <!-- PAGE 4: WALLET -->
     <div id="pageWallet" class="hidden" style="padding:14px;">
       <div class="ledger-tabs" style="margin-bottom:14px;">
         <button class="l-btn active" id="tabWalletDep" onclick="toggleWalletSubTab('deposit')">Fast Recharge</button>
@@ -758,10 +560,10 @@ body{
         <div class="casino-wallet-card" style="margin:0 0 14px;">
           <span style="font-size:0.75rem;color:var(--text-muted);font-weight:800;display:block;">Select Amount:</span>
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0 16px;">
-            <button class="av-chip-btn" onclick="selectDepositChip(100, this)">₹100</button>
-            <button class="av-chip-btn" onclick="selectDepositChip(300, this)">₹300</button>
-            <button class="av-chip-btn active" onclick="selectDepositChip(500, this)">₹500</button>
-            <button class="av-chip-btn" onclick="selectDepositChip(1000, this)">₹1,000</button>
+            <button class="l-btn" style="background:#182238;border-radius:8px;padding:10px 0;font-weight:900;color:#fff;" onclick="selectDepositChip(100)">₹100</button>
+            <button class="l-btn" style="background:#182238;border-radius:8px;padding:10px 0;font-weight:900;color:#fff;" onclick="selectDepositChip(300)">₹300</button>
+            <button class="l-btn active" style="background:var(--neon-green);border-radius:8px;padding:10px 0;font-weight:900;color:#000;" onclick="selectDepositChip(500)">₹500</button>
+            <button class="l-btn" style="background:#182238;border-radius:8px;padding:10px 0;font-weight:900;color:#fff;" onclick="selectDepositChip(1000)">₹1,000</button>
           </div>
           <span style="font-size:0.75rem;color:var(--text-muted);font-weight:800;display:block;margin-bottom:6px;">Custom Amount (Min: ₹10, Max: ₹1,000):</span>
           <input type="number" id="inWalletDepAmt" class="input-luxury" value="500" min="10" max="1000" oninput="refreshQrDisplay()" style="text-align:center;font-size:1.3rem;font-weight:900;" />
@@ -785,9 +587,7 @@ body{
       </div>
     </div>
 
-    <!-- ========================================================= -->
-    <!-- PAGE 5: LOADED VIP ACCOUNT -->
-    <!-- ========================================================= -->
+    <!-- PAGE 5: ACCOUNT -->
     <div id="pageAccount" class="hidden" style="padding:14px;">
       <div class="casino-wallet-card" style="margin:0 0 14px;text-align:center;">
         <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg, #ffd05b, #ff7a00);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:#5a1e00;" id="accAvatar">P</div>
@@ -823,7 +623,52 @@ body{
 
   </div>
 
-  <!-- COMPACT LUCKY SPIN MODAL -->
+  <!-- ========================================================= -->
+  <!-- 🎨 RESTORED CLEAN WINGO BET SLIP DRAWER (CHIPS & MULTIPLIERS) -->
+  <!-- ========================================================= -->
+  <div class="drawer-backdrop" id="betDrawer" onclick="if(event.target===this)closeDrawer('betDrawer')">
+    <div class="bottom-drawer">
+      <div style="width:40px;height:4px;background:var(--border-subtle);border-radius:100px;margin:0 auto 14px;"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <span style="font-weight:900;padding:4px 12px;border-radius:10px;background:var(--neon-red);text-transform:uppercase;" id="contractTargetPill">GREEN</span>
+        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('betDrawer')"></i>
+      </div>
+
+      <!-- CHIPS PRESETS -->
+      <span style="font-size:0.7rem;color:var(--text-muted);font-weight:800;text-transform:uppercase;display:block;margin-bottom:6px;">Select Chip Amount:</span>
+      <div class="bet-chips-grid">
+        <button class="bet-chip active" onclick="setBaseUnit(10, this)">₹10</button>
+        <button class="bet-chip" onclick="setBaseUnit(20, this)">₹20</button>
+        <button class="bet-chip" onclick="setBaseUnit(50, this)">₹50</button>
+        <button class="bet-chip" onclick="setBaseUnit(100, this)">₹100</button>
+        <button class="bet-chip" onclick="setBaseUnit(500, this)">₹500</button>
+      </div>
+
+      <!-- MULTIPLIERS -->
+      <span style="font-size:0.7rem;color:var(--text-muted);font-weight:800;text-transform:uppercase;display:block;margin-bottom:6px;">Multiplier:</span>
+      <div class="mult-pills-row">
+        <button class="mult-pill active" onclick="setBetMultiplier(1, this)">×1</button>
+        <button class="mult-pill" onclick="setBetMultiplier(5, this)">×5</button>
+        <button class="mult-pill" onclick="setBetMultiplier(10, this)">×10</button>
+        <button class="mult-pill" onclick="setBetMultiplier(20, this)">×20</button>
+      </div>
+
+      <div style="background:#04060a;border:1px solid var(--border-subtle);border-radius:14px;padding:12px;margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:4px;">
+          <span style="color:var(--text-muted);">Total Investment</span>
+          <b style="font-size:1.3rem;color:var(--neon-red);">₹<span id="calcTotal">10</span></b>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;border-top:1px dashed var(--border-subtle);padding-top:4px;">
+          <span style="color:var(--text-muted);">Est. Potential Return</span>
+          <b style="color:var(--neon-green);">+₹<span id="calcEstReturn">19.60</span></b>
+        </div>
+      </div>
+
+      <button class="btn-action-main" onclick="submitBetOrder()">CONFIRM PURCHASE</button>
+    </div>
+  </div>
+
+  <!-- LUCKY SPIN MODAL -->
   <div class="drawer-backdrop" id="luckySpinModal" onclick="if(event.target===this)closeDrawer('luckySpinModal')">
     <div class="bottom-drawer" style="text-align:center;">
       <div style="width:40px;height:4px;background:var(--border-subtle);border-radius:100px;margin:0 auto 12px;"></div>
@@ -835,23 +680,6 @@ body{
         <canvas id="spinCanvas" width="540" height="540"></canvas>
       </div>
       <button class="btn-action-main" onclick="executeLuckySpin()">START LUCKY SPIN 🎡</button>
-    </div>
-  </div>
-
-  <!-- ORDER BET DRAWER (WINGO) -->
-  <div class="drawer-backdrop" id="betDrawer" onclick="if(event.target===this)closeDrawer('betDrawer')">
-    <div class="bottom-drawer">
-      <div style="width:40px;height:4px;background:var(--border-subtle);border-radius:100px;margin:0 auto 14px;"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <span style="font-weight:900;padding:4px 12px;border-radius:10px;background:var(--neon-red);" id="contractTargetPill">GREEN</span>
-        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('betDrawer')"></i>
-      </div>
-      <input type="number" id="inCustomBetAmt" class="input-luxury" value="10" min="1" oninput="updateSlipCalculations()" style="text-align:center;font-size:1.4rem;font-weight:900;" />
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px;font-size:0.85rem;">
-        <span>Total Investment:</span>
-        <b style="color:var(--neon-red);">₹<span id="calcTotal">10</span></b>
-      </div>
-      <button class="btn-action-main" onclick="submitBetOrder()">CONFIRM PURCHASE</button>
     </div>
   </div>
 
@@ -918,7 +746,8 @@ let currentUser = JSON.parse(localStorage.getItem('user') || 'null');
 let curRoom = '30s';
 let isRegisterMode = false;
 let curBetType = null, curBetTarget = null;
-let autoCloseActive = true;
+let currentBaseAmt = 10;
+let currentMultiplier = 1;
 let lastRecordedPeriod = null;
 let playerPendingBets = [];
 let upiInfo = { upiId: 'merchantpay@upi', name: 'HueRush' };
@@ -930,9 +759,7 @@ let remainingSpins = (lastSpinDate === todayDateStr) ? 0 : 1;
 let currentWheelRotation = 0;
 let isSpinningWheel = false;
 
-// =========================================================
-// ✈️ 1. REAL AVIATOR ENGINE WITH CONTROLLED HOUSE CRASH
-// =========================================================
+// Aviator state variables
 let avBetAmount = 50;
 let avMultiplier = 1.00;
 let avIsFlying = false;
@@ -950,13 +777,7 @@ function initAviatorFlightEngine() {
   avMultiplier = 1.00;
   avStartTime = Date.now();
 
-  // =========================================================
-  // HOUSE EDGE CONTROL ALGORITHM (NEVER RUNAWAY WINS)
-  // 60% chance: crashes between 1.10x and 1.45x
-  // 15% chance: instant burst at 1.02x - 1.08x
-  // 20% chance: decent flight 1.50x - 2.80x
-  // 5% rare chance: high flight > 3.00x
-  // =========================================================
+  // House edge control algorithm
   const dice = Math.random();
   if (dice < 0.15) {
     avCrashPoint = +(1.01 + Math.random() * 0.08).toFixed(2);
@@ -974,25 +795,20 @@ function initAviatorFlightEngine() {
   function renderFrame() {
     const elapsed = (Date.now() - avStartTime) / 1000;
     avMultiplier = +(1.00 + Math.pow(elapsed * 0.55, 1.75)).toFixed(2);
-
     multiText.innerText = avMultiplier.toFixed(2) + 'x';
 
-    // Live update potential cashout
     if (avBetActive) {
       document.getElementById('cashoutPotentialAmt').innerText = (avBetAmount * avMultiplier).toFixed(2);
     }
 
-    // Draw Aviator Parabolic Trajectory
     if (avCtx) {
       avCtx.clearRect(0, 0, avCanvas.width, avCanvas.height);
       const w = avCanvas.width;
       const h = avCanvas.height;
-
       const progress = Math.min(1, elapsed / 5);
       const curX = 30 + progress * (w - 70);
       const curY = (h - 25) - Math.pow(progress, 1.8) * (h - 60);
 
-      // Curve Line
       avCtx.beginPath();
       avCtx.moveTo(20, h - 20);
       avCtx.quadraticCurveTo(curX * 0.4, h - 20, curX, curY);
@@ -1000,20 +816,17 @@ function initAviatorFlightEngine() {
       avCtx.lineWidth = 3;
       avCtx.stroke();
 
-      // Exhaust glow fill
       avCtx.lineTo(curX, h - 20);
       avCtx.lineTo(20, h - 20);
       avCtx.fillStyle = 'rgba(255, 42, 85, 0.15)';
       avCtx.fill();
 
-      // Red Plane Marker
       avCtx.fillStyle = '#ffffff';
       avCtx.beginPath();
       avCtx.arc(curX, curY, 6, 0, Math.PI * 2);
       avCtx.fill();
     }
 
-    // Check Crash Hit
     if (avMultiplier >= avCrashPoint) {
       triggerAviatorCrash();
     } else {
@@ -1028,7 +841,7 @@ function triggerAviatorCrash() {
   cancelAnimationFrame(avAnimFrame);
   avIsFlying = false;
   const multiText = document.getElementById('aviatorMultiText');
-  multiText.innerText = 'FLEW AWAY @ ' + avCrashPoint.toFixed(2) + 'x';
+  multiText.innerText = 'FLEW @ ' + avCrashPoint.toFixed(2) + 'x';
   multiText.classList.add('hud-crashed');
 
   if (avBetActive) {
@@ -1041,19 +854,9 @@ function triggerAviatorCrash() {
   setTimeout(initAviatorFlightEngine, 3500);
 }
 
-function selectAviatorChip(amt, el) {
+function setAviatorChip(amt) {
   avBetAmount = amt;
-  document.getElementById('inAviatorBet').value = amt;
-  document.querySelectorAll('.av-chip-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-}
-function stepAviatorBet(diff) {
-  avBetAmount = Math.max(10, avBetAmount + diff);
-  document.getElementById('inAviatorBet').value = avBetAmount;
-}
-function onAviatorCustomInput() {
-  const val = Number(document.getElementById('inAviatorBet').value);
-  avBetAmount = Math.max(10, isNaN(val) ? 10 : val);
+  document.getElementById('btnAviatorBet').innerText = `PLACE BET (₹${amt})`;
 }
 
 async function placeAviatorFlightBet() {
@@ -1089,162 +892,17 @@ async function cashoutAviatorFlight() {
   document.getElementById('btnAviatorBet').classList.remove('hidden');
   document.getElementById('btnAviatorCashout').classList.add('hidden');
   syncWalletBalances();
-  showLuxuryStatus(true, 'Cashed Out!', `Successfully cashed out at ${avMultiplier.toFixed(2)}x and won ₹${cashWon}!`);
+  showLuxuryStatus(true, 'Cashed Out!', `Won ₹${cashWon}!`);
 }
 
-// =========================================================
-// 💣 2. MINES GAME ENGINE
-// =========================================================
-let minesActive = false;
-let minesGemsFound = 0;
-let minesBetAmt = 50;
-let minesBombIndices = [];
-
-function initMinesField() {
-  const arena = document.getElementById('minesGridArena');
-  arena.innerHTML = '';
-  for (let i = 0; i < 25; i++) {
-    const tile = document.createElement('div');
-    tile.className = 'mine-tile';
-    tile.dataset.index = i;
-    tile.onclick = () => revealMineTile(i, tile);
-    arena.appendChild(tile);
-  }
-}
-
-async function startOrCashoutMines() {
-  const btn = document.getElementById('btnMinesAction');
-  if (!minesActive) {
-    const total = currentUser.bonusBalance + currentUser.winningBalance;
-    if (total < minesBetAmt) return showLuxuryStatus(false, 'Insufficient Balance', 'Need at least ₹50 to play Mines!');
-
-    await fetch('/api/game/bet', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ userId: currentUser.id, roomType: '30s', target: 'mines', type: 'mines', amount: minesBetAmt })
-    });
-    syncWalletBalances();
-
-    minesActive = true;
-    minesGemsFound = 0;
-    document.getElementById('minesMultiTag').innerText = '1.00x';
-    btn.innerText = 'CASHOUT (1.00x)';
-    btn.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
-
-    // Random 3 bombs
-    minesBombIndices = [];
-    while (minesBombIndices.length < 3) {
-      const idx = Math.floor(Math.random() * 25);
-      if (!minesBombIndices.includes(idx)) minesBombIndices.push(idx);
-    }
-    initMinesField();
-  } else {
-    // Cashout
-    minesActive = false;
-    const multi = 1 + (minesGemsFound * 0.28);
-    const win = +(minesBetAmt * multi).toFixed(2);
-
-    await fetch('/api/wallet/claim-reward', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ userId: currentUser.id, type: 'mines_win', amount: win, targetWallet: 'winning' })
-    });
-    syncWalletBalances();
-
-    btn.innerText = 'START MINES (₹50)';
-    btn.style.background = 'linear-gradient(135deg, var(--neon-red), #991b1b)';
-    showLuxuryStatus(true, 'Mines Cashout!', `Won ₹${win} with ${minesGemsFound} diamonds!`);
-  }
-}
-
-function revealMineTile(idx, el) {
-  if (!minesActive || el.classList.contains('gem-revealed') || el.classList.contains('bomb-revealed')) return;
-
-  if (minesBombIndices.includes(idx)) {
-    // Bomb explosion
-    minesActive = false;
-    el.classList.add('bomb-revealed');
-    el.innerText = '💣';
-    document.getElementById('btnMinesAction').innerText = 'START MINES (₹50)';
-    document.getElementById('btnMinesAction').style.background = 'linear-gradient(135deg, var(--neon-red), #991b1b)';
-    showLuxuryStatus(false, 'Boom! Bomb Hit', `Hit a mine! Lost ₹${minesBetAmt}.`);
-  } else {
-    // Gem hit
-    minesGemsFound++;
-    el.classList.add('gem-revealed');
-    el.innerText = '💎';
-    const multi = +(1 + (minesGemsFound * 0.28)).toFixed(2);
-    document.getElementById('minesMultiTag').innerText = multi + 'x';
-    document.getElementById('btnMinesAction').innerText = `CASHOUT (₹${(minesBetAmt * multi).toFixed(2)})`;
-  }
-}
-
-// =========================================================
-// 🎲 3. DICE & 🪙 4. COIN FLIP ENGINES
-// =========================================================
-async function rollDiceCasino() {
-  const total = currentUser.bonusBalance + currentUser.winningBalance;
-  if (total < 50) return showLuxuryStatus(false, 'Insufficient Balance', 'Need at least ₹50 to roll dice!');
-
-  await fetch('/api/game/bet', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({ userId: currentUser.id, roomType: '30s', target: 'dice', type: 'dice', amount: 50 })
-  });
-
-  const roll = Math.floor(Math.random() * 100) + 1;
-  document.getElementById('diceSphere').innerText = roll;
-
-  if (roll > 50) {
-    await fetch('/api/wallet/claim-reward', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ userId: currentUser.id, type: 'dice_win', amount: 98, targetWallet: 'winning' })
-    });
-    showLuxuryStatus(true, 'Dice Won!', `Rolled ${roll} (>50)! Won ₹98.00!`);
-  } else {
-    showLuxuryStatus(false, 'Dice Lost!', `Rolled ${roll} (<=50). Lost ₹50.`);
-  }
-  syncWalletBalances();
-}
-
-async function flipCoinCasino(choice) {
-  const total = currentUser.bonusBalance + currentUser.winningBalance;
-  if (total < 50) return showLuxuryStatus(false, 'Insufficient Balance', 'Need at least ₹50 to flip coin!');
-
-  await fetch('/api/game/bet', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({ userId: currentUser.id, roomType: '30s', target: choice, type: 'coin', amount: 50 })
-  });
-
-  const outcome = Math.random() > 0.5 ? 'H' : 'T';
-  document.getElementById('coinSphere').innerText = outcome;
-
-  if (choice === outcome) {
-    await fetch('/api/wallet/claim-reward', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ userId: currentUser.id, type: 'coin_win', amount: 98, targetWallet: 'winning' })
-    });
-    showLuxuryStatus(true, 'Coin Won!', `Flipped ${outcome}! Won ₹98.00!`);
-  } else {
-    showLuxuryStatus(false, 'Coin Lost!', `Flipped ${outcome}. Lost ₹50.`);
-  }
-  syncWalletBalances();
-}
-
-// GAME VIEW SWITCHER
-function switchGameMode(game, el) {
-  const games = ['aviator', 'wingo', 'mines', 'dice', 'coin'];
-  games.forEach(g => {
-    const box = document.getElementById('game' + g.charAt(0).toUpperCase() + g.slice(1));
-    if (box) box.classList.toggle('hidden', g !== game);
-  });
-  document.querySelectorAll('.game-tab-pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-
-  if (game === 'mines') initMinesField();
+// GAME SWITCHER
+function switchGameMode(mode) {
+  const isAv = mode === 'aviator';
+  document.getElementById('gameAviator').classList.toggle('hidden', !isAv);
+  document.getElementById('gameWingo').classList.toggle('hidden', isAv);
+  document.getElementById('tabSwitchAviator').classList.toggle('active', isAv);
+  document.getElementById('tabSwitchWingo').classList.toggle('active', !isAv);
+  if (isAv && !avIsFlying) initAviatorFlightEngine();
 }
 
 function switchMainPage(p) {
@@ -1372,6 +1030,56 @@ function renderPersistentPersonalBets(bets) {
   `).join('');
 }
 
+// RESTORED WINGO SLIP LOGIC
+function prepareBetContract(type, target) {
+  curBetType = type;
+  curBetTarget = target;
+  document.getElementById('contractTargetPill').innerText = String(target).toUpperCase();
+  currentBaseAmt = 10;
+  currentMultiplier = 1;
+  updateSlipCalculations();
+  document.getElementById('betDrawer').classList.add('open');
+}
+
+function setBaseUnit(amt, el) {
+  currentBaseAmt = amt;
+  document.querySelectorAll('.bet-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  updateSlipCalculations();
+}
+
+function setBetMultiplier(m, el) {
+  currentMultiplier = m;
+  document.querySelectorAll('.mult-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  updateSlipCalculations();
+}
+
+function updateSlipCalculations() {
+  const total = currentBaseAmt * currentMultiplier;
+  document.getElementById('calcTotal').innerText = total;
+  let factor = 2;
+  if (curBetType === 'number') factor = 9;
+  else if (curBetType === 'color' && curBetTarget === 'violet') factor = 4.5;
+  document.getElementById('calcEstReturn').innerText = (total * factor * 0.98).toFixed(2);
+}
+
+async function submitBetOrder() {
+  const totalCost = currentBaseAmt * currentMultiplier;
+  const res = await fetch('/api/game/bet', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({ userId: currentUser.id, roomType: curRoom, target: curBetTarget, type: curBetType, amount: totalCost })
+  });
+  const data = await res.json();
+  if (!res.ok) return showLuxuryStatus(false, 'Bet Error', data.error);
+
+  playerPendingBets.push({ period: document.getElementById('displayPeriod').innerText, type: curBetType, target: curBetTarget, amount: totalCost });
+  closeDrawer('betDrawer');
+  syncWalletBalances();
+  showLuxuryStatus(true, 'Order Placed!', `₹${totalCost} contract active!`);
+}
+
 // LUCKY SPIN ROULETTE
 const spinRewards = [
   { text: "₹10", value: 10, color: "#ef4444" },
@@ -1448,35 +1156,6 @@ function executeLuckySpin() {
   }, 4100);
 }
 
-// WINGO CONTRACTS
-function prepareBetContract(type, target) {
-  curBetType = type;
-  curBetTarget = target;
-  document.getElementById('contractTargetPill').innerText = String(target).toUpperCase();
-  document.getElementById('inCustomBetAmt').value = 10;
-  updateSlipCalculations();
-  document.getElementById('betDrawer').classList.add('open');
-}
-function updateSlipCalculations() {
-  const amt = Number(document.getElementById('inCustomBetAmt').value) || 10;
-  document.getElementById('calcTotal').innerText = amt;
-}
-async function submitBetOrder() {
-  const totalCost = Number(document.getElementById('inCustomBetAmt').value) || 10;
-  const res = await fetch('/api/game/bet', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({ userId: currentUser.id, roomType: curRoom, target: curBetTarget, type: curBetType, amount: totalCost })
-  });
-  const data = await res.json();
-  if (!res.ok) return showLuxuryStatus(false, 'Bet Error', data.error);
-
-  playerPendingBets.push({ period: document.getElementById('displayPeriod').innerText, type: curBetType, target: curBetTarget, amount: totalCost });
-  closeDrawer('betDrawer');
-  syncWalletBalances();
-  showLuxuryStatus(true, 'Order Placed', `₹${totalCost} contract active!`);
-}
-
 function openGiftCodeModal() { document.getElementById('giftModal').classList.add('open'); }
 async function submitGiftCode() {
   const code = document.getElementById('giftCodeInput').value.trim().toUpperCase();
@@ -1539,7 +1218,7 @@ function refreshQrDisplay() {
   const amt = Math.max(10, +document.getElementById('inWalletDepAmt').value || 100);
   document.getElementById('qrLuxuryImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`upi://pay?pa=${upiInfo.upiId}&pn=HueRush&am=${amt}&cu=INR`)}`;
 }
-function selectDepositChip(val, el) {
+function selectDepositChip(val) {
   document.getElementById('inWalletDepAmt').value = val;
   refreshQrDisplay();
 }
@@ -1547,8 +1226,6 @@ function selectDepositChip(val, el) {
 async function submitWalletDeposit() {
   const amt = Number(document.getElementById('inWalletDepAmt').value);
   const utr = document.getElementById('inWalletUtr').value.trim();
-  if (amt < 10 || amt > 1000) return showLuxuryStatus(false, 'Limit', 'Min: 10, Max: 1000');
-  if (!utr || utr.length < 8) return showLuxuryStatus(false, 'UTR', 'Enter 12-digit UTR');
   const res = await fetch('/api/wallet/submit-deposit', {
     method:'POST', headers:{'Content-Type':'application/json'},
     body:JSON.stringify({ userId: currentUser.id, amount: amt, utrNumber: utr })
@@ -1607,6 +1284,10 @@ function triggerAtmOutcomeModal(isWin, amount, resultMeta, periodCode) {
   document.getElementById('atmCashModal').classList.add('open');
   setTimeout(() => document.getElementById('atmCashModal').classList.remove('open'), 3000);
 }
+
+document.getElementById('atmCashModal').addEventListener('click', (e) => {
+  if (e.target.id === 'atmCashModal') document.getElementById('atmCashModal').classList.remove('open');
+});
 
 // REALTIME WINGO ENGINE
 setInterval(async () => {
