@@ -3,48 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>HueRush — God Control Panel</title>
+<title>HueRush — Elite God Control Vault</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --dark-base:#05070b;
-  --dark-surface:#0d111a;
-  --dark-elevated:#161d2b;
-  --red-matte:#ef394e;
-  --green-matte:#10b981;
+  --dark-base:#030508;
+  --dark-surface:#0b0f19;
+  --dark-elevated:#131b2e;
+  --neon-red:#ff2a55;
+  --neon-green:#00e676;
+  --neon-cyan:#00d2ff;
+  --gold-grad:linear-gradient(135deg, #ffd700 0%, #ff8f00 100%);
   --gold-text:#fde047;
   --text-primary:#f8fafc;
-  --text-secondary:#94a3b8;
+  --text-secondary:#8a99ad;
   --glass-border:rgba(255,255,255,0.08);
+  --glass-bg:rgba(11, 15, 25, 0.85);
 }
 
 body{
   background:var(--dark-base);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;
   color:var(--text-primary);
   padding:12px;
   display:flex;
   justify-content:center;
+  min-height:100vh;
 }
 
 .admin-container{
   width:100%;
-  max-width:500px;
+  max-width:440px;
   display:flex;
   flex-direction:column;
   gap:14px;
 }
 
+.hidden{display:none!important;}
+
+/* ========================================================= */
+/* 🔒 ULTRA-LUXURY PIN ENTRY GATE (PASSWORD: 1104) */
+/* ========================================================= */
+.vault-pin-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(2,3,6,0.95);
+  backdrop-filter:blur(16px);
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.vault-pin-box{
+  background:linear-gradient(135deg, #182238 0%, #0d1320 100%);
+  border:1px solid rgba(255,215,0,0.3);
+  border-radius:28px;
+  padding:32px 20px;
+  width:100%;
+  max-width:340px;
+  text-align:center;
+  box-shadow:0 25px 60px rgba(0,0,0,0.9), 0 0 30px rgba(255,215,0,0.15);
+  animation:vaultPopIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes vaultPopIn{0%{transform:scale(0.8);opacity:0;}100%{transform:scale(1);opacity:1;}}
+
+.vault-shield-glow{
+  width:70px;height:70px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,215,0,0.2) 0%, rgba(255,42,85,0.1) 100%);
+  border:2px solid var(--gold-text);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;color:var(--gold-text);margin:0 auto 16px;
+  box-shadow:0 0 25px rgba(255,215,0,0.3);
+}
+
+.pin-dots-row{
+  display:flex;justify-content:center;gap:12px;margin:20px 0;
+}
+.pin-dot{
+  width:16px;height:16px;border-radius:50%;
+  background:var(--dark-base);border:1.5px solid var(--text-secondary);
+  transition:all 0.15s ease;
+}
+.pin-dot.filled{background:var(--neon-green);border-color:var(--neon-green);box-shadow:0 0 10px var(--neon-green);}
+
+.pin-keypad{
+  display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;margin-top:10px;
+}
+.pin-key{
+  background:var(--dark-elevated);border:1px solid var(--glass-border);
+  color:#fff;border-radius:14px;padding:14px 0;font-size:1.2rem;font-weight:900;
+  cursor:pointer;transition:transform 0.1s;
+}
+.pin-key:active{transform:scale(0.92);background:var(--neon-red);}
+
+/* ========================================================= */
+/* DASHBOARD STYLING */
+/* ========================================================= */
 .admin-header{
-  background:linear-gradient(135deg, #1c2436, #0d111a);
+  background:linear-gradient(135deg, #182238, #0d1320);
   border:1px solid var(--glass-border);
   border-radius:20px;
   padding:16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
 }
 
 .stats-grid{
@@ -58,8 +123,9 @@ body{
   border-radius:16px;
   padding:14px;
   text-align:center;
+  box-shadow:0 6px 20px rgba(0,0,0,0.4);
 }
-.stat-box span{font-size:0.7rem;color:var(--text-secondary);font-weight:800;text-transform:uppercase;display:block;}
+.stat-box span{font-size:0.68rem;color:var(--text-secondary);font-weight:800;text-transform:uppercase;display:block;}
 .stat-box b{font-size:1.25rem;font-weight:900;margin-top:4px;display:block;}
 
 .admin-card{
@@ -67,11 +133,11 @@ body{
   border:1px solid var(--glass-border);
   border-radius:20px;
   padding:16px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+  box-shadow:0 8px 24px rgba(0,0,0,0.5);
 }
 
 .admin-card h3{
-  font-size:0.95rem;
+  font-size:0.9rem;
   font-weight:900;
   margin-bottom:12px;
   display:flex;
@@ -106,9 +172,8 @@ body{
 .btn-action{
   border:none;border-radius:8px;padding:6px 12px;font-size:0.75rem;font-weight:900;cursor:pointer;
 }
-.btn-approve{background:#10b981;color:#000;}
-.btn-reject{background:#ef4444;color:#fff;}
-.btn-force{background:#38bdf8;color:#000;}
+.btn-approve{background:var(--neon-green);color:#000;}
+.btn-reject{background:var(--neon-red);color:#fff;}
 
 .room-rig-row{
   display:flex;
@@ -120,37 +185,69 @@ body{
   margin-bottom:8px;
   font-size:0.85rem;
   font-weight:800;
+  border:1px solid var(--glass-border);
 }
 .rig-num-btns{display:flex;gap:4px;}
 .num-btn{
   width:26px;height:26px;background:var(--dark-surface);border:1px solid var(--glass-border);
   color:#fff;border-radius:6px;font-size:0.75rem;font-weight:900;cursor:pointer;
 }
-.num-btn:active{background:var(--red-matte);}
+.num-btn:active{background:var(--neon-red);}
 </style>
 </head>
 <body>
 
-<div class="admin-container">
+<!-- 🔒 PASSWORD GATE (PASS: 1104) -->
+<div class="vault-pin-overlay" id="vaultGate">
+  <div class="vault-pin-box">
+    <div class="vault-shield-glow"><i class="fa-solid fa-lock"></i></div>
+    <h2 style="font-weight:900;font-size:1.3rem;color:#fff;">God Vault Security</h2>
+    <p style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Enter 4-Digit Master PIN to Access</p>
+    
+    <div class="pin-dots-row">
+      <div class="pin-dot" id="dot1"></div>
+      <div class="pin-dot" id="dot2"></div>
+      <div class="pin-dot" id="dot3"></div>
+      <div class="pin-dot" id="dot4"></div>
+    </div>
+
+    <div class="pin-keypad">
+      <button class="pin-key" onclick="pressPin(1)">1</button>
+      <button class="pin-key" onclick="pressPin(2)">2</button>
+      <button class="pin-key" onclick="pressPin(3)">3</button>
+      <button class="pin-key" onclick="pressPin(4)">4</button>
+      <button class="pin-key" onclick="pressPin(5)">5</button>
+      <button class="pin-key" onclick="pressPin(6)">6</button>
+      <button class="pin-key" onclick="pressPin(7)">7</button>
+      <button class="pin-key" onclick="pressPin(8)">8</button>
+      <button class="pin-key" onclick="pressPin(9)">9</button>
+      <button class="pin-key" onclick="clearPin()" style="color:var(--neon-red);">C</button>
+      <button class="pin-key" onclick="pressPin(0)">0</button>
+      <button class="pin-key" onclick="backPin()" style="color:var(--neon-cyan);"><i class="fa-solid fa-delete-left"></i></button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-container hidden" id="adminMainContent">
 
   <!-- HEADER -->
   <div class="admin-header">
     <div>
-      <h2 style="font-weight:900;font-size:1.2rem;"><i class="fa-solid fa-shield-halved" style="color:var(--red-matte);"></i> God Panel</h2>
-      <p style="font-size:0.7rem;color:var(--text-secondary);">Enterprise Casino Operations</p>
+      <h2 style="font-weight:900;font-size:1.2rem;"><i class="fa-solid fa-shield-halved" style="color:var(--neon-red);"></i> God Vault</h2>
+      <p style="font-size:0.7rem;color:var(--text-secondary);">Mobile Luxury Casino Operations</p>
     </div>
-    <button class="btn-action" style="background:var(--dark-elevated);color:#fff;" onclick="loadAdminData()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+    <button class="btn-action" style="background:var(--dark-elevated);color:#fff;border:1px solid var(--glass-border);" onclick="loadAdminData()"><i class="fa-solid fa-rotate"></i> Refresh</button>
   </div>
 
   <!-- FINANCIAL METRICS -->
   <div class="stats-grid">
     <div class="stat-box">
       <span>Total Revenue</span>
-      <b style="color:var(--green-matte);" id="statRev">₹0</b>
+      <b style="color:var(--neon-green);" id="statRev">₹0</b>
     </div>
     <div class="stat-box">
       <span>Total Paid Out</span>
-      <b style="color:var(--red-matte);" id="statPaid">₹0</b>
+      <b style="color:var(--neon-red);" id="statPaid">₹0</b>
     </div>
     <div class="stat-box" style="grid-column: span 2;">
       <span>Platform Net Profit</span>
@@ -160,7 +257,7 @@ body{
 
   <!-- PENDING DEPOSITS APPROVAL -->
   <div class="admin-card">
-    <h3><i class="fa-solid fa-arrow-down-long" style="color:var(--green-matte);"></i> Pending Recharges (UTR Verification)</h3>
+    <h3><i class="fa-solid fa-arrow-down-long" style="color:var(--neon-green);"></i> Pending Recharges (UTR Verification)</h3>
     <div class="table-responsive">
       <table class="admin-table">
         <thead><tr><th>User</th><th>Amount</th><th>UTR Number</th><th>Action</th></tr></thead>
@@ -171,7 +268,7 @@ body{
 
   <!-- PENDING WITHDRAWALS APPROVAL -->
   <div class="admin-card">
-    <h3><i class="fa-solid fa-arrow-up-long" style="color:var(--red-matte);"></i> Pending Withdrawals (Cashout)</h3>
+    <h3><i class="fa-solid fa-arrow-up-long" style="color:var(--neon-red);"></i> Pending Withdrawals (Cashout)</h3>
     <div class="table-responsive">
       <table class="admin-table">
         <thead><tr><th>User</th><th>Amount</th><th>UPI ID</th><th>Action</th></tr></thead>
@@ -182,7 +279,7 @@ body{
 
   <!-- RIGGING & FORCE RESULT ENGINE -->
   <div class="admin-card">
-    <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:#38bdf8;"></i> Rigging & Force Result Engine</h3>
+    <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--neon-cyan);"></i> Rigging & Force Result Engine</h3>
     <p style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:10px;">Select exact next winning number for rooms:</p>
     
     <div class="room-rig-row">
@@ -206,6 +303,41 @@ body{
 </div>
 
 <script>
+let enteredPin = '';
+const correctPin = '1104';
+
+function pressPin(digit) {
+  if (enteredPin.length < 4) {
+    enteredPin += digit;
+    updatePinDots();
+    if (enteredPin.length === 4) {
+      setTimeout(verifyPin, 150);
+    }
+  }
+}
+
+function clearPin() { enteredPin = ''; updatePinDots(); }
+function backPin() { enteredPin = enteredPin.slice(0, -1); updatePinDots(); }
+
+function updatePinDots() {
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('dot' + i);
+    dot.classList.toggle('filled', i <= enteredPin.length);
+  }
+}
+
+function verifyPin() {
+  if (enteredPin === correctPin) {
+    document.getElementById('vaultGate').classList.add('hidden');
+    document.getElementById('adminMainContent').classList.remove('hidden');
+    loadAdminData();
+    setInterval(loadAdminData, 8000);
+  } else {
+    alert('❌ Incorrect Security PIN! Try again.');
+    clearPin();
+  }
+}
+
 async function loadAdminData() {
   try {
     const res = await fetch('/api/admin/system-status');
@@ -215,7 +347,6 @@ async function loadAdminData() {
     document.getElementById('statPaid').innerText = '₹' + data.stats.totalPaid.toLocaleString('en-IN');
     document.getElementById('statProfit').innerText = '₹' + data.stats.netProfit.toLocaleString('en-IN');
 
-    // Pending Deposits
     const depTbody = document.getElementById('pendingDepRows');
     if (!data.pendingDeposits.length) {
       depTbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-secondary);padding:12px;">No pending deposits.</td></tr>';
@@ -223,7 +354,7 @@ async function loadAdminData() {
       depTbody.innerHTML = data.pendingDeposits.map(d => `
         <tr>
           <td><b>${d.userId ? d.userId.name : 'Unknown'}</b></td>
-          <td style="color:var(--green-matte);">₹${d.amount}</td>
+          <td style="color:var(--neon-green);">₹${d.amount}</td>
           <td style="font-family:monospace;">${d.utrNumber}</td>
           <td>
             <button class="btn-action btn-approve" onclick="processTx('${d._id}', 'approved')">Approve</button>
@@ -233,7 +364,6 @@ async function loadAdminData() {
       `).join('');
     }
 
-    // Pending Withdrawals
     const wdTbody = document.getElementById('pendingWdRows');
     if (!data.pendingWithdraws.length) {
       wdTbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-secondary);padding:12px;">No pending withdrawals.</td></tr>';
@@ -241,7 +371,7 @@ async function loadAdminData() {
       wdTbody.innerHTML = data.pendingWithdraws.map(w => `
         <tr>
           <td><b>${w.userId ? w.userId.name : 'Unknown'}</b></td>
-          <td style="color:var(--red-matte);">₹${w.amount}</td>
+          <td style="color:var(--neon-red);">₹${w.amount}</td>
           <td style="font-family:monospace;font-size:0.7rem;">${w.upiId}</td>
           <td>
             <button class="btn-action btn-approve" onclick="processTx('${w._id}', 'approved')">Approve</button>
@@ -251,7 +381,6 @@ async function loadAdminData() {
       `).join('');
     }
 
-    // Rigging buttons setup
     ['30s', '90s', '3m', '5m'].forEach(roomKey => {
       const container = document.getElementById('rigBtns' + roomKey);
       if (container && container.innerHTML === '') {
@@ -262,10 +391,7 @@ async function loadAdminData() {
         container.innerHTML = html;
       }
     });
-
-  } catch(e) {
-    console.error('Failed to load admin data');
-  }
+  } catch(e) {}
 }
 
 async function processTx(txId, status) {
@@ -288,9 +414,6 @@ async function forceRoomNum(roomKey, number) {
   const data = await res.json();
   alert(data.message);
 }
-
-loadAdminData();
-setInterval(loadAdminData, 8000);
 </script>
 </body>
 </html>
