@@ -14,6 +14,7 @@
   --neon-red:#ff2a4d;
   --neon-green:#00e676;
   --neon-cyan:#00e5ff;
+  --neon-violet:#8b5cf6;
   --text-main:#f8fafc;
   --text-muted:#7b8ca5;
   --glass-border:rgba(255,255,255,0.08);
@@ -51,9 +52,7 @@ body{
 .back-link{
   background:var(--bg-elevated);border:1px solid var(--glass-border);color:#fff;
   text-decoration:none;padding:8px 14px;border-radius:12px;font-weight:800;font-size:0.75rem;
-  transition:all 0.2s;
 }
-.back-link:active{transform:scale(0.94);}
 
 /* STATS CARDS */
 .stats-grid{
@@ -74,23 +73,50 @@ body{
 }
 .section-title{font-size:0.95rem;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 
-/* FORCE CONTROLS */
-.force-control-row{
-  display:flex;gap:8px;align-items:center;background:var(--bg-base);
-  padding:10px;border-radius:14px;margin-bottom:8px;border:1px solid var(--glass-border);
+/* ========================================================= */
+/* 🎨 PREMIER ANIMATED CASINO RIGGING ENGINE (0-9 BALL MATRIX) */
+/* ========================================================= */
+.rigging-room-tabs{
+  display:flex;background:var(--bg-base);padding:4px;border-radius:12px;gap:4px;margin-bottom:14px;border:1px solid var(--glass-border);
 }
-.force-control-row span{font-size:0.8rem;font-weight:800;flex:1;}
-.force-control-row select{
-  background:var(--bg-elevated);border:1px solid var(--glass-border);color:#fff;
-  padding:8px 10px;border-radius:10px;font-weight:800;font-size:0.8rem;outline:none;
+.r-room-tab{
+  flex:1;text-align:center;padding:8px 0;border-radius:9px;font-size:0.75rem;font-weight:900;color:var(--text-muted);cursor:pointer;
 }
-.btn-lock{
+.r-room-tab.active{
   background:linear-gradient(135deg, var(--neon-cyan), #0284c7);color:#000;
-  border:none;padding:8px 14px;border-radius:10px;font-weight:900;font-size:0.75rem;cursor:pointer;
-  box-shadow:0 4px 12px rgba(0,229,255,0.3);
+  box-shadow:0 0 12px rgba(0,229,255,0.4);
 }
 
-/* MOBILE RESPONSIVE CARDS INSTEAD OF CLUNKY TABLES */
+.rigging-status-pill{
+  background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.3);color:var(--neon-cyan);
+  padding:8px 12px;border-radius:12px;font-size:0.75rem;font-weight:800;text-align:center;margin-bottom:14px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.btn-clear-rig{background:none;border:none;color:var(--neon-red);font-weight:900;cursor:pointer;font-size:0.75rem;}
+
+.rigging-balls-grid{
+  display:grid;grid-template-columns:repeat(5, 1fr);gap:10px;margin-bottom:12px;
+}
+.rig-ball{
+  width:100%;aspect-ratio:1;border-radius:50%;border:2px solid transparent;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#fff;font-size:1.2rem;font-weight:900;cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);transition:all 0.15s ease;
+}
+.rig-ball sub{font-size:0.55rem;font-weight:800;opacity:0.9;text-transform:uppercase;margin-top:-2px;}
+.rig-ball.selected{
+  border-color:#ffffff;transform:scale(1.1);
+  box-shadow:0 0 20px #ffffff, 0 0 30px var(--neon-cyan);
+  animation:ballPulse 1.2s infinite alternate;
+}
+@keyframes ballPulse{0%{transform:scale(1.05);}100%{transform:scale(1.12);}}
+
+.ball-green{background:radial-gradient(circle at 35% 35%, #4ade80, #15803d);}
+.ball-red{background:radial-gradient(circle at 35% 35%, #f87171, #b91c1c);}
+.ball-split-0{background:conic-gradient(#b91c1c 0% 50%, #6d28d9 50% 100%);}
+.ball-split-5{background:conic-gradient(#15803d 0% 50%, #6d28d9 50% 100%);}
+
+/* RECORDS CARDS */
 .record-item-card{
   background:var(--bg-base);border:1px solid var(--glass-border);
   border-radius:14px;padding:12px;margin-bottom:10px;
@@ -100,9 +126,7 @@ body{
 .record-info div:nth-child(2){font-size:0.7rem;color:var(--text-muted);font-family:monospace;margin-top:2px;}
 .record-actions{display:flex;gap:6px;}
 
-.btn-action{
-  padding:8px 12px;border-radius:10px;border:none;font-weight:900;font-size:0.72rem;cursor:pointer;
-}
+.btn-action{padding:8px 12px;border-radius:10px;border:none;font-weight:900;font-size:0.72rem;cursor:pointer;}
 .btn-approve{background:rgba(0,230,118,0.2);color:var(--neon-green);border:1px solid var(--neon-green);}
 .btn-reject{background:rgba(255,42,77,0.2);color:var(--neon-red);border:1px solid var(--neon-red);}
 </style>
@@ -134,33 +158,36 @@ body{
     </div>
   </div>
 
-  <!-- RIGGING ENGINE -->
+  <!-- ========================================================= -->
+  <!-- ⚡ PREMIER CASINO BALL RIGGING ENGINE -->
+  <!-- ========================================================= -->
   <div class="section-box">
-    <div class="section-title"><i class="fa-solid fa-dice" style="color:var(--neon-cyan);"></i> Parity Rigging Engine</div>
-    <div class="force-control-row">
-      <span>30s Quick Room:</span>
-      <select id="forceNum_30s">
-        <option value="">Random (Normal)</option>
-        <option value="0">0 (Red/Vio)</option>
-        <option value="1">1 (Green)</option>
-        <option value="2">2 (Red)</option>
-        <option value="3">3 (Green)</option>
-        <option value="4">4 (Red)</option>
-        <option value="5">5 (Grn/Vio)</option>
-        <option value="6">6 (Red)</option>
-        <option value="7">7 (Green)</option>
-        <option value="8">8 (Red)</option>
-        <option value="9">9 (Green)</option>
-      </select>
-      <button class="btn-lock" onclick="setForcedNumber('30s')">LOCK</button>
+    <div class="section-title"><i class="fa-solid fa-dice" style="color:var(--neon-cyan);"></i> Parity Rigging Engine (House Control)</div>
+    
+    <div class="rigging-room-tabs">
+      <div class="r-room-tab active" onclick="switchRigRoom('30s', this)">30s Quick</div>
+      <div class="r-room-tab" onclick="switchRigRoom('90s', this)">90s Room</div>
+      <div class="r-room-tab" onclick="switchRigRoom('3m', this)">3 Min Room</div>
+      <div class="r-room-tab" onclick="switchRigRoom('5m', this)">5 Min Room</div>
     </div>
-    <div class="force-control-row">
-      <span>90s Room:</span>
-      <select id="forceNum_90s">
-        <option value="">Random (Normal)</option>
-        <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option>
-      </select>
-      <button class="btn-lock" onclick="setForcedNumber('90s')">LOCK</button>
+
+    <div class="rigging-status-pill">
+      <span id="activeRigText">Active Room: [30s] • Mode: Random Normal</span>
+      <button class="btn-clear-rig" onclick="clearForcedNumber()">RESET RANDOM</button>
+    </div>
+
+    <!-- 0-9 INTERACTIVE CASINO BALLS -->
+    <div class="rigging-balls-grid">
+      <button class="rig-ball ball-split-0" onclick="selectRigBall(0)">0<sub>Vio</sub></button>
+      <button class="rig-ball ball-green" onclick="selectRigBall(1)">1<sub>Grn</sub></button>
+      <button class="rig-ball ball-red" onclick="selectRigBall(2)">2<sub>Red</sub></button>
+      <button class="rig-ball ball-green" onclick="selectRigBall(3)">3<sub>Grn</sub></button>
+      <button class="rig-ball ball-red" onclick="selectRigBall(4)">4<sub>Red</sub></button>
+      <button class="rig-ball ball-split-5" onclick="selectRigBall(5)">5<sub>Vio</sub></button>
+      <button class="rig-ball ball-red" onclick="selectRigBall(6)">6<sub>Red</sub></button>
+      <button class="rig-ball ball-green" onclick="selectRigBall(7)">7<sub>Grn</sub></button>
+      <button class="rig-ball ball-red" onclick="selectRigBall(8)">8<sub>Red</sub></button>
+      <button class="rig-ball ball-green" onclick="selectRigBall(9)">9<sub>Grn</sub></button>
     </div>
   </div>
 
@@ -182,6 +209,42 @@ body{
 </div>
 
 <script>
+let currentRigRoom = '30s';
+let selectedRigNumber = null;
+
+function switchRigRoom(room, el) {
+  currentRigRoom = room;
+  document.querySelectorAll('.r-room-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('activeRigText').innerText = `Active Room: [${room}] • Mode: ${selectedRigNumber !== null ? 'Locked to Ball ' + selectedRigNumber : 'Random Normal'}`;
+}
+
+async function selectRigBall(num) {
+  selectedRigNumber = num;
+  document.querySelectorAll('.rig-ball').forEach(b => b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+
+  const res = await fetch('/api/admin/force-number', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ roomKey: currentRigRoom, number: num })
+  });
+  const data = await res.json();
+  document.getElementById('activeRigText').innerText = `Active Room: [${currentRigRoom}] • Locked Next Result: Ball #${num} 🎯`;
+}
+
+async function clearForcedNumber() {
+  selectedRigNumber = null;
+  document.querySelectorAll('.rig-ball').forEach(b => b.classList.remove('selected'));
+  const res = await fetch('/api/admin/force-number', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ roomKey: currentRigRoom, number: null })
+  });
+  document.getElementById('activeRigText').innerText = `Active Room: [${currentRigRoom}] • Mode: Random Normal`;
+  alert('Rigging cleared! Room back to algorithmic random output.');
+}
+
 async function loadGodData() {
   try {
     const res = await fetch('/api/admin/system-status');
@@ -192,7 +255,6 @@ async function loadGodData() {
     const net = data.stats.totalRevenue - data.stats.totalPaid;
     document.getElementById('statProfit').innerText = `₹${net.toFixed(0)}`;
 
-    // Render Pending Deposits
     const depBox = document.getElementById('listPendingDeposits');
     if (!data.pendingDeposits.length) {
       depBox.innerHTML = `<p style="text-align:center;color:var(--text-muted);font-size:0.75rem;padding:10px;">No pending recharges.</p>`;
@@ -211,7 +273,6 @@ async function loadGodData() {
       `).join('');
     }
 
-    // Render Pending Withdrawals
     const wdBox = document.getElementById('listPendingWithdraws');
     if (!data.pendingWithdraws.length) {
       wdBox.innerHTML = `<p style="text-align:center;color:var(--text-muted);font-size:0.75rem;padding:10px;">No pending cashouts.</p>`;
@@ -241,18 +302,6 @@ async function processTx(txId, status) {
   const data = await res.json();
   alert(data.message);
   loadGodData();
-}
-
-async function setForcedNumber(roomKey) {
-  const num = document.getElementById('forceNum_' + roomKey).value;
-  if (num === '') return alert('Please select a valid number!');
-  const res = await fetch('/api/admin/force-number', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ roomKey, number: num })
-  });
-  const data = await res.json();
-  alert(data.message);
 }
 
 setInterval(loadGodData, 4000);
