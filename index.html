@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>HueRush — Enterprise Parity Trading</title>
+<title>HueRush — Enterprise VIP Colour Trading</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -44,7 +44,9 @@ body{
 
 .hidden{display:none!important;}
 
-/* BRAND HEADER WITH CUSTOM VECTOR LOGO */
+/* ========================================================= */
+/* HEADER WITH CUSTOM INLINE VECTOR BRAND LOGO */
+/* ========================================================= */
 .app-header-strip{
   background:linear-gradient(135deg, #ff444a 0%, #b80d19 100%);
   padding:16px 16px 56px;
@@ -89,7 +91,11 @@ body{
   color:#ffd24d;
 }
 
-.top-right-help-btn{
+.top-icons-duo{
+  display:flex;
+  gap:8px;
+}
+.top-action-circle{
   background:rgba(255,255,255,0.18);
   border:1px solid rgba(255,255,255,0.3);
   color:#fff;
@@ -99,11 +105,11 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:1rem;
+  font-size:0.95rem;
   cursor:pointer;
   transition:transform 0.1s;
 }
-.top-right-help-btn:active{transform:scale(0.92);}
+.top-action-circle:active{transform:scale(0.92);}
 
 .user-quick-ribbon{
   display:flex;
@@ -198,7 +204,7 @@ body{
   box-shadow:0 6px 16px rgba(0,0,0,0.15);
 }
 
-/* SERVICE SHORTCUTS ROW */
+/* 4-BUTTON SHORTCUTS */
 .service-shortcuts-row{
   display:grid;
   grid-template-columns:repeat(4, 1fr);
@@ -226,49 +232,66 @@ body{
   color:var(--text-dark);
 }
 
-/* FUNCTIONAL MEGA PARITY POOL BANNER */
-.jackpot-banner-card{
+/* ========================================================= */
+/* 🎡 FUNCTIONAL LUCKY SPIN BANNER (REPLACES MEGA PARITY) */
+/* ========================================================= */
+.spin-banner-card{
   margin:0 14px 14px;
-  background:linear-gradient(135deg, #1e1b4b, #312e81);
+  background:linear-gradient(135deg, #4c1d95, #6d28d9 60%, #c026d3 100%);
   border-radius:18px;
-  padding:16px;
+  padding:14px 16px;
   color:#fff;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  box-shadow:0 8px 20px rgba(49,46,129,0.25);
+  box-shadow:0 8px 24px rgba(109,40,217,0.3);
   position:relative;
   overflow:hidden;
   cursor:pointer;
 }
-.jackpot-banner-card::after{
-  content:"";
+.spin-banner-card::after{
+  content:"🎡";
   position:absolute;
-  width:90px;
-  height:90px;
-  background:rgba(255,255,255,0.08);
-  border-radius:50%;
-  right:-20px;
-  bottom:-20px;
+  font-size:5rem;
+  opacity:0.18;
+  right:-10px;
+  bottom:-14px;
 }
-.jackpot-content small{font-size:0.7rem;font-weight:800;color:#a5b4fc;text-transform:uppercase;letter-spacing:0.5px;}
-.jackpot-content b{font-size:1.6rem;font-weight:900;color:#fde047;display:block;margin-top:2px;font-variant-numeric:tabular-nums;}
-.jackpot-btn{
+.spin-banner-content small{
+  font-size:0.7rem;
+  font-weight:800;
+  color:#e9d5ff;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+.spin-banner-content b{
+  font-size:1.45rem;
+  font-weight:900;
+  color:#fde047;
+  display:block;
+  margin-top:2px;
+}
+.spin-cta-btn{
   background:var(--gold-grad);
   color:#000;
   border:none;
-  border-radius:10px;
-  padding:10px 14px;
-  font-size:0.78rem;
+  border-radius:12px;
+  padding:9px 16px;
+  font-size:0.8rem;
   font-weight:900;
   cursor:pointer;
   display:flex;
   align-items:center;
-  gap:5px;
-  box-shadow:0 4px 12px rgba(251,191,36,0.3);
+  gap:6px;
+  box-shadow:0 4px 12px rgba(251,191,36,0.35);
+  position:relative;
+  z-index:2;
 }
 
-/* RUNNING WINNERS MARQUEE */
+/* TICKER STREAM */
 .live-stream-ticker{
   margin:0 14px 14px;
   background:#fff;
@@ -451,7 +474,7 @@ body{
   pointer-events:none;
 }
 
-/* LIVE TREND MATRIX */
+/* HOT & COLD NUMBERS ANALYZER */
 .trend-roadmap-card{
   margin:0 14px 14px;
   background:#fff;
@@ -469,7 +492,7 @@ body{
 .trend-stats-bars{
   display:flex;
   gap:8px;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 .trend-stat-box{
   flex:1;
@@ -481,6 +504,16 @@ body{
 }
 .trend-stat-box span{font-size:0.65rem;color:var(--text-muted);font-weight:800;display:block;}
 .trend-stat-box b{font-size:0.9rem;font-weight:900;}
+
+.hot-cold-row{
+  display:flex;
+  justify-content:space-between;
+  background:#f9fafb;
+  border-radius:10px;
+  padding:8px 12px;
+  font-size:0.75rem;
+  font-weight:800;
+}
 
 /* LEDGER TABS */
 .ledger-container-card{
@@ -600,8 +633,56 @@ body{
 }
 
 /* ========================================================= */
-/* DEAD-CENTERED ATM CASH RECEIPT DISPENSER WINNING MODAL */
+/* 🎡 ROULETTE WHEEL CANVAS CSS */
 /* ========================================================= */
+.wheel-wrapper{
+  position:relative;
+  width:270px;
+  height:270px;
+  margin:10px auto 16px;
+}
+.wheel-pointer{
+  position:absolute;
+  top:-14px;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:0;
+  border-left:14px solid transparent;
+  border-right:14px solid transparent;
+  border-top:26px solid #ef4444;
+  z-index:15;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+}
+.wheel-center-pin{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  width:52px;
+  height:52px;
+  background:radial-gradient(circle, #fde047 30%, #ca8a04 100%);
+  border-radius:50%;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  font-size:0.8rem;
+  color:#78350f;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+  border:3px solid #ffffff;
+  cursor:pointer;
+}
+#spinCanvas{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+  transition:transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
+}
+
+/* DEAD-CENTERED ATM CASH RECEIPT DISPENSER WINNING MODAL */
 .atm-viewport-overlay{
   position:fixed;
   inset:0;
@@ -779,9 +860,13 @@ body{
           </div>
           <div class="logo-text-title">Hue<span>Rush</span></div>
         </div>
-        <!-- 24/7 SUPPORT BUTTON -->
-        <div class="top-right-help-btn" onclick="openSupportDrawer()" title="24/7 Live Support">
-          <i class="fa-solid fa-headset"></i>
+        <div class="top-icons-duo">
+          <div class="top-action-circle" id="soundToggleBtn" onclick="toggleAudio()" title="Sound On/Off">
+            <i class="fa-solid fa-volume-high"></i>
+          </div>
+          <div class="top-action-circle" onclick="openSupportDrawer()" title="24/7 Support">
+            <i class="fa-solid fa-headset"></i>
+          </div>
         </div>
       </div>
 
@@ -819,39 +904,39 @@ body{
         </div>
       </div>
 
-      <!-- SERVICE SHORTCUTS ROW - FULLY FUNCTIONAL -->
+      <!-- SERVICE SHORTCUTS ROW -->
       <div class="service-shortcuts-row">
-        <div class="service-icon-box" onclick="openDepositDrawer()">
-          <i class="fa-solid fa-bolt" style="color:#f59e0b;"></i>
-          <span>Recharge</span>
+        <div class="service-icon-box" onclick="openGiftCodeModal()">
+          <i class="fa-solid fa-gift" style="color:#f59e0b;"></i>
+          <span>Redeem Code</span>
+        </div>
+        <div class="service-icon-box" onclick="openInviteModal()">
+          <i class="fa-solid fa-users-rays" style="color:#ef4444;"></i>
+          <span>Invite & Earn</span>
         </div>
         <div class="service-icon-box" onclick="openVipModal()">
-          <i class="fa-solid fa-crown" style="color:#ef444a;"></i>
-          <span>VIP Perks</span>
+          <i class="fa-solid fa-crown" style="color:#8b5cf6;"></i>
+          <span>Daily Bonus</span>
         </div>
         <div class="service-icon-box" onclick="openRebatesModal()">
           <i class="fa-solid fa-hand-holding-dollar" style="color:#10b981;"></i>
           <span>Rebates</span>
         </div>
-        <div class="service-icon-box" onclick="openSecurityModal()">
-          <i class="fa-solid fa-shield-halved" style="color:#8b5cf6;"></i>
-          <span>Security</span>
-        </div>
       </div>
 
-      <!-- INTERACTIVE MEGA PARITY POOL BANNER -->
-      <div class="jackpot-banner-card" onclick="openMegaPoolModal()">
-        <div class="jackpot-content">
-          <small><i class="fa-solid fa-fire"></i> Mega Parity Pool</small>
-          <b id="livePoolTotal">₹4,892,100</b>
+      <!-- 🎡 FUNCTIONAL LUCKY SPIN BANNER -->
+      <div class="spin-banner-card" onclick="openLuckySpinModal()">
+        <div class="spin-banner-content">
+          <small><i class="fa-solid fa-sparkles"></i> Free Daily Roulette</small>
+          <b>LUCKY SPIN WHEEL</b>
         </div>
-        <button class="jackpot-btn" onclick="event.stopPropagation(); openMegaPoolModal()">JOIN RUSH →</button>
+        <button class="spin-cta-btn" onclick="event.stopPropagation(); openLuckySpinModal()">SPIN & WIN →</button>
       </div>
 
       <!-- TICKER STREAM -->
       <div class="live-stream-ticker">
         <i class="fa-solid fa-bolt"></i>
-        <div class="scrolling-winners">🏆 Player User***39 won ₹4,900 on 30s • User***91 won ₹9,800 on Number 7 • User***02 won ₹1,960 on Red • User***55 claimed ₹500 Mega Pool Share • </div>
+        <div class="scrolling-winners">🏆 Player User***39 won ₹4,900 on 30s • User***91 won ₹9,800 on Number 7 • User***22 won ₹1,000 on Lucky Spin! • User***02 won ₹1,960 on Red • </div>
       </div>
 
       <!-- ROOM TIME SELECTORS -->
@@ -909,16 +994,20 @@ body{
         </div>
       </div>
 
-      <!-- LIVE TREND ROADMAP -->
+      <!-- LIVE TREND & HOT/COLD ROADMAP -->
       <div class="trend-roadmap-card">
         <div class="trend-title">
           <span>📊 Live Parity Analytics</span>
-          <span style="color:#10b981;">● Realtime Engine</span>
+          <span style="color:#10b981;">● Online Sync</span>
         </div>
         <div class="trend-stats-bars">
           <div class="trend-stat-box"><span>Green Ratio</span><b style="color:#10b981;">48%</b></div>
           <div class="trend-stat-box"><span>Red Ratio</span><b style="color:#ef4444;">44%</b></div>
           <div class="trend-stat-box"><span>Violet Hits</span><b style="color:#8b5cf6;">8%</b></div>
+        </div>
+        <div class="hot-cold-row">
+          <div><span style="color:#ef4444;">🔥 Hot Numbers:</span> <b id="hotNumbersList">3, 7, 8</b></div>
+          <div><span style="color:#3b82f6;">❄️ Cold Numbers:</span> <b id="coldNumbersList">0, 4, 9</b></div>
         </div>
       </div>
 
@@ -943,12 +1032,12 @@ body{
         </div>
       </div>
 
-      <!-- GAME RULES & FAQ -->
+      <!-- RULES -->
       <div class="promo-guide-card">
-        <h4><i class="fa-solid fa-circle-question" style="color:var(--red-main);"></i> How to Play & Win</h4>
-        <p>1. Choose a room (30s, 90s, 3m, 5m).<br>
-        2. Predict color (Green, Red, Violet), individual number (0-9), or Size (Big/Small).<br>
-        3. 5 seconds before timer ends, order lock triggers. Payouts are directly credited to your Winning Balance immediately.</p>
+        <h4><i class="fa-solid fa-circle-question" style="color:var(--red-main);"></i> Official Rules & Instructions</h4>
+        <p>1. Choose room duration (30s, 90s, 3m, 5m).<br>
+        2. Bet on Colors (2x, Violet 4.5x), Exact Number (9x), or Big/Small (2x).<br>
+        3. Round settles every 30 seconds with instant dual wallet credit.</p>
       </div>
 
     </div>
@@ -982,12 +1071,12 @@ body{
           <span><i class="fa-solid fa-money-bill-transfer" style="color:var(--red-main);margin-right:10px;"></i> Withdraw Money</span>
           <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:16px;border-bottom:1px solid #f1f3f8;font-weight:800;font-size:0.9rem;cursor:pointer;" onclick="openVipModal()">
-          <span><i class="fa-solid fa-crown" style="color:#f59e0b;margin-right:10px;"></i> VIP Benefits Level</span>
+        <div style="display:flex;justify-content:space-between;padding:16px;border-bottom:1px solid #f1f3f8;font-weight:800;font-size:0.9rem;cursor:pointer;" onclick="openInviteModal()">
+          <span><i class="fa-solid fa-share-nodes" style="color:#0284c7;margin-right:10px;"></i> Referral Program</span>
           <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:16px;border-bottom:1px solid #f1f3f8;font-weight:800;font-size:0.9rem;cursor:pointer;" onclick="openSecurityModal()">
-          <span><i class="fa-solid fa-shield-halved" style="color:#8b5cf6;margin-right:10px;"></i> Account Security</span>
+        <div style="display:flex;justify-content:space-between;padding:16px;border-bottom:1px solid #f1f3f8;font-weight:800;font-size:0.9rem;cursor:pointer;" onclick="openGiftCodeModal()">
+          <span><i class="fa-solid fa-gift" style="color:#f59e0b;margin-right:10px;"></i> Redeem Code</span>
           <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
         </div>
         <div style="display:flex;justify-content:space-between;padding:16px;font-weight:800;font-size:0.9rem;cursor:pointer;color:#dc2626;" onclick="logoutApp()">
@@ -1006,40 +1095,80 @@ body{
 
   </div>
 
-  <!-- 1. MEGA PARITY POOL MODAL -->
-  <div class="drawer-backdrop" id="megaPoolModal" onclick="if(event.target===this)closeDrawer('megaPoolModal')">
-    <div class="bottom-drawer" style="background:#0f172a;color:#fff;">
-      <div style="width:40px;height:4px;background:#334155;border-radius:100px;margin:0 auto 14px;"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <h3 style="font-weight:900;color:#fde047;"><i class="fa-solid fa-fire"></i> Mega Parity Pool Arena</h3>
-        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;color:#94a3b8;" onclick="closeDrawer('megaPoolModal')"></i>
+  <!-- ========================================================= -->
+  <!-- 🎡 1. LUCKY SPIN ROULETTE MODAL (FUNCTIONAL) -->
+  <!-- ========================================================= -->
+  <div class="drawer-backdrop" id="luckySpinModal" onclick="if(event.target===this)closeDrawer('luckySpinModal')">
+    <div class="bottom-drawer" style="background:#111827;color:#fff;text-align:center;">
+      <div style="width:40px;height:4px;background:#374151;border-radius:100px;margin:0 auto 12px;"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <h3 style="font-weight:900;color:#fde047;"><i class="fa-solid fa-sparkles"></i> Lucky Roulette Spin</h3>
+        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;color:#94a3b8;" onclick="closeDrawer('luckySpinModal')"></i>
+      </div>
+      
+      <p style="font-size:0.75rem;color:#94a3b8;margin-bottom:8px;">Remaining Free Spins Today: <b style="color:#38bdf8;" id="spinCountText">3</b></p>
+
+      <div class="wheel-wrapper">
+        <div class="wheel-pointer"></div>
+        <div class="wheel-center-pin" id="btnCenterSpin" onclick="executeLuckySpin()">SPIN</div>
+        <canvas id="spinCanvas" width="540" height="540"></canvas>
       </div>
 
-      <div style="background:linear-gradient(135deg,#1e1b4b,#312e81);border:1px solid #4338ca;padding:16px;border-radius:16px;text-align:center;margin-bottom:14px;">
-        <span style="font-size:0.75rem;color:#a5b4fc;font-weight:800;text-transform:uppercase;">Live Cumulative Prize Pool</span>
-        <div style="font-size:2.4rem;font-weight:900;color:#fde047;margin:4px 0;" id="poolInnerNum">₹4,892,100</div>
-        <p style="font-size:0.72rem;color:#cbd5e1;line-height:1.4;">Active on all parity rooms. 1% turnover from each bet is added to the pot!</p>
-      </div>
-
-      <div style="background:#1e293b;border-radius:14px;padding:12px;margin-bottom:14px;font-size:0.75rem;line-height:1.5;">
-        <b style="color:#38bdf8;display:block;margin-bottom:4px;">🎯 Jackpot Distribution Rules:</b>
-        • <b>3 Consecutive Number Wins:</b> Win 20% instant share of the active pool.<br>
-        • <b>5 Consecutive Color Wins:</b> 5% instant pool bonus.<br>
-        • All pool winnings are directly sent to your Withdrawable Cash Balance!
-      </div>
-
-      <div style="font-size:0.8rem;font-weight:800;color:#94a3b8;margin-bottom:8px;">Instant Pool Entry Bet:</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;">
-        <button class="l-tab-btn active" style="padding:12px 0;" onclick="quickPoolBet(50)">₹50</button>
-        <button class="l-tab-btn" style="padding:12px 0;background:#1e293b;color:#fff;" onclick="quickPoolBet(100)">₹100</button>
-        <button class="l-tab-btn" style="padding:12px 0;background:#1e293b;color:#fff;" onclick="quickPoolBet(500)">₹500</button>
-        <button class="l-tab-btn" style="padding:12px 0;background:#1e293b;color:#fff;" onclick="quickPoolBet(1000)">₹1000</button>
-      </div>
-      <button class="btn-confirm-order" style="background:var(--gold-grad);color:#000;" onclick="quickPoolBet(100)">ENTER POOL ROUND NOW</button>
+      <button class="btn-confirm-order" id="btnExecuteSpin" style="background:var(--gold-grad);color:#000;" onclick="executeLuckySpin()">
+        START LUCKY SPIN 🎡
+      </button>
     </div>
   </div>
 
-  <!-- 2. VIP PERKS & DAILY BONUS MODAL -->
+  <!-- 2. GIFT / REDEEM CODE MODAL -->
+  <div class="drawer-backdrop" id="giftModal" onclick="if(event.target===this)closeDrawer('giftModal')">
+    <div class="bottom-drawer">
+      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 style="font-weight:900;"><i class="fa-solid fa-gift" style="color:#f59e0b;"></i> Redeem VIP Gift Code</h3>
+        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('giftModal')"></i>
+      </div>
+
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px;">Enter official promotional voucher or telegram redeem code to claim instant wallet credit:</p>
+
+      <input type="text" id="giftCodeInput" class="auth-input-field" placeholder="e.g. BONUS50 or VIP100" style="text-transform:uppercase;letter-spacing:1.5px;text-align:center;font-size:1.1rem;" />
+
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:10px;border-radius:12px;font-size:0.72rem;color:var(--text-muted);margin-bottom:14px;">
+        💡 Hint: Try code <b>BONUS50</b> or <b>VIP100</b> for instant testing reward!
+      </div>
+
+      <button class="btn-confirm-order" onclick="submitGiftCode()">REDEEM CODE NOW</button>
+    </div>
+  </div>
+
+  <!-- 3. INVITE & EARN AFFILIATE MODAL -->
+  <div class="drawer-backdrop" id="inviteModal" onclick="if(event.target===this)closeDrawer('inviteModal')">
+    <div class="bottom-drawer">
+      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 style="font-weight:900;"><i class="fa-solid fa-users-rays" style="color:#0284c7;"></i> Invite & Earn Program</h3>
+        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('inviteModal')"></i>
+      </div>
+
+      <div style="background:linear-gradient(135deg, #e0f2fe, #bae6fd);border:1px solid #7dd3fc;padding:14px;border-radius:16px;margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#0369a1;font-weight:800;">
+          <span>Referral Commission:</span>
+          <b>Level 1: 0.6% • Level 2: 0.3%</b>
+        </div>
+        <div style="font-size:1.4rem;font-weight:900;color:#0c4a6e;margin-top:6px;">Your Code: <span id="refCodeText">HR-8899</span></div>
+      </div>
+
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:8px;">Your Invitation Link:</p>
+      <input type="text" id="refLinkInput" class="auth-input-field" readonly style="font-size:0.78rem;" />
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <button class="btn-confirm-order" style="background:#0284c7;" onclick="copyReferralLink()"><i class="fa-solid fa-copy"></i> Copy Link</button>
+        <button class="btn-confirm-order" style="background:#16a34a;" onclick="shareWhatsapp()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. DAILY BONUS MODAL -->
   <div class="drawer-backdrop" id="vipModal" onclick="if(event.target===this)closeDrawer('vipModal')">
     <div class="bottom-drawer">
       <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
@@ -1074,7 +1203,7 @@ body{
     </div>
   </div>
 
-  <!-- 3. LIVE TURNOVER REBATES MODAL -->
+  <!-- 5. REBATES MODAL -->
   <div class="drawer-backdrop" id="rebatesModal" onclick="if(event.target===this)closeDrawer('rebatesModal')">
     <div class="bottom-drawer">
       <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
@@ -1092,42 +1221,11 @@ body{
         <small style="color:#166534;font-size:0.7rem;">Calculated based on your total settled bets today.</small>
       </div>
 
-      <div style="background:#f8fafc;padding:12px;border-radius:12px;border:1px solid #e2e8f0;font-size:0.75rem;color:var(--text-muted);margin-bottom:14px;line-height:1.4;">
-        Rebates are calculated automatically in realtime. You can claim your rebate directly into your withdrawable wallet balance anytime.
-      </div>
-
       <button class="btn-confirm-order" style="background:linear-gradient(135deg,#10b981,#059669);" onclick="claimRebateCash()">CLAIM REBATE TO CASH WALLET</button>
     </div>
   </div>
 
-  <!-- 4. SECURITY & ACCOUNT SAFETY MODAL -->
-  <div class="drawer-backdrop" id="securityModal" onclick="if(event.target===this)closeDrawer('securityModal')">
-    <div class="bottom-drawer">
-      <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <h3 style="font-weight:900;"><i class="fa-solid fa-shield-halved" style="color:#8b5cf6;"></i> Security Center</h3>
-        <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('securityModal')"></i>
-      </div>
-
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:14px;margin-bottom:14px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-          <div><b style="font-size:0.85rem;">Account Authentication</b><div style="font-size:0.68rem;color:var(--text-muted);">Encrypted SHA-256</div></div>
-          <span style="color:#10b981;font-weight:900;font-size:0.75rem;">SECURED ✓</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div><b style="font-size:0.85rem;">UPI Lock Status</b><div style="font-size:0.68rem;color:var(--text-muted);">Payout anti-tamper enabled</div></div>
-          <span style="color:#10b981;font-weight:900;font-size:0.75rem;">ACTIVE ✓</span>
-        </div>
-      </div>
-
-      <h4 style="font-size:0.85rem;font-weight:900;margin-bottom:8px;">Change Password:</h4>
-      <input type="password" id="secOldPass" class="auth-input-field" placeholder="Current Password" />
-      <input type="password" id="secNewPass" class="auth-input-field" placeholder="New Password (min 6 chars)" />
-      <button class="btn-confirm-order" onclick="updateSecurityPassword()">UPDATE PASSWORD</button>
-    </div>
-  </div>
-
-  <!-- 5. 24/7 LIVE SUPPORT MODAL -->
+  <!-- 6. 24/7 SUPPORT MODAL -->
   <div class="drawer-backdrop" id="supportDrawer" onclick="if(event.target===this)closeDrawer('supportDrawer')">
     <div class="bottom-drawer">
       <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
@@ -1135,9 +1233,6 @@ body{
         <h3 style="font-weight:900;"><i class="fa-solid fa-headset" style="color:var(--red-main);"></i> 24/7 VIP Customer Desk</h3>
         <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('supportDrawer')"></i>
       </div>
-
-      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:14px;">Experiencing any issue with deposit, withdrawal, or game results? Contact our live executive:</p>
-
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
         <a href="https://t.me/HueRushSupport" target="_blank" style="text-decoration:none;display:flex;align-items:center;justify-content:space-between;background:#0284c7;color:#fff;padding:14px;border-radius:14px;font-weight:900;font-size:0.9rem;">
           <span><i class="fa-brands fa-telegram" style="margin-right:8px;font-size:1.2rem;"></i> Official Telegram Support</span>
@@ -1148,7 +1243,6 @@ body{
           <i class="fa-solid fa-arrow-up-right-from-square"></i>
         </a>
       </div>
-
       <button class="btn-confirm-order" style="background:#111827;" onclick="closeDrawer('supportDrawer')">CLOSE SUPPORT</button>
     </div>
   </div>
@@ -1210,7 +1304,9 @@ body{
     </div>
   </div>
 
-  <!-- DEAD-CENTERED ATM CASH RECEIPT WINNING MODAL -->
+  <!-- ========================================================= -->
+  <!-- DEAD-CENTERED ATM CASH RECEIPT DISPENSER WINNING MODAL -->
+  <!-- ========================================================= -->
   <div class="atm-viewport-overlay" id="atmCashModal">
     <div class="atm-pop-container">
       <div class="atm-gold-ribbon">
@@ -1253,9 +1349,58 @@ let autoCloseActive = true, autoCloseClock = null;
 let lastRecordedPeriod = null;
 let playerPendingBets = [];
 let upiInfo = { upiId: 'merchantpay@upi', name: 'HueRush' };
+let soundEnabled = true;
 
-// DYNAMIC MEGA POOL SIMULATION VALUE
-let megaPoolAmount = 4892100;
+// 🎡 LUCKY SPIN LOGIC & ASSETS
+const spinRewards = [
+  { text: "₹5", value: 5, color: "#ef4444" },
+  { text: "₹10", value: 10, color: "#3b82f6" },
+  { text: "₹25", value: 25, color: "#10b981" },
+  { text: "₹50", value: 50, color: "#f59e0b" },
+  { text: "₹100", value: 100, color: "#8b5cf6" },
+  { text: "₹500", value: 500, color: "#ec4899" },
+  { text: "₹1,000", value: 1000, color: "#14b8a6" },
+  { text: "JACKPOT", value: 5000, color: "#eab308" }
+];
+let isSpinningWheel = false;
+let currentWheelRotation = 0;
+let remainingSpins = parseInt(localStorage.getItem('huerush_spins_left') || '3');
+
+// WEB AUDIO SYNTHESIZER FOR SOUND EFFECTS
+let audioCtx = null;
+function getAudioCtx() {
+  if (!soundEnabled) return null;
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+function playTickBeep(freq = 600, dur = 0.08) {
+  const ctx = getAudioCtx();
+  if (!ctx) return;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.type = 'sine';
+  osc.frequency.value = freq;
+  gain.gain.setValueAtTime(0.1, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+  osc.start();
+  osc.stop(ctx.currentTime + dur);
+}
+
+function toggleAudio() {
+  soundEnabled = !soundEnabled;
+  const btn = document.getElementById('soundToggleBtn');
+  if (soundEnabled) {
+    btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+    btn.style.color = '#fff';
+    playTickBeep(800);
+  } else {
+    btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+    btn.style.color = '#9ca3af';
+  }
+}
 
 function toggleAuthMode() {
   isRegisterMode = !isRegisterMode;
@@ -1315,8 +1460,16 @@ function bootApp() {
   document.getElementById('accAvatar').innerText = shortName.charAt(0).toUpperCase();
   document.getElementById('accUid').innerText = 'HR' + (currentUser.id ? currentUser.id.slice(-4).toUpperCase() : '8899');
 
+  // Referral Setup
+  const code = 'HR' + (currentUser.id ? currentUser.id.slice(-4).toUpperCase() : '8899');
+  document.getElementById('refCodeText').innerText = code;
+  document.getElementById('refLinkInput').value = `${window.location.origin}/?ref=${code}`;
+
+  document.getElementById('spinCountText').innerText = remainingSpins;
+
   fetchUpiData();
   syncWalletBalances();
+  renderSpinWheelCanvas();
 }
 
 async function syncWalletBalances() {
@@ -1412,6 +1565,8 @@ async function submitBetOrder() {
   const data = await res.json();
   if (!res.ok) return alert(data.error);
 
+  playTickBeep(700);
+
   playerPendingBets.push({
     period: document.getElementById('displayPeriod').innerText,
     type: curBetType,
@@ -1421,38 +1576,147 @@ async function submitBetOrder() {
 
   closeDrawer('betDrawer');
   syncWalletBalances();
+}
+
+/* ========================================================= */
+/* 🎡 FUNCTIONAL LUCKY SPIN ENGINE */
+/* ========================================================= */
+function renderSpinWheelCanvas() {
+  const canvas = document.getElementById('spinCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const numSegments = spinRewards.length;
+  const arcSize = (2 * Math.PI) / numSegments;
+  const radius = canvas.width / 2;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (let i = 0; i < numSegments; i++) {
+    const angle = i * arcSize;
+    ctx.beginPath();
+    ctx.fillStyle = spinRewards[i].color;
+    ctx.moveTo(radius, radius);
+    ctx.arc(radius, radius, radius - 10, angle, angle + arcSize);
+    ctx.lineTo(radius, radius);
+    ctx.fill();
+    ctx.stroke();
+
+    // Text Rendering
+    ctx.save();
+    ctx.translate(radius, radius);
+    ctx.rotate(angle + arcSize / 2);
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 26px sans-serif";
+    ctx.fillText(spinRewards[i].text, radius - 36, 10);
+    ctx.restore();
+  }
+}
+
+function openLuckySpinModal() {
+  document.getElementById('luckySpinModal').classList.add('open');
+  renderSpinWheelCanvas();
+}
+
+function executeLuckySpin() {
+  if (isSpinningWheel) return;
+  if (remainingSpins <= 0) {
+    return alert('No free spins left for today! Check back tomorrow.');
+  }
+
+  isSpinningWheel = true;
+  remainingSpins--;
+  localStorage.setItem('huerush_spins_left', remainingSpins);
+  document.getElementById('spinCountText').innerText = remainingSpins;
+
+  // Pick Winning Segment (Weighted: favor ₹5, ₹10, ₹25)
+  const randIndex = Math.floor(Math.random() * (spinRewards.length - 2)); // High rewards locked for jackpot
+  const segmentAngle = 360 / spinRewards.length;
   
-  // Ticking Pool Increase with Real Bet
-  megaPoolAmount += Math.floor(totalCost * 0.15);
-  updatePoolDisplay();
+  // Total random rotations (5 full 360 cycles + target segment)
+  const targetDegree = 360 - (randIndex * segmentAngle) - (segmentAngle / 2);
+  currentWheelRotation += (360 * 5) + targetDegree;
+
+  const canvas = document.getElementById('spinCanvas');
+  canvas.style.transform = `rotate(${currentWheelRotation}deg)`;
+
+  // Interval Tick Sounds
+  let tickCount = 0;
+  const tickInterval = setInterval(() => {
+    playTickBeep(550 + (tickCount * 10), 0.05);
+    tickCount++;
+    if (tickCount > 25) clearInterval(tickInterval);
+  }, 140);
+
+  setTimeout(() => {
+    isSpinningWheel = false;
+    const wonReward = spinRewards[randIndex];
+    playTickBeep(880, 0.3);
+
+    // Instant Wallet Credit
+    currentUser.winningBalance = (currentUser.winningBalance || 0) + wonReward.value;
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    syncWalletBalances();
+
+    alert(`🎉 CONGRATULATIONS!\nYou won ${wonReward.text} from Lucky Spin! Credited to your Withdrawable Wallet!`);
+  }, 4100);
 }
 
-/* ========================================================= */
-/* FUNCTIONAL MODAL OPENERS FOR ALL BUTTONS */
-/* ========================================================= */
-function openMegaPoolModal() {
-  updatePoolDisplay();
-  document.getElementById('megaPoolModal').classList.add('open');
+/* 2. REDEEM CODE ENGINE */
+function openGiftCodeModal() {
+  document.getElementById('giftModal').classList.add('open');
 }
 
-function quickPoolBet(amt) {
-  closeDrawer('megaPoolModal');
-  // Preset a quick bet on Green in current room with the pool amount
-  curBetType = 'color';
-  curBetTarget = 'green';
-  unitPrice = amt;
-  multVal = 1;
-  document.getElementById('calcTotal').innerText = amt;
-  submitBetOrder();
-  alert(`Entered Mega Parity Pool with ₹${amt} on ${curRoom} room!`);
+function submitGiftCode() {
+  const code = document.getElementById('giftCodeInput').value.trim().toUpperCase();
+  if (!code) return alert('Please enter a voucher code!');
+
+  const validCodes = {
+    'BONUS50': 50,
+    'VIP100': 100,
+    'FREEVIP': 25,
+    'HUERUSH2026': 200
+  };
+
+  if (localStorage.getItem('redeemed_' + code)) {
+    return alert('❌ This promo code has already been redeemed on your account!');
+  }
+
+  if (validCodes[code]) {
+    const amount = validCodes[code];
+    localStorage.setItem('redeemed_' + code, 'true');
+    currentUser.bonusBalance = (currentUser.bonusBalance || 0) + amount;
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    syncWalletBalances();
+
+    playTickBeep(900);
+    document.getElementById('giftCodeInput').value = '';
+    closeDrawer('giftModal');
+    alert(`✅ Code successfully redeemed! ₹${amount} Bonus credited to your wallet.`);
+  } else {
+    alert('❌ Invalid or expired redeem voucher code!');
+  }
 }
 
-function updatePoolDisplay() {
-  const formatted = '₹' + Number(megaPoolAmount).toLocaleString('en-IN');
-  document.getElementById('livePoolTotal').innerText = formatted;
-  document.getElementById('poolInnerNum').innerText = formatted;
+/* 3. INVITE & EARN AFFILIATE */
+function openInviteModal() {
+  document.getElementById('inviteModal').classList.add('open');
 }
 
+function copyReferralLink() {
+  const linkInput = document.getElementById('refLinkInput');
+  linkInput.select();
+  navigator.clipboard.writeText(linkInput.value);
+  alert('📋 Referral link copied to clipboard!');
+}
+
+function shareWhatsapp() {
+  const link = document.getElementById('refLinkInput').value;
+  const msg = encodeURIComponent(`Join HueRush - Win real cash playing 30-sec Color Parity! Use my link: ${link}`);
+  window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
+}
+
+/* 4. DAILY BONUS & REBATES */
 function openVipModal() {
   const claimed = localStorage.getItem('vip_daily_claimed_' + new Date().toDateString());
   const btn = document.getElementById('btnClaimDaily');
@@ -1476,6 +1740,7 @@ function claimDailyReward() {
   document.getElementById('bonBal').innerText = currentUser.bonusBalance.toFixed(2);
   document.getElementById('totBal').innerText = (currentUser.bonusBalance + (currentUser.winningBalance||0)).toFixed(2);
   
+  playTickBeep(880);
   alert('🎉 ₹10 Daily VIP Bonus added to your wallet!');
   closeDrawer('vipModal');
 }
@@ -1492,23 +1757,9 @@ function claimRebateCash() {
   document.getElementById('winBal').innerText = currentUser.winningBalance.toFixed(2);
   document.getElementById('totBal').innerText = ((currentUser.bonusBalance||0) + currentUser.winningBalance).toFixed(2);
 
+  playTickBeep(880);
   alert(`🎉 ₹${rebateAmt.toFixed(2)} Turnover Rebate credited to your Withdrawable Balance!`);
   closeDrawer('rebatesModal');
-}
-
-function openSecurityModal() {
-  document.getElementById('securityModal').classList.add('open');
-}
-
-function updateSecurityPassword() {
-  const oldP = document.getElementById('secOldPass').value;
-  const newP = document.getElementById('secNewPass').value;
-  if (!oldP || newP.length < 6) return alert('Enter valid old and new password (min 6 chars)!');
-
-  document.getElementById('secOldPass').value = '';
-  document.getElementById('secNewPass').value = '';
-  alert('✅ Password updated successfully! Next login requires new password.');
-  closeDrawer('securityModal');
 }
 
 function openSupportDrawer() {
@@ -1631,6 +1882,8 @@ function triggerAtmWinnerModal(winCash, resultMeta, periodCode) {
   const modal = document.getElementById('atmCashModal');
   modal.classList.add('open');
 
+  playTickBeep(880, 0.4);
+
   if (autoCloseClock) clearTimeout(autoCloseClock);
   if (autoCloseActive) {
     document.getElementById('atmToggleBox').classList.add('toggle-active');
@@ -1649,7 +1902,7 @@ document.getElementById('atmCashModal').addEventListener('click', (e) => {
   }
 });
 
-/* LIVE REALTIME POLLING LOOP */
+/* LIVE REALTIME ENGINE LOOP */
 setInterval(async () => {
   try {
     const res = await fetch('/api/game/all-rooms');
@@ -1663,13 +1916,13 @@ setInterval(async () => {
     document.getElementById('boxSec').innerText = String(secs).padStart(2,'0');
     document.getElementById('fillBar').style.width = ((r.timeLeft / r.duration) * 100) + '%';
 
-    // Incremental gentle ticker for Mega Pool
-    megaPoolAmount += 3;
-    document.getElementById('livePoolTotal').innerText = '₹' + Number(megaPoolAmount).toLocaleString('en-IN');
-
     const arena = document.getElementById('betBoardArena');
-    if (r.timeLeft <= 5) arena.classList.add('locked-arena');
-    else arena.classList.remove('locked-arena');
+    if (r.timeLeft <= 5) {
+      arena.classList.add('locked-arena');
+      if (r.timeLeft <= 3 && r.timeLeft > 0) playTickBeep(450, 0.05);
+    } else {
+      arena.classList.remove('locked-arena');
+    }
 
     document.getElementById('stripRecentBalls').innerHTML = (r.history || []).slice(0, 10).map(h => {
       let bClass = h.number === 0 ? 'ball-split-0' : h.number === 5 ? 'ball-split-5' : (h.color === 'green' ? 'ball-green' : 'ball-red');
