@@ -628,9 +628,7 @@ body{
   box-shadow:0 6px 18px rgba(184,13,25,0.3);
 }
 
-/* ========================================================= */
-/* 🎡 ROULETTE WHEEL CANVAS CSS */
-/* ========================================================= */
+/* WHEEL CANVAS */
 .wheel-wrapper{
   position:relative;
   width:270px;
@@ -678,7 +676,9 @@ body{
   transition:transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
 }
 
-/* DEAD-CENTERED ATM CASH RECEIPT DISPENSER WINNING MODAL */
+/* ========================================================= */
+/* DEAD-CENTERED ATM WINNING & LOSS POPUPS */
+/* ========================================================= */
 .atm-viewport-overlay{
   position:fixed;
   inset:0;
@@ -698,17 +698,20 @@ body{
 .atm-pop-container{
   width:100%;
   max-width:330px;
-  background:linear-gradient(180deg, #ff6d43 0%, #ff4f3b 100%);
   border-radius:28px;
   padding:72px 18px 22px;
   position:relative;
-  box-shadow:0 24px 60px rgba(255,79,59,0.45);
   text-align:center;
   margin:auto;
   animation:atmPopIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 @keyframes atmPopIn{0%{transform:scale(0.8);opacity:0;}100%{transform:scale(1);opacity:1;}}
 
+/* WIN THEME */
+.theme-win-card{
+  background:linear-gradient(180deg, #ff6d43 0%, #ff4f3b 100%);
+  box-shadow:0 24px 60px rgba(255,79,59,0.45);
+}
 .atm-gold-ribbon{
   position:absolute;
   top:-34px;
@@ -735,6 +738,40 @@ body{
   border-radius:100px;
 }
 .atm-flight-rocket{font-size:2rem;color:#fff;animation:rocketFloat 1.8s ease-in-out infinite alternate;}
+
+/* LOSS THEME */
+.theme-loss-card{
+  background:linear-gradient(180deg, #334155 0%, #1e293b 100%);
+  box-shadow:0 24px 60px rgba(0,0,0,0.6);
+  border:1px solid #475569;
+}
+.atm-loss-ribbon{
+  position:absolute;
+  top:-34px;
+  left:50%;
+  transform:translateX(-50%);
+  width:220px;
+  height:76px;
+  background:radial-gradient(circle at center, #64748b 0%, #334155 80%);
+  border-radius:100px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+  border:3px solid #94a3b8;
+}
+.ribbon-loss-wings{
+  position:absolute;
+  width:270px;
+  height:36px;
+  top:18px;
+  left:-25px;
+  background:linear-gradient(90deg, transparent, #475569 20%, #334155 80%, transparent);
+  z-index:-1;
+  border-radius:100px;
+}
+.atm-loss-icon{font-size:2rem;color:#ef4444;}
+
 @keyframes rocketFloat{0%{transform:translateY(0);}100%{transform:translateY(-5px);}}
 
 .atm-heading-congrats{font-size:1.35rem;font-weight:900;color:#fff;line-height:1.2;}
@@ -748,6 +785,8 @@ body{
 .pill-violet{background:#8b5cf6;}
 
 .atm-cutter-slot{background:#b92716;border-radius:100px;height:14px;width:92%;margin:0 auto;box-shadow:inset 0 3px 6px rgba(0,0,0,0.6);}
+.slot-loss{background:#0f172a;}
+
 .atm-slide-receipt{
   position:relative;
   width:90%;
@@ -764,6 +803,7 @@ body{
 
 .receipt-bonus-lbl{font-size:0.8rem;color:#ef4444;font-weight:800;text-transform:lowercase;}
 .receipt-cash-val{font-size:1.85rem;font-weight:900;color:#f43f5e;margin:2px 0 6px;}
+.loss-val{color:#64748b;}
 .receipt-issue-id{font-size:0.65rem;color:#64748b;font-weight:700;}
 
 .atm-auto-close-toggle{display:flex;align-items:center;gap:8px;margin-top:20px;padding-left:14px;font-size:0.78rem;font-weight:800;color:#ffdcd4;cursor:pointer;}
@@ -1091,9 +1131,7 @@ body{
 
   </div>
 
-  <!-- ========================================================= -->
-  <!-- 🎡 CONTROLLED LUCKY SPIN MODAL (MAX ₹20 / NO LOSS SCRIPT) -->
-  <!-- ========================================================= -->
+  <!-- 🎡 1. LUCKY SPIN ROULETTE MODAL -->
   <div class="drawer-backdrop" id="luckySpinModal" onclick="if(event.target===this)closeDrawer('luckySpinModal')">
     <div class="bottom-drawer" style="background:#111827;color:#fff;text-align:center;">
       <div style="width:40px;height:4px;background:#374151;border-radius:100px;margin:0 auto 12px;"></div>
@@ -1300,15 +1338,20 @@ body{
     </div>
   </div>
 
-  <!-- DEAD-CENTERED ATM CASH RECEIPT DISPENSER WINNING MODAL -->
+  <!-- ========================================================= -->
+  <!-- DEAD-CENTERED ATM CASH RECEIPT DISPENSER (WIN/LOSS DYNAMIC) -->
+  <!-- ========================================================= -->
   <div class="atm-viewport-overlay" id="atmCashModal">
-    <div class="atm-pop-container">
-      <div class="atm-gold-ribbon">
-        <div class="ribbon-lateral-wings"></div>
-        <i class="fa-solid fa-rocket atm-flight-rocket"></i>
+    <div class="atm-pop-container theme-win-card" id="atmCardBody">
+      
+      <!-- DYNAMIC TOP RIBBON (GOLD WINGS OR LOSS SHIELD) -->
+      <div class="atm-gold-ribbon" id="atmRibbonContainer">
+        <div class="ribbon-lateral-wings" id="atmWingsContainer"></div>
+        <i class="fa-solid fa-rocket atm-flight-rocket" id="atmTopIcon"></i>
       </div>
-      <div class="atm-heading-congrats">Congratulations on your</div>
-      <div class="atm-subheading-win">winning</div>
+
+      <div class="atm-heading-congrats" id="atmMainHeading">Congratulations on your</div>
+      <div class="atm-subheading-win" id="atmSubHeading">winning</div>
       
       <div class="atm-result-pill-row">
         <span class="pill-label-tag">lottery result</span>
@@ -1317,9 +1360,9 @@ body{
         <span class="pill-badge pill-green" id="atmWinSize">Big</span>
       </div>
 
-      <div class="atm-cutter-slot"></div>
+      <div class="atm-cutter-slot" id="atmSlotCutter"></div>
       <div class="atm-slide-receipt">
-        <div class="receipt-bonus-lbl">bonus</div>
+        <div class="receipt-bonus-lbl" id="receiptTagLabel">bonus</div>
         <div class="receipt-cash-val" id="atmWinCash">₹0.00</div>
         <div class="receipt-issue-id" id="atmWinIssue">Issue: 30s Quick 20260901001</div>
       </div>
@@ -1345,9 +1388,7 @@ let playerPendingBets = [];
 let upiInfo = { upiId: 'merchantpay@upi', name: 'HueRush' };
 let soundEnabled = true;
 
-// =========================================================
-// 🎡 8 CONTROLLED SEGMENTS: ₹10 TO ₹50 MAX (WITH TRY AGAIN)
-// =========================================================
+// 8 CONTROLLED SEGMENTS: ₹10 TO ₹50 (WITH TRY AGAIN)
 const spinRewards = [
   { text: "₹10", value: 10, color: "#ef4444" },
   { text: "Try Again", value: 0, color: "#64748b" },
@@ -1361,8 +1402,6 @@ const spinRewards = [
 
 let isSpinningWheel = false;
 let currentWheelRotation = 0;
-
-// STRICT: ONLY 1 CHANCE PER 24 HOURS
 const todayDateStr = new Date().toDateString();
 let lastSpinDate = localStorage.getItem('huerush_last_spin_date');
 let remainingSpins = (lastSpinDate === todayDateStr) ? 0 : 1;
@@ -1577,9 +1616,7 @@ async function submitBetOrder() {
   syncWalletBalances();
 }
 
-/* ========================================================= */
-/* 🎡 CONTROLLED ROULETTE WHEEL WITH STRICT PLATFORM SAFETY */
-/* ========================================================= */
+/* 🎡 CONTROLLED ROULETTE WHEEL */
 function renderSpinWheelCanvas() {
   const canvas = document.getElementById('spinCanvas');
   if (!canvas) return;
@@ -1627,27 +1664,14 @@ function executeLuckySpin() {
   localStorage.setItem('huerush_last_spin_date', todayDateStr);
   document.getElementById('spinCountText').innerText = 0;
 
-  // =========================================================
-  // RIGGED/CONTROLLED MATH: NEVER LAND ON ₹50 OR ₹30!
-  // Safe Indices:
-  // 0: ₹10 (25% chance)
-  // 2: ₹20 (5% chance)
-  // 1, 3, 5, 7: Try Again / No Prize (70% chance)
-  // =========================================================
-  let targetIndex = 1; // Default "Try Again"
+  let targetIndex = 1; // Try Again
   const dice = Math.random();
 
-  if (dice < 0.25) {
-    targetIndex = 0; // ₹10
-  } else if (dice < 0.30) {
-    targetIndex = 2; // ₹20
-  } else if (dice < 0.55) {
-    targetIndex = 1; // Try Again
-  } else if (dice < 0.75) {
-    targetIndex = 3; // No Prize
-  } else {
-    targetIndex = 5; // Hard Luck
-  }
+  if (dice < 0.25) targetIndex = 0; // ₹10
+  else if (dice < 0.30) targetIndex = 2; // ₹20
+  else if (dice < 0.55) targetIndex = 1; // Try Again
+  else if (dice < 0.75) targetIndex = 3; // No Prize
+  else targetIndex = 5; // Hard Luck
 
   const segmentAngle = 360 / spinRewards.length;
   const targetDegree = 360 - (targetIndex * segmentAngle) - (segmentAngle / 2);
@@ -1878,7 +1902,9 @@ function renderPersonalBets(bets) {
   `).join('');
 }
 
-// ATM RECEIPT CONTROLLER
+// =========================================================
+// ATM RECEIPT CONTROLLER: DYNAMIC WIN VS LOSS DISPLAY
+// =========================================================
 function toggleAutoClose() {
   autoCloseActive = !autoCloseActive;
   const box = document.getElementById('atmToggleBox');
@@ -1886,8 +1912,47 @@ function toggleAutoClose() {
   else box.classList.remove('toggle-active');
 }
 
-function triggerAtmWinnerModal(winCash, resultMeta, periodCode) {
-  document.getElementById('atmWinCash').innerText = `₹${winCash.toFixed(2)}`;
+function triggerAtmOutcomeModal(isWin, amount, resultMeta, periodCode) {
+  const cardBody = document.getElementById('atmCardBody');
+  const ribbonBox = document.getElementById('atmRibbonContainer');
+  const wingsBox = document.getElementById('atmWingsContainer');
+  const topIcon = document.getElementById('atmTopIcon');
+  const mainHead = document.getElementById('atmMainHeading');
+  const subHead = document.getElementById('atmSubHeading');
+  const cashVal = document.getElementById('atmWinCash');
+  const tagLbl = document.getElementById('receiptTagLabel');
+  const slotCut = document.getElementById('atmSlotCutter');
+
+  if (isWin) {
+    // WIN STYLES
+    cardBody.className = 'atm-pop-container theme-win-card';
+    ribbonBox.className = 'atm-gold-ribbon';
+    wingsBox.className = 'ribbon-lateral-wings';
+    topIcon.className = 'fa-solid fa-rocket atm-flight-rocket';
+    mainHead.innerText = 'Congratulations on your';
+    subHead.innerText = 'winning';
+    tagLbl.innerText = 'bonus';
+    tagLbl.style.color = '#ef4444';
+    cashVal.innerText = `+₹${amount.toFixed(2)}`;
+    cashVal.className = 'receipt-cash-val';
+    slotCut.className = 'atm-cutter-slot';
+    playTickBeep(880, 0.4);
+  } else {
+    // LOSS STYLES
+    cardBody.className = 'atm-pop-container theme-loss-card';
+    ribbonBox.className = 'atm-loss-ribbon';
+    wingsBox.className = 'ribbon-loss-wings';
+    topIcon.className = 'fa-solid fa-heart-crack atm-loss-icon';
+    mainHead.innerText = 'Better luck next time';
+    subHead.innerText = 'you lost';
+    tagLbl.innerText = 'debit';
+    tagLbl.style.color = '#64748b';
+    cashVal.innerText = `-₹${amount.toFixed(2)}`;
+    cashVal.className = 'receipt-cash-val loss-val';
+    slotCut.className = 'atm-cutter-slot slot-loss';
+    playTickBeep(320, 0.3);
+  }
+
   document.getElementById('atmWinIssue').innerText = `Issue: ${curRoom} Quick ${periodCode}`;
 
   const colTag = document.getElementById('atmWinCol');
@@ -1899,8 +1964,6 @@ function triggerAtmWinnerModal(winCash, resultMeta, periodCode) {
 
   const modal = document.getElementById('atmCashModal');
   modal.classList.add('open');
-
-  playTickBeep(880, 0.4);
 
   if (autoCloseClock) clearTimeout(autoCloseClock);
   if (autoCloseActive) {
@@ -1966,6 +2029,7 @@ setInterval(async () => {
         lastRecordedPeriod = latest.period;
         syncWalletBalances();
 
+        // Check if player placed bet in this period
         const matchBet = playerPendingBets.find(b => String(b.period) === String(latest.period));
         if (matchBet) {
           let win = false;
@@ -1983,8 +2047,12 @@ setInterval(async () => {
 
           if (win) {
             const winCash = matchBet.amount * mult * 0.98;
-            triggerAtmWinnerModal(winCash, latest, latest.period);
+            triggerAtmOutcomeModal(true, winCash, latest, latest.period);
+          } else {
+            // TRIGGER LOSS POPUP
+            triggerAtmOutcomeModal(false, matchBet.amount, latest, latest.period);
           }
+
           playerPendingBets = playerPendingBets.filter(b => String(b.period) !== String(latest.period));
         }
       } else if (lastRecordedPeriod === null) {
