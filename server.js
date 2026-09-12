@@ -18,7 +18,11 @@ const userSchema = new mongoose.Schema({
   role: { type: String, default: 'user' },
   bonusBalance: { type: Number, default: 50 },
   winningBalance: { type: Number, default: 0 },
-  totalDeposited: { type: Number, default: 0 }
+  totalDeposited: { type: Number, default: 0 },
+  claimedStreakDays: { type: [Number], default: [] },
+  lastStreakDate: { type: String, default: '' },
+  redeemedVouchers: { type: [String], default: [] },
+  referralEarnings: { type: Number, default: 0 }
 }, { timestamps: true });
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
@@ -68,7 +72,7 @@ function getNumberMeta(num) {
   return { num, color: num % 2 === 0 ? 'red' : 'green', size };
 }
 
-// Background Game Loops with Bonus-Drain Algorithm
+// Background Game Loop
 Object.keys(global.rooms).forEach(roomKey => {
   setInterval(async () => {
     const room = global.rooms[roomKey];
@@ -80,19 +84,15 @@ Object.keys(global.rooms).forEach(roomKey => {
         winningNum = Number(room.forcedResult);
         room.forcedResult = null;
       } else {
-        // SMART ALGORITHM: Check if high volume of free bonus bets are placed
-        let totalFreeBonusBets = 0;
         let colorPool = { green: 0, red: 0, violet: 0 };
-
         room.activeBets.forEach(b => {
           if (b.type === 'color') colorPool[b.target] = (colorPool[b.target] || 0) + b.amount;
         });
 
-        // Agar zyada bets ek color par hain, toh opposite aane ke chances 70% badha do
-        if (colorPool.green > colorPool.red && Math.random() < 0.70) {
+        if (colorPool.green > colorPool.red && Math.random() < 0.65) {
           const redNumbers = [2, 4, 6, 8];
           winningNum = redNumbers[Math.floor(Math.random() * redNumbers.length)];
-        } else if (colorPool.red > colorPool.green && Math.random() < 0.70) {
+        } else if (colorPool.red > colorPool.green && Math.random() < 0.65) {
           const greenNumbers = [1, 3, 7, 9];
           winningNum = greenNumbers[Math.floor(Math.random() * greenNumbers.length)];
         } else {
@@ -138,7 +138,6 @@ Object.keys(global.rooms).forEach(roomKey => {
             time: new Date().toLocaleTimeString()
           });
           if (global.userBetLedger[bet.userId].length > 40) global.userBetLedger[bet.userId].pop();
-
         } catch (e) {
           console.error('Settle bet error:', e.message);
         }
@@ -160,7 +159,7 @@ Object.keys(global.rooms).forEach(roomKey => {
   }, 1000);
 });
 
-// Authentication Routes
+// Authentication
 app.post('/api/auth/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -169,7 +168,7 @@ app.post('/api/auth/register', async (req, res) => {
 
     const hashedPassword = hashPassword(password);
     user = await User.create({ name, email, password: hashedPassword, bonusBalance: 50, winningBalance: 0, totalDeposited: 0 });
-    res.json({ message: 'User created successfully', user: { id: user._id, name: user.name, email: user.email } });
+    res.json({ message: 'User created successfully', user: { id: user._id, name: user.name, email: user.email, bonusBalance: user.bonusBalance, winningBalance: user.winningBalance } });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -212,6 +211,8 @@ app.get('/api/game/my-bets/:userId', async (req, res) => {
       bonusBalance: user.bonusBalance,
       winningBalance: user.winningBalance,
       totalDeposited: user.totalDeposited,
+      claimedStreakDays: user.claimedStreakDays || [],
+      lastStreakDate: user.lastStreakDate || '',
       bets: global.userBetLedger[req.params.userId] || []
     });
   } catch (err) {
@@ -240,8 +241,59 @@ app.post('/api/game/bet', async (req, res) => {
   await user.save();
 
   room.activeBets.push({ userId, target, type, amount });
-
   res.json({ message: 'Bet accepted!', bonusBalance: user.bonusBalance, winningBalance: user.winningBalance });
+});
+
+// REAL PERMANENT WALLET REWARD CLAIMS (Fixes Balance Not Updating Issue)
+app.post('/api/wallet/claim-reward', async (req, res) => {
+  try {
+    const { userId, type, amount, targetWallet, code, day } = req.body;
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    const numAmount = Number(amount);
+    if (isNaN(numAmount) || numAmount <= 0) return res.status(400).json({ error: 'Invalid amount' });
+
+    const todayStr = new Date().toDateString();
+
+    if (type === 'daily_streak') {
+      if (user.lastStreakDate === todayStr) {
+        return res.status(400).json({ error: 'Daily reward already claimed today!' });
+      }
+      user.lastStreakDate = todayStr;
+      if (!user.claimedStreakDays.includes(day)) {
+        user.claimedStreakDays.push(day);
+      }
+      if (user.claimedStreakDays.length >= 7) {
+        user.claimedStreakDays = [1];
+      }
+    } else if (type === 'gift_code') {
+      const upperCode = String(code).trim().toUpperCase();
+      if (user.redeemedVouchers.includes(upperCode)) {
+        return res.status(400).json({ error: 'You have already redeemed this code!' });
+      }
+      user.redeemedVouchers.push(upperCode);
+    }
+
+    if (targetWallet === 'winning') {
+      user.winningBalance += numAmount;
+    } else {
+      user.bonusBalance += numAmount;
+    }
+
+    await user.save();
+
+    res.json({
+      success: true,
+      message: `₹${numAmount.toFixed(2)} added to your ${targetWallet === 'winning' ? 'Winning' : 'Bonus'} wallet!`,
+      bonusBalance: user.bonusBalance,
+      winningBalance: user.winningBalance,
+      claimedStreakDays: user.claimedStreakDays,
+      lastStreakDate: user.lastStreakDate
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.get('/api/wallet/upi-config', (req, res) => {
@@ -278,7 +330,6 @@ app.post('/api/wallet/withdraw-request', async (req, res) => {
   const user = await User.findById(userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
 
-  // ANTI-EXPLOIT: User must have made at least one deposit to withdraw (Prevents Free Bonus exploit)
   if (user.totalDeposited <= 0) {
     return res.status(400).json({ error: 'Please make a minimum ₹100 deposit first to verify your account & activate withdrawals!' });
   }
@@ -301,7 +352,7 @@ app.get('/api/wallet/user-transactions/:userId', async (req, res) => {
   }
 });
 
-// Admin System Status & Audit
+// Admin Control
 app.post('/api/admin/force-number', (req, res) => {
   const { roomKey, number } = req.body;
   if (!global.rooms[roomKey]) return res.status(400).json({ error: 'Room not found' });
