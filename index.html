@@ -44,9 +44,7 @@ body{
 
 .hidden{display:none!important;}
 
-/* ========================================================= */
 /* HEADER WITH CUSTOM INLINE VECTOR BRAND LOGO */
-/* ========================================================= */
 .app-header-strip{
   background:linear-gradient(135deg, #ff444a 0%, #b80d19 100%);
   padding:16px 16px 56px;
@@ -232,9 +230,7 @@ body{
   color:var(--text-dark);
 }
 
-/* ========================================================= */
-/* 🎡 FUNCTIONAL LUCKY SPIN BANNER (REPLACES MEGA PARITY) */
-/* ========================================================= */
+/* 🎡 FUNCTIONAL LUCKY SPIN BANNER */
 .spin-banner-card{
   margin:0 14px 14px;
   background:linear-gradient(135deg, #4c1d95, #6d28d9 60%, #c026d3 100%);
@@ -927,7 +923,7 @@ body{
       <!-- 🎡 FUNCTIONAL LUCKY SPIN BANNER -->
       <div class="spin-banner-card" onclick="openLuckySpinModal()">
         <div class="spin-banner-content">
-          <small><i class="fa-solid fa-sparkles"></i> Free Daily Roulette</small>
+          <small><i class="fa-solid fa-sparkles"></i> 1 Free Daily Chance</small>
           <b>LUCKY SPIN WHEEL</b>
         </div>
         <button class="spin-cta-btn" onclick="event.stopPropagation(); openLuckySpinModal()">SPIN & WIN →</button>
@@ -936,7 +932,7 @@ body{
       <!-- TICKER STREAM -->
       <div class="live-stream-ticker">
         <i class="fa-solid fa-bolt"></i>
-        <div class="scrolling-winners">🏆 Player User***39 won ₹4,900 on 30s • User***91 won ₹9,800 on Number 7 • User***22 won ₹1,000 on Lucky Spin! • User***02 won ₹1,960 on Red • </div>
+        <div class="scrolling-winners">🏆 Player User***39 won ₹4,900 on 30s • User***91 won ₹9,800 on Number 7 • User***22 won ₹20 on Lucky Spin! • User***02 won ₹1,960 on Red • </div>
       </div>
 
       <!-- ROOM TIME SELECTORS -->
@@ -1096,17 +1092,17 @@ body{
   </div>
 
   <!-- ========================================================= -->
-  <!-- 🎡 1. LUCKY SPIN ROULETTE MODAL (FUNCTIONAL) -->
+  <!-- 🎡 CONTROLLED LUCKY SPIN MODAL (MAX ₹20 / NO LOSS SCRIPT) -->
   <!-- ========================================================= -->
   <div class="drawer-backdrop" id="luckySpinModal" onclick="if(event.target===this)closeDrawer('luckySpinModal')">
     <div class="bottom-drawer" style="background:#111827;color:#fff;text-align:center;">
       <div style="width:40px;height:4px;background:#374151;border-radius:100px;margin:0 auto 12px;"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <h3 style="font-weight:900;color:#fde047;"><i class="fa-solid fa-sparkles"></i> Lucky Roulette Spin</h3>
+        <h3 style="font-weight:900;color:#fde047;"><i class="fa-solid fa-sparkles"></i> Daily Lucky Roulette Spin</h3>
         <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;color:#94a3b8;" onclick="closeDrawer('luckySpinModal')"></i>
       </div>
       
-      <p style="font-size:0.75rem;color:#94a3b8;margin-bottom:8px;">Remaining Free Spins Today: <b style="color:#38bdf8;" id="spinCountText">3</b></p>
+      <p style="font-size:0.75rem;color:#94a3b8;margin-bottom:8px;">Remaining Chances Today: <b style="color:#38bdf8;" id="spinCountText">1</b></p>
 
       <div class="wheel-wrapper">
         <div class="wheel-pointer"></div>
@@ -1134,7 +1130,7 @@ body{
       <input type="text" id="giftCodeInput" class="auth-input-field" placeholder="e.g. BONUS50 or VIP100" style="text-transform:uppercase;letter-spacing:1.5px;text-align:center;font-size:1.1rem;" />
 
       <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:10px;border-radius:12px;font-size:0.72rem;color:var(--text-muted);margin-bottom:14px;">
-        💡 Hint: Try code <b>BONUS50</b> or <b>VIP100</b> for instant testing reward!
+        💡 Try code <b>BONUS50</b> or <b>VIP100</b> for instant testing reward!
       </div>
 
       <button class="btn-confirm-order" onclick="submitGiftCode()">REDEEM CODE NOW</button>
@@ -1304,9 +1300,7 @@ body{
     </div>
   </div>
 
-  <!-- ========================================================= -->
   <!-- DEAD-CENTERED ATM CASH RECEIPT DISPENSER WINNING MODAL -->
-  <!-- ========================================================= -->
   <div class="atm-viewport-overlay" id="atmCashModal">
     <div class="atm-pop-container">
       <div class="atm-gold-ribbon">
@@ -1351,22 +1345,28 @@ let playerPendingBets = [];
 let upiInfo = { upiId: 'merchantpay@upi', name: 'HueRush' };
 let soundEnabled = true;
 
-// 🎡 LUCKY SPIN LOGIC & ASSETS
+// =========================================================
+// 🎡 8 CONTROLLED SEGMENTS: ₹10 TO ₹50 MAX (WITH TRY AGAIN)
+// =========================================================
 const spinRewards = [
-  { text: "₹5", value: 5, color: "#ef4444" },
-  { text: "₹10", value: 10, color: "#3b82f6" },
-  { text: "₹25", value: 25, color: "#10b981" },
-  { text: "₹50", value: 50, color: "#f59e0b" },
-  { text: "₹100", value: 100, color: "#8b5cf6" },
-  { text: "₹500", value: 500, color: "#ec4899" },
-  { text: "₹1,000", value: 1000, color: "#14b8a6" },
-  { text: "JACKPOT", value: 5000, color: "#eab308" }
+  { text: "₹10", value: 10, color: "#ef4444" },
+  { text: "Try Again", value: 0, color: "#64748b" },
+  { text: "₹20", value: 20, color: "#10b981" },
+  { text: "No Prize", value: 0, color: "#475569" },
+  { text: "₹30", value: 30, color: "#f59e0b" },
+  { text: "Hard Luck", value: 0, color: "#334155" },
+  { text: "₹50", value: 50, color: "#8b5cf6" },
+  { text: "Better Luck", value: 0, color: "#1e293b" }
 ];
+
 let isSpinningWheel = false;
 let currentWheelRotation = 0;
-let remainingSpins = parseInt(localStorage.getItem('huerush_spins_left') || '3');
 
-// WEB AUDIO SYNTHESIZER FOR SOUND EFFECTS
+// STRICT: ONLY 1 CHANCE PER 24 HOURS
+const todayDateStr = new Date().toDateString();
+let lastSpinDate = localStorage.getItem('huerush_last_spin_date');
+let remainingSpins = (lastSpinDate === todayDateStr) ? 0 : 1;
+
 let audioCtx = null;
 function getAudioCtx() {
   if (!soundEnabled) return null;
@@ -1460,7 +1460,6 @@ function bootApp() {
   document.getElementById('accAvatar').innerText = shortName.charAt(0).toUpperCase();
   document.getElementById('accUid').innerText = 'HR' + (currentUser.id ? currentUser.id.slice(-4).toUpperCase() : '8899');
 
-  // Referral Setup
   const code = 'HR' + (currentUser.id ? currentUser.id.slice(-4).toUpperCase() : '8899');
   document.getElementById('refCodeText').innerText = code;
   document.getElementById('refLinkInput').value = `${window.location.origin}/?ref=${code}`;
@@ -1579,7 +1578,7 @@ async function submitBetOrder() {
 }
 
 /* ========================================================= */
-/* 🎡 FUNCTIONAL LUCKY SPIN ENGINE */
+/* 🎡 CONTROLLED ROULETTE WHEEL WITH STRICT PLATFORM SAFETY */
 /* ========================================================= */
 function renderSpinWheelCanvas() {
   const canvas = document.getElementById('spinCanvas');
@@ -1601,14 +1600,13 @@ function renderSpinWheelCanvas() {
     ctx.fill();
     ctx.stroke();
 
-    // Text Rendering
     ctx.save();
     ctx.translate(radius, radius);
     ctx.rotate(angle + arcSize / 2);
     ctx.textAlign = "right";
     ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 26px sans-serif";
-    ctx.fillText(spinRewards[i].text, radius - 36, 10);
+    ctx.font = "bold 24px sans-serif";
+    ctx.fillText(spinRewards[i].text, radius - 30, 8);
     ctx.restore();
   }
 }
@@ -1621,26 +1619,43 @@ function openLuckySpinModal() {
 function executeLuckySpin() {
   if (isSpinningWheel) return;
   if (remainingSpins <= 0) {
-    return alert('No free spins left for today! Check back tomorrow.');
+    return alert('❌ You have already used your 1 Free Spin for today! Check back tomorrow.');
   }
 
   isSpinningWheel = true;
-  remainingSpins--;
-  localStorage.setItem('huerush_spins_left', remainingSpins);
-  document.getElementById('spinCountText').innerText = remainingSpins;
+  remainingSpins = 0;
+  localStorage.setItem('huerush_last_spin_date', todayDateStr);
+  document.getElementById('spinCountText').innerText = 0;
 
-  // Pick Winning Segment (Weighted: favor ₹5, ₹10, ₹25)
-  const randIndex = Math.floor(Math.random() * (spinRewards.length - 2)); // High rewards locked for jackpot
+  // =========================================================
+  // RIGGED/CONTROLLED MATH: NEVER LAND ON ₹50 OR ₹30!
+  // Safe Indices:
+  // 0: ₹10 (25% chance)
+  // 2: ₹20 (5% chance)
+  // 1, 3, 5, 7: Try Again / No Prize (70% chance)
+  // =========================================================
+  let targetIndex = 1; // Default "Try Again"
+  const dice = Math.random();
+
+  if (dice < 0.25) {
+    targetIndex = 0; // ₹10
+  } else if (dice < 0.30) {
+    targetIndex = 2; // ₹20
+  } else if (dice < 0.55) {
+    targetIndex = 1; // Try Again
+  } else if (dice < 0.75) {
+    targetIndex = 3; // No Prize
+  } else {
+    targetIndex = 5; // Hard Luck
+  }
+
   const segmentAngle = 360 / spinRewards.length;
-  
-  // Total random rotations (5 full 360 cycles + target segment)
-  const targetDegree = 360 - (randIndex * segmentAngle) - (segmentAngle / 2);
+  const targetDegree = 360 - (targetIndex * segmentAngle) - (segmentAngle / 2);
   currentWheelRotation += (360 * 5) + targetDegree;
 
   const canvas = document.getElementById('spinCanvas');
   canvas.style.transform = `rotate(${currentWheelRotation}deg)`;
 
-  // Interval Tick Sounds
   let tickCount = 0;
   const tickInterval = setInterval(() => {
     playTickBeep(550 + (tickCount * 10), 0.05);
@@ -1650,19 +1665,22 @@ function executeLuckySpin() {
 
   setTimeout(() => {
     isSpinningWheel = false;
-    const wonReward = spinRewards[randIndex];
-    playTickBeep(880, 0.3);
+    const wonReward = spinRewards[targetIndex];
 
-    // Instant Wallet Credit
-    currentUser.winningBalance = (currentUser.winningBalance || 0) + wonReward.value;
-    localStorage.setItem('user', JSON.stringify(currentUser));
-    syncWalletBalances();
-
-    alert(`🎉 CONGRATULATIONS!\nYou won ${wonReward.text} from Lucky Spin! Credited to your Withdrawable Wallet!`);
+    if (wonReward.value > 0) {
+      playTickBeep(880, 0.4);
+      currentUser.winningBalance = (currentUser.winningBalance || 0) + wonReward.value;
+      localStorage.setItem('user', JSON.stringify(currentUser));
+      syncWalletBalances();
+      alert(`🎉 CONGRATULATIONS!\nYou won ${wonReward.text}! Credited directly to your Withdrawable Balance.`);
+    } else {
+      playTickBeep(300, 0.2);
+      alert(`😔 ${wonReward.text}!\nBetter luck next time! Your daily spin is completed.`);
+    }
   }, 4100);
 }
 
-/* 2. REDEEM CODE ENGINE */
+// 2. REDEEM VOUCHER ENGINE
 function openGiftCodeModal() {
   document.getElementById('giftModal').classList.add('open');
 }
@@ -1692,13 +1710,13 @@ function submitGiftCode() {
     playTickBeep(900);
     document.getElementById('giftCodeInput').value = '';
     closeDrawer('giftModal');
-    alert(`✅ Code successfully redeemed! ₹${amount} Bonus credited to your wallet.`);
+    alert(`✅ Code redeemed! ₹${amount} Bonus credited to your wallet.`);
   } else {
     alert('❌ Invalid or expired redeem voucher code!');
   }
 }
 
-/* 3. INVITE & EARN AFFILIATE */
+// 3. REFERRAL & AFFILIATE
 function openInviteModal() {
   document.getElementById('inviteModal').classList.add('open');
 }
@@ -1716,9 +1734,9 @@ function shareWhatsapp() {
   window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
 }
 
-/* 4. DAILY BONUS & REBATES */
+// 4. DAILY REWARD & REBATES
 function openVipModal() {
-  const claimed = localStorage.getItem('vip_daily_claimed_' + new Date().toDateString());
+  const claimed = localStorage.getItem('vip_daily_claimed_' + todayDateStr);
   const btn = document.getElementById('btnClaimDaily');
   if (claimed) {
     btn.innerText = 'ALREADY CLAIMED TODAY ✓';
@@ -1733,7 +1751,7 @@ function openVipModal() {
 }
 
 function claimDailyReward() {
-  localStorage.setItem('vip_daily_claimed_' + new Date().toDateString(), 'true');
+  localStorage.setItem('vip_daily_claimed_' + todayDateStr, 'true');
   currentUser.bonusBalance = (currentUser.bonusBalance || 0) + 10;
   localStorage.setItem('user', JSON.stringify(currentUser));
   
@@ -1766,7 +1784,7 @@ function openSupportDrawer() {
   document.getElementById('supportDrawer').classList.add('open');
 }
 
-/* DEPOSIT & WITHDRAW HANDLERS */
+// DEPOSIT & WITHDRAW HANDLERS
 async function fetchUpiData() {
   try {
     const res = await fetch('/api/wallet/upi-config');
@@ -1860,7 +1878,7 @@ function renderPersonalBets(bets) {
   `).join('');
 }
 
-/* ATM WINNING MODAL CONTROLLER */
+// ATM RECEIPT CONTROLLER
 function toggleAutoClose() {
   autoCloseActive = !autoCloseActive;
   const box = document.getElementById('atmToggleBox');
@@ -1902,7 +1920,7 @@ document.getElementById('atmCashModal').addEventListener('click', (e) => {
   }
 });
 
-/* LIVE REALTIME ENGINE LOOP */
+// REALTIME ENGINE LOOP
 setInterval(async () => {
   try {
     const res = await fetch('/api/game/all-rooms');
