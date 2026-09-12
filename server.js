@@ -2,10 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 require('dotenv').config();
 
-// --- EMBEDDED MONGOOSE SCHEMAS (NO SEPARATE FOLDER NEEDED) ---
+// Inbuilt zero-dependency password hash
+function hashPassword(pass) {
+  return crypto.createHash('sha256').update(pass).digest('hex');
+}
+
+// --- EMBEDDED MONGOOSE SCHEMAS ---
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
@@ -133,7 +138,7 @@ app.post('/api/auth/register', async (req, res) => {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ error: 'Email already registered' });
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = hashPassword(password);
     user = await User.create({ name, email, password: hashedPassword, bonusBalance: 50, winningBalance: 0 });
     res.json({ message: 'User created successfully', user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
@@ -147,7 +152,7 @@ app.post('/api/auth/login', async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ error: 'Invalid credentials' });
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = hashPassword(password) === user.password;
     if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
 
     res.json({ user: { id: user._id, name: user.name, email: user.email, bonusBalance: user.bonusBalance, winningBalance: user.winningBalance } });
