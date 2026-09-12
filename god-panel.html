@@ -2,431 +2,168 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>HueRush — Master God Control Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HueRush — God Panel (Owner Admin Terminal)</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  --dark-base:#030508;
-  --dark-surface:#0c111d;
-  --dark-elevated:#151d2e;
-  --neon-red:#ff2a55;
-  --neon-green:#10b981;
-  --neon-cyan:#00d2ff;
-  --gold-text:#fde047;
-  --text-primary:#f8fafc;
-  --text-secondary:#8a99ad;
-  --glass-border:rgba(255,255,255,0.08);
-}
-
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-  background:var(--dark-base);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;
-  color:var(--text-primary);
-  padding:12px;
-  display:flex;
-  justify-content:center;
-  min-height:100vh;
+  background:#04060b;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  color:#f8fafc;
+  padding:20px;
 }
+.god-container{max-width:1100px;margin:0 auto;}
+.god-header{
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(135deg, #1c2436, #0d111a);
+  border:1px solid rgba(255,255,255,0.08);
+  padding:20px 24px;border-radius:20px;margin-bottom:24px;
+}
+.god-title{font-size:1.5rem;font-weight:900;color:#ff2a4d;}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:16px;margin-bottom:24px;
+}
+.stat-card{
+  background:#0b101a;border:1px solid rgba(255,255,255,0.06);
+  border-radius:16px;padding:18px;
+}
+.stat-card span{font-size:0.75rem;color:#7b8ca5;text-transform:uppercase;font-weight:800;display:block;}
+.stat-card b{font-size:1.8rem;font-weight:900;margin-top:6px;display:block;font-family:monospace;}
 
-.admin-container{
-  width:100%;
-  max-width:440px;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
+.section-box{
+  background:#0b101a;border:1px solid rgba(255,255,255,0.06);
+  border-radius:20px;padding:20px;margin-bottom:24px;
 }
-.hidden{display:none!important;}
+.section-title{font-size:1.1rem;font-weight:900;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 
-/* 🔒 SECURE VAULT PIN GATE (PASS: 1104) */
-.vault-pin-overlay{
-  position:fixed;inset:0;background:rgba(2,3,6,0.95);backdrop-filter:blur(16px);
-  z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;
-}
-.vault-pin-box{
-  background:linear-gradient(135deg, #182238 0%, #0d1320 100%);
-  border:1px solid rgba(255,215,0,0.3);border-radius:28px;padding:32px 20px;
-  width:100%;max-width:340px;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,0.9);
-}
-.vault-shield-glow{
-  width:70px;height:70px;border-radius:50%;
-  background:radial-gradient(circle, rgba(255,215,0,0.2) 0%, rgba(255,42,85,0.1) 100%);
-  border:2px solid var(--gold-text);display:flex;align-items:center;justify-content:center;
-  font-size:2rem;color:var(--gold-text);margin:0 auto 16px;box-shadow:0 0 25px rgba(255,215,0,0.3);
-}
-.pin-dots-row{display:flex;justify-content:center;gap:12px;margin:20px 0;}
-.pin-dot{width:16px;height:16px;border-radius:50%;background:var(--dark-base);border:1.5px solid var(--text-secondary);transition:all 0.15s;}
-.pin-dot.filled{background:var(--neon-green);border-color:var(--neon-green);box-shadow:0 0 10px var(--neon-green);}
-.pin-keypad{display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;margin-top:10px;}
-.pin-key{
-  background:var(--dark-elevated);border:1px solid var(--glass-border);color:#fff;
-  border-radius:14px;padding:14px 0;font-size:1.2rem;font-weight:900;cursor:pointer;
-}
-.pin-key:active{transform:scale(0.92);background:var(--neon-red);}
+table{width:100%;border-collapse:collapse;font-size:0.85rem;}
+th{text-align:left;padding:10px;color:#7b8ca5;border-bottom:1px solid rgba(255,255,255,0.06);}
+td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.03);}
 
-/* HEADER */
-.admin-header{
-  background:linear-gradient(135deg, #182238, #0d1320);
-  border:1px solid var(--glass-border);border-radius:20px;padding:16px;
-  display:flex;justify-content:space-between;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,0.6);
+.btn-action{
+  padding:6px 14px;border-radius:8px;border:none;font-weight:900;font-size:0.75rem;cursor:pointer;
 }
+.btn-approve{background:#00e676;color:#000;}
+.btn-reject{background:#ff2a4d;color:#fff;}
+.btn-force{background:#00e5ff;color:#000;margin-left:6px;}
 
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.stat-box{
-  background:var(--dark-surface);border:1px solid var(--glass-border);
-  border-radius:16px;padding:14px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.4);
+.force-control-row{
+  display:flex;gap:10px;align-items:center;background:#04060b;padding:10px 14px;border-radius:12px;margin-bottom:8px;
 }
-.stat-box span{font-size:0.68rem;color:var(--text-secondary);font-weight:800;text-transform:uppercase;display:block;}
-.stat-box b{font-size:1.25rem;font-weight:900;margin-top:4px;display:block;}
-
-.admin-card{
-  background:var(--dark-surface);border:1px solid var(--glass-border);
-  border-radius:20px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,0.5);
-}
-.admin-card h3{font-size:0.9rem;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-
-/* ========================================================= */
-/* 💎 ULTRA-PREMIUM CASINO RIGGING CONSOLE */
-/* ========================================================= */
-.rig-room-console{
-  background:var(--dark-elevated);
-  border:1px solid var(--glass-border);
-  border-radius:18px;
-  padding:14px;
-  margin-bottom:12px;
-  position:relative;
-  overflow:hidden;
-}
-.rig-room-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-.room-name-badge{
-  font-size:0.85rem;
-  font-weight:900;
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-.period-badge-tag{
-  font-size:0.68rem;
-  font-family:monospace;
-  color:var(--neon-cyan);
-  background:rgba(0,210,255,0.1);
-  padding:3px 8px;
-  border-radius:6px;
-  border:1px solid rgba(0,210,255,0.2);
-}
-
-/* REAL CASINO EXACT 0-9 RIGGING BALLS (NO OVERLAP) */
-.rig-balls-grid{
-  display:grid;
-  grid-template-columns:repeat(5, 1fr);
-  gap:8px;
-}
-.rig-ball-btn{
-  width:100%;
-  aspect-ratio:1;
-  border-radius:50%;
-  border:2px solid transparent;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  font-size:1.15rem;
-  font-weight:900;
-  cursor:pointer;
-  transition:all 0.15s ease;
-  box-shadow:0 4px 10px rgba(0,0,0,0.4);
-}
-.rig-ball-btn:active{transform:scale(0.9);}
-.rig-ball-btn sub{
-  font-size:0.52rem;
-  font-weight:800;
-  margin-top:-2px;
-  opacity:0.85;
-  text-transform:uppercase;
-}
-
-/* Casino Ball Gradient Classes */
-.ball-green{background:radial-gradient(circle at 35% 35%, #34d399, #059669);}
-.ball-red{background:radial-gradient(circle at 35% 35%, #f87171, #dc2626);}
-.ball-split-0{background:conic-gradient(#dc2626 0% 50%, #7c3aed 50% 100%);}
-.ball-split-5{background:conic-gradient(#059669 0% 50%, #7c3aed 50% 100%);}
-
-/* Locked / Active State Glow */
-.rig-ball-btn.rigged-active{
-  border-color:#fff!important;
-  box-shadow:0 0 16px #fff, 0 0 25px var(--neon-cyan);
-  transform:scale(1.05);
-}
-
-/* TABLE STYLING */
-.table-responsive{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
-.admin-table{width:100%;border-collapse:collapse;font-size:0.78rem;white-space:nowrap;}
-.admin-table th{padding:8px 6px;color:var(--text-secondary);border-bottom:1px solid var(--glass-border);font-weight:800;text-align:left;}
-.admin-table td{padding:10px 6px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;}
-
-.btn-action{border:none;border-radius:8px;padding:6px 12px;font-size:0.75rem;font-weight:900;cursor:pointer;}
-.btn-approve{background:var(--neon-green);color:#000;}
-.btn-reject{background:var(--neon-red);color:#fff;}
-
-/* RADAR SUCCESS TOAST */
-.radar-toast{
-  position:fixed;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%) translateY(-100px);
-  background:linear-gradient(135deg, #064e3b, #022c22);
-  border:1.5px solid #10b981;
-  color:#fff;
-  padding:12px 20px;
-  border-radius:100px;
-  font-size:0.8rem;
-  font-weight:900;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(16,185,129,0.5);
-  z-index:999999;
-  transition:transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  white-space:nowrap;
-}
-.radar-toast.show{
-  transform:translateX(-50%) translateY(0);
+.force-control-row select, .force-control-row input{
+  background:#131b2e;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:8px 12px;border-radius:8px;font-weight:800;outline:none;
 }
 </style>
 </head>
 <body>
 
-<!-- 🔒 PASSWORD GATE (PASS: 1104) -->
-<div class="vault-pin-overlay" id="vaultGate">
-  <div class="vault-pin-box">
-    <div class="vault-shield-glow"><i class="fa-solid fa-lock"></i></div>
-    <h2 style="font-weight:900;font-size:1.3rem;color:#fff;">God Vault Security</h2>
-    <p style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Enter 4-Digit Master PIN</p>
-    
-    <div class="pin-dots-row">
-      <div class="pin-dot" id="dot1"></div>
-      <div class="pin-dot" id="dot2"></div>
-      <div class="pin-dot" id="dot3"></div>
-      <div class="pin-dot" id="dot4"></div>
-    </div>
-
-    <div class="pin-keypad">
-      <button class="pin-key" onclick="pressPin(1)">1</button>
-      <button class="pin-key" onclick="pressPin(2)">2</button>
-      <button class="pin-key" onclick="pressPin(3)">3</button>
-      <button class="pin-key" onclick="pressPin(4)">4</button>
-      <button class="pin-key" onclick="pressPin(5)">5</button>
-      <button class="pin-key" onclick="pressPin(6)">6</button>
-      <button class="pin-key" onclick="pressPin(7)">7</button>
-      <button class="pin-key" onclick="pressPin(8)">8</button>
-      <button class="pin-key" onclick="pressPin(9)">9</button>
-      <button class="pin-key" onclick="clearPin()" style="color:var(--neon-red);">C</button>
-      <button class="pin-key" onclick="pressPin(0)">0</button>
-      <button class="pin-key" onclick="backPin()" style="color:var(--neon-cyan);"><i class="fa-solid fa-delete-left"></i></button>
-    </div>
-  </div>
-</div>
-
-<!-- TOAST -->
-<div class="radar-toast" id="radarToast">
-  <i class="fa-solid fa-satellite-dish" style="color:var(--neon-green);"></i>
-  <span id="toastMsgText">Result Locked</span>
-</div>
-
-<div class="admin-container hidden" id="adminMainContent">
-
-  <!-- HEADER -->
-  <div class="admin-header">
+<div class="god-container">
+  <div class="god-header">
     <div>
-      <h2 style="font-weight:900;font-size:1.2rem;"><i class="fa-solid fa-crown" style="color:var(--gold-text);"></i> God Console</h2>
-      <p style="font-size:0.7rem;color:var(--text-secondary);">Master Operational Center</p>
+      <div class="god-title"><i class="fa-solid fa-shield-halved"></i> HueRush God Terminal</div>
+      <p style="font-size:0.75rem;color:#7b8ca5;margin-top:4px;">Master Control & Financial Audit Panel</p>
     </div>
-    <button class="btn-action" style="background:var(--dark-elevated);color:#fff;border:1px solid var(--glass-border);" onclick="loadAdminData()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+    <a href="/" style="background:#131b2e;color:#fff;text-decoration:none;padding:10px 16px;border-radius:12px;font-weight:800;font-size:0.8rem;">← Back to App</a>
   </div>
 
-  <!-- FINANCIAL METRICS -->
+  <!-- STATS -->
   <div class="stats-grid">
-    <div class="stat-box">
-      <span>Total Revenue</span>
-      <b style="color:var(--neon-green);" id="statRev">₹0</b>
+    <div class="stat-card">
+      <span>Total Revenue (Deposits)</span>
+      <b style="color:#00e676;" id="statRev">₹0.00</b>
     </div>
-    <div class="stat-box">
-      <span>Total Paid Out</span>
-      <b style="color:var(--neon-red);" id="statPaid">₹0</b>
+    <div class="stat-card">
+      <span>Total Paid (Withdrawals)</span>
+      <b style="color:#ff2a4d;" id="statPaid">₹0.00</b>
     </div>
-    <div class="stat-box" style="grid-column: span 2;">
-      <span>Platform Net Profit</span>
-      <b style="font-size:1.5rem;color:var(--gold-text);" id="statProfit">₹0</b>
-    </div>
-  </div>
-
-  <!-- 💎 ULTRA-PREMIUM RIGGING CONSOLE (EXACT CASINO COLOR MAPPING) -->
-  <div class="admin-card">
-    <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--neon-cyan);"></i> Parity Rigging Engine</h3>
-    <p style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:12px;">Tap exact number ball to lock next winning outcome:</p>
-    
-    <!-- 30s Room -->
-    <div class="rig-room-console">
-      <div class="rig-room-header">
-        <span class="room-name-badge"><i class="fa-solid fa-stopwatch" style="color:var(--neon-red);"></i> 30s Quick</span>
-        <span class="period-badge-tag" id="period30s">Period: ---</span>
-      </div>
-      <div class="rig-balls-grid" id="rigGrid30s"></div>
-    </div>
-
-    <!-- 90s Room -->
-    <div class="rig-room-console">
-      <div class="rig-room-header">
-        <span class="room-name-badge"><i class="fa-solid fa-stopwatch" style="color:var(--gold-text);"></i> 1.5 Min Room</span>
-        <span class="period-badge-tag" id="period90s">Period: ---</span>
-      </div>
-      <div class="rig-balls-grid" id="rigGrid90s"></div>
-    </div>
-
-    <!-- 3m Room -->
-    <div class="rig-room-console">
-      <div class="rig-room-header">
-        <span class="room-name-badge"><i class="fa-solid fa-stopwatch" style="color:var(--neon-cyan);"></i> 3 Min Room</span>
-        <span class="period-badge-tag" id="period3m">Period: ---</span>
-      </div>
-      <div class="rig-balls-grid" id="rigGrid3m"></div>
-    </div>
-
-    <!-- 5m Room -->
-    <div class="rig-room-console">
-      <div class="rig-room-header">
-        <span class="room-name-badge"><i class="fa-solid fa-stopwatch" style="color:var(--neon-green);"></i> 5 Min Room</span>
-        <span class="period-badge-tag" id="period5m">Period: ---</span>
-      </div>
-      <div class="rig-balls-grid" id="rigGrid5m"></div>
+    <div class="stat-card">
+      <span>Net House Profit</span>
+      <b style="color:#00e5ff;" id="statProfit">₹0.00</b>
     </div>
   </div>
 
-  <!-- PENDING DEPOSITS APPROVAL -->
-  <div class="admin-card">
-    <h3><i class="fa-solid fa-arrow-down-long" style="color:var(--neon-green);"></i> Pending Recharges</h3>
-    <div class="table-responsive">
-      <table class="admin-table">
-        <thead><tr><th>User</th><th>Amount</th><th>UTR Number</th><th>Action</th></tr></thead>
-        <tbody id="pendingDepRows"><tr><td colspan="4" style="text-align:center;color:var(--text-secondary);">Loading...</td></tr></tbody>
-      </table>
+  <!-- RIGGING ENGINE / FORCE RESULT -->
+  <div class="section-box">
+    <div class="section-title"><i class="fa-solid fa-dice" style="color:#00e5ff;"></i> Parity Rigging Engine (Force Next Result)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:10px;">
+      <div class="force-control-row">
+        <span>30s Room:</span>
+        <select id="forceNum_30s">
+          <option value="">Random (Normal)</option>
+          <option value="0">0 (Red/Violet)</option>
+          <option value="1">1 (Green)</option>
+          <option value="2">2 (Red)</option>
+          <option value="3">3 (Green)</option>
+          <option value="4">4 (Red)</option>
+          <option value="5">5 (Green/Violet)</option>
+          <option value="6">6 (Red)</option>
+          <option value="7">7 (Green)</option>
+          <option value="8">8 (Red)</option>
+          <option value="9">9 (Green)</option>
+        </select>
+        <button class="btn-action btn-force" onclick="setForcedNumber('30s')">LOCK</button>
+      </div>
+      <div class="force-control-row">
+        <span>90s Room:</span>
+        <select id="forceNum_90s">
+          <option value="">Random (Normal)</option>
+          <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option>
+        </select>
+        <button class="btn-action btn-force" onclick="setForcedNumber('90s')">LOCK</button>
+      </div>
     </div>
   </div>
 
-  <!-- PENDING WITHDRAWALS APPROVAL -->
-  <div class="admin-card">
-    <h3><i class="fa-solid fa-arrow-up-long" style="color:var(--neon-red);"></i> Pending Withdrawals</h3>
-    <div class="table-responsive">
-      <table class="admin-table">
-        <thead><tr><th>User</th><th>Amount</th><th>UPI ID</th><th>Action</th></tr></thead>
-        <tbody id="pendingWdRows"><tr><td colspan="4" style="text-align:center;color:var(--text-secondary);">Loading...</td></tr></tbody>
-      </table>
-    </div>
+  <!-- PENDING DEPOSITS -->
+  <div class="section-box">
+    <div class="section-title"><i class="fa-solid fa-arrow-down-long" style="color:#00e676;"></i> Pending Recharges (UTR Verification)</div>
+    <table>
+      <thead>
+        <tr><th>User</th><th>Amount</th><th>UTR Number</th><th>Time</th><th>Action</th></tr>
+      </thead>
+      <tbody id="tblPendingDeposits">
+        <tr><td colspan="5" style="text-align:center;color:#7b8ca5;">Loading...</td></tr>
+      </tbody>
+    </table>
   </div>
 
+  <!-- PENDING WITHDRAWALS -->
+  <div class="section-box">
+    <div class="section-title"><i class="fa-solid fa-arrow-up-long" style="color:#ff2a4d;"></i> Pending Cashout Requests</div>
+    <table>
+      <thead>
+        <tr><th>User</th><th>Amount</th><th>Receiving UPI</th><th>Time</th><th>Action</th></tr>
+      </thead>
+      <tbody id="tblPendingWithdraws">
+        <tr><td colspan="5" style="text-align:center;color:#7b8ca5;">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <script>
-let enteredPin = '';
-const correctPin = '1104';
-
-function pressPin(digit) {
-  if (enteredPin.length < 4) {
-    enteredPin += digit;
-    updatePinDots();
-    if (enteredPin.length === 4) setTimeout(verifyPin, 150);
-  }
-}
-function clearPin() { enteredPin = ''; updatePinDots(); }
-function backPin() { enteredPin = enteredPin.slice(0, -1); updatePinDots(); }
-
-function updatePinDots() {
-  for (let i = 1; i <= 4; i++) {
-    document.getElementById('dot' + i).classList.toggle('filled', i <= enteredPin.length);
-  }
-}
-
-function verifyPin() {
-  if (enteredPin === correctPin) {
-    document.getElementById('vaultGate').classList.add('hidden');
-    document.getElementById('adminMainContent').classList.remove('hidden');
-    loadAdminData();
-    setInterval(loadAdminData, 6000);
-  } else {
-    alert('❌ Incorrect Security PIN!');
-    clearPin();
-  }
-}
-
-function showRadarToast(msg) {
-  const toast = document.getElementById('radarToast');
-  document.getElementById('toastMsgText').innerText = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2500);
-}
-
-// REAL EXACT CASINO MAPPING FOR BALLS
-const ballMetaInfo = [
-  { num: 0, cls: 'ball-split-0', lbl: 'Red/Vio' },
-  { num: 1, cls: 'ball-green', lbl: 'Green' },
-  { num: 2, cls: 'ball-red', lbl: 'Red' },
-  { num: 3, cls: 'ball-green', lbl: 'Green' },
-  { num: 4, cls: 'ball-red', lbl: 'Red' },
-  { num: 5, cls: 'ball-split-5', lbl: 'Grn/Vio' },
-  { num: 6, cls: 'ball-red', lbl: 'Red' },
-  { num: 7, cls: 'ball-green', lbl: 'Green' },
-  { num: 8, cls: 'ball-red', lbl: 'Red' },
-  { num: 9, cls: 'ball-green', lbl: 'Green' }
-];
-
-async function loadAdminData() {
+async function loadGodData() {
   try {
     const res = await fetch('/api/admin/system-status');
     const data = await res.json();
 
-    document.getElementById('statRev').innerText = '₹' + data.stats.totalRevenue.toLocaleString('en-IN');
-    document.getElementById('statPaid').innerText = '₹' + data.stats.totalPaid.toLocaleString('en-IN');
-    document.getElementById('statProfit').innerText = '₹' + data.stats.netProfit.toLocaleString('en-IN');
+    document.getElementById('statRev').innerText = `₹${data.stats.totalRevenue.toFixed(2)}`;
+    document.getElementById('statPaid').innerText = `₹${data.stats.totalPaid.toFixed(2)}`;
+    const net = data.stats.totalRevenue - data.stats.totalPaid;
+    document.getElementById('statProfit').innerText = `₹${net.toFixed(2)}`;
 
-    // Rooms Rigging Setup
-    ['30s', '90s', '3m', '5m'].forEach(roomKey => {
-      if (data.rooms[roomKey]) {
-        document.getElementById('period' + roomKey).innerText = `Period: ${data.rooms[roomKey].period}`;
-      }
-      const grid = document.getElementById('rigGrid' + roomKey);
-      if (grid && grid.innerHTML === '') {
-        grid.innerHTML = ballMetaInfo.map(b => `
-          <button class="rig-ball-btn ${b.cls}" id="rig_${roomKey}_${b.num}" onclick="forceRoomNum('${roomKey}', ${b.num}, this)">
-            ${b.num}
-            <sub>${b.lbl}</sub>
-          </button>
-        `).join('');
-      }
-
-      // Highlight active locked number
-      const forced = data.rooms[roomKey] ? data.rooms[roomKey].forcedResult : null;
-      for (let i = 0; i <= 9; i++) {
-        const btn = document.getElementById(`rig_${roomKey}_${i}`);
-        if (btn) btn.classList.toggle('rigged-active', forced === i);
-      }
-    });
-
-    const depTbody = document.getElementById('pendingDepRows');
+    // Render Pending Deposits
+    const depBox = document.getElementById('tblPendingDeposits');
     if (!data.pendingDeposits.length) {
-      depTbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-secondary);padding:12px;">No pending deposits.</td></tr>';
+      depBox.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#7b8ca5;">No pending recharges.</td></tr>`;
     } else {
-      depTbody.innerHTML = data.pendingDeposits.map(d => `
+      depBox.innerHTML = data.pendingDeposits.map(d => `
         <tr>
-          <td><b>${d.userId ? d.userId.name : 'Unknown'}</b></td>
-          <td style="color:var(--neon-green);">₹${d.amount}</td>
-          <td style="font-family:monospace;">${d.utrNumber}</td>
+          <td><b>${d.userId ? d.userId.name : 'Unknown'}</b><div style="font-size:0.7rem;color:#7b8ca5;">${d.userId ? d.userId.email : ''}</div></td>
+          <td><b style="color:#00e676;">₹${d.amount}</b></td>
+          <td><code style="background:#131b2e;padding:4px 8px;border-radius:6px;">${d.utrNumber}</code></td>
+          <td style="color:#7b8ca5;font-size:0.75rem;">${new Date(d.createdAt).toLocaleTimeString()}</td>
           <td>
             <button class="btn-action btn-approve" onclick="processTx('${d._id}', 'approved')">Approve</button>
             <button class="btn-action btn-reject" onclick="processTx('${d._id}', 'rejected')">Reject</button>
@@ -435,15 +172,17 @@ async function loadAdminData() {
       `).join('');
     }
 
-    const wdTbody = document.getElementById('pendingWdRows');
+    // Render Pending Withdrawals
+    const wdBox = document.getElementById('tblPendingWithdraws');
     if (!data.pendingWithdraws.length) {
-      wdTbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-secondary);padding:12px;">No pending withdrawals.</td></tr>';
+      wdBox.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#7b8ca5;">No pending withdrawals.</td></tr>`;
     } else {
-      wdTbody.innerHTML = data.pendingWithdraws.map(w => `
+      wdBox.innerHTML = data.pendingWithdraws.map(w => `
         <tr>
-          <td><b>${w.userId ? w.userId.name : 'Unknown'}</b></td>
-          <td style="color:var(--neon-red);">₹${w.amount}</td>
-          <td style="font-family:monospace;font-size:0.7rem;">${w.upiId}</td>
+          <td><b>${w.userId ? w.userId.name : 'Unknown'}</b><div style="font-size:0.7rem;color:#7b8ca5;">${w.userId ? w.userId.email : ''}</div></td>
+          <td><b style="color:#ff2a4d;">₹${w.amount}</b></td>
+          <td><code style="background:#131b2e;padding:4px 8px;border-radius:6px;color:#00e5ff;">${w.upiId}</code></td>
+          <td style="color:#7b8ca5;font-size:0.75rem;">${new Date(w.createdAt).toLocaleTimeString()}</td>
           <td>
             <button class="btn-action btn-approve" onclick="processTx('${w._id}', 'approved')">Approve</button>
             <button class="btn-action btn-reject" onclick="processTx('${w._id}', 'rejected')">Reject</button>
@@ -451,28 +190,38 @@ async function loadAdminData() {
         </tr>
       `).join('');
     }
-  } catch(e) {}
+
+  } catch(e) {
+    console.error('God Panel Sync Error:', e);
+  }
 }
 
 async function processTx(txId, status) {
   const res = await fetch('/api/admin/process-tx', {
-    method: 'POST', headers: {'Content-Type': 'application/json'},
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ txId, status })
   });
   const data = await res.json();
-  showRadarToast(`Transaction ${status.toUpperCase()}!`);
-  loadAdminData();
+  alert(data.message);
+  loadGodData();
 }
 
-async function forceRoomNum(roomKey, number, el) {
+async function setForcedNumber(roomKey) {
+  const num = document.getElementById('forceNum_' + roomKey).value;
+  if (num === '') return alert('Please select a valid number to lock!');
+
   const res = await fetch('/api/admin/force-number', {
-    method: 'POST', headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ roomKey, number })
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ roomKey, number: num })
   });
   const data = await res.json();
-  showRadarToast(`🎯 Room [${roomKey}] Locked to: ${number}`);
-  loadAdminData();
+  alert(data.message);
 }
+
+setInterval(loadGodData, 4000);
+loadGodData();
 </script>
 </body>
 </html>
