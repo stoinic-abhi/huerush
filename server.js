@@ -31,11 +31,12 @@ const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 const transactionSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  type: { type: String, enum: ['deposit', 'withdraw'], required: true },
+  type: { type: String, enum: ['deposit', 'withdraw', 'reward', 'win', 'loss'], required: true },
   amount: { type: Number, required: true },
   utrNumber: { type: String },
   upiId: { type: String },
-  status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' }
+  description: { type: String },
+  status: { type: String, enum: ['pending', 'approved', 'rejected', 'completed'], default: 'completed' }
 }, { timestamps: true });
 
 const Transaction = mongoose.models.Transaction || mongoose.model('Transaction', transactionSchema);
@@ -88,7 +89,6 @@ function getNumberMeta(num) {
   return { num, color: num % 2 === 0 ? 'red' : 'green', size };
 }
 
-// Background Game Loops with Reduced House Payouts
 Object.keys(global.rooms).forEach(roomKey => {
   setInterval(async () => {
     const room = global.rooms[roomKey];
@@ -100,20 +100,7 @@ Object.keys(global.rooms).forEach(roomKey => {
         winningNum = Number(room.forcedResult);
         room.forcedResult = null;
       } else {
-        let colorPool = { green: 0, red: 0, violet: 0 };
-        room.activeBets.forEach(b => {
-          if (b.type === 'color') colorPool[b.target] = (colorPool[b.target] || 0) + b.amount;
-        });
-
-        if (colorPool.green > colorPool.red && Math.random() < 0.70) {
-          const redNumbers = [2, 4, 6, 8];
-          winningNum = redNumbers[Math.floor(Math.random() * redNumbers.length)];
-        } else if (colorPool.red > colorPool.green && Math.random() < 0.70) {
-          const greenNumbers = [1, 3, 7, 9];
-          winningNum = greenNumbers[Math.floor(Math.random() * greenNumbers.length)];
-        } else {
-          winningNum = Math.floor(Math.random() * 10);
-        }
+        winningNum = Math.floor(Math.random() * 10);
       }
 
       const meta = getNumberMeta(winningNum);
@@ -123,7 +110,6 @@ Object.keys(global.rooms).forEach(roomKey => {
           let isWin = false;
           let multiplier = 0;
 
-          // REDUCED HOUSE PAYOUTS (Color/Size = 1.7x, Number = 4.5x, Violet = 3.5x)
           if (bet.type === 'color' && (bet.target === meta.color || bet.target === meta.subColor)) {
             isWin = true;
             multiplier = bet.target === 'violet' ? 3.5 : 1.7;
@@ -138,6 +124,9 @@ Object.keys(global.rooms).forEach(roomKey => {
           const winAmount = isWin ? (bet.amount * multiplier * 0.95) : 0;
           if (isWin) {
             await User.findByIdAndUpdate(bet.userId, { $inc: { winningBalance: winAmount } });
+            await Transaction.create({ userId: bet.userId, type: 'win', amount: winAmount, description: `Won parity bet on period ${room.currentPeriod}` });
+          } else {
+            await Transaction.create({ userId: bet.userId, type: 'loss', amount: bet.amount, description: `Lost parity bet on period ${room.currentPeriod}` });
           }
 
           await Bet.create({
@@ -244,10 +233,12 @@ app.get('/api/game/my-bets/:userId', async (req, res) => {
     const user = await User.findById(req.params.userId);
     if (!user) return res.status(404).json({ error: 'User not found' });
     const bets = await Bet.find({ userId: req.params.userId }).sort({ createdAt: -1 }).limit(50);
+    const transactions = await Transaction.find({ userId: req.params.userId }).sort({ createdAt: -1 }).limit(50);
     res.json({
       bonusBalance: user.bonusBalance, winningBalance: user.winningBalance, totalDeposited: user.totalDeposited,
       claimedStreakDays: user.claimedStreakDays || [], lastStreakDate: user.lastStreakDate || '',
-      referralCode: user.referralCode, invitedCount: user.invitedCount || 0, referralEarnings: user.referralEarnings || 0, bets: bets
+      referralCode: user.referralCode, invitedCount: user.invitedCount || 0, referralEarnings: user.referralEarnings || 0, 
+      bets: bets, transactions: transactions
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -292,7 +283,7 @@ app.post('/api/wallet/claim-reward', async (req, res) => {
     } else if (type === 'gift_code') {
       const upperCode = String(code).trim().toUpperCase();
       const codePricer = { 'BONUS10': 10, 'VIP15': 15, 'LUCKY10': 10, 'RUSH15': 15 };
-      if (!codePricer[upperCode]) return res.status(400).json({ error: 'Invalid or expired promo voucher!' });
+      if (!codePricer[upperCode]) return res.status(400).json({ error: 'Invalid promo voucher!' });
       if (user.redeemedVouchers.includes(upperCode)) return res.status(400).json({ error: 'Voucher already redeemed!' });
       numAmount = codePricer[upperCode];
       user.redeemedVouchers.push(upperCode);
@@ -306,13 +297,13 @@ app.post('/api/wallet/claim-reward', async (req, res) => {
     else user.bonusBalance += numAmount;
 
     await user.save();
+    await Transaction.create({ userId, type: 'reward', amount: numAmount, description: `Claimed reward: ${type}` });
     res.json({ success: true, message: `₹${numAmount.toFixed(2)} credited successfully!` });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// UPI Huerush33@ybl Config
 app.get('/api/wallet/upi-config', (req, res) => {
   res.json({ upiId: 'Huerush33@ybl', name: 'HueRush VIP' });
 });
@@ -323,25 +314,34 @@ app.post('/api/wallet/submit-deposit', async (req, res) => {
   const existing = await Transaction.findOne({ utrNumber });
   if (existing) return res.status(400).json({ error: 'UTR already submitted!' });
 
-  await Transaction.create({ userId, type: 'deposit', amount: Number(amount), utrNumber: utrNumber.trim(), status: 'pending' });
-  res.json({ message: 'Recharge verification submitted successfully!' });
+  let baseAmt = Number(amount);
+  let bonusAmt = 0;
+  // Deposit tier bonuses (e.g. 300+48, 500+108, 1000+188, 5000+488)
+  if (baseAmt >= 5000) bonusAmt = 488;
+  else if (baseAmt >= 1000) bonusAmt = 188;
+  else if (baseAmt >= 500) bonusAmt = 108;
+  else if (baseAmt >= 300) bonusAmt = 48;
+
+  await Transaction.create({ userId, type: 'deposit', amount: baseAmt + bonusAmt, utrNumber: utrNumber.trim(), status: 'pending', description: `Deposit ₹${baseAmt} + Bonus ₹${bonusAmt}` });
+  res.json({ message: `Recharge verification submitted! (Includes ₹${bonusAmt} extra bonus)` });
 });
 
 app.post('/api/wallet/withdraw-request', async (req, res) => {
   const { userId, amount, upiId } = req.body;
   const user = await User.findById(userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
+  if (amount < 110) return res.status(400).json({ error: 'Minimum withdrawal is ₹110' });
   if (user.winningBalance < amount) return res.status(400).json({ error: 'Insufficient withdrawable cash!' });
 
   user.winningBalance -= Number(amount);
   await user.save();
-  await Transaction.create({ userId, type: 'withdraw', amount: Number(amount), upiId, status: 'pending' });
+  await Transaction.create({ userId, type: 'withdraw', amount: Number(amount), upiId, status: 'pending', description: `Withdrawal request to ${upiId}` });
   res.json({ message: 'Cashout request submitted!' });
 });
 
 app.get('/api/wallet/user-transactions/:userId', async (req, res) => {
   try {
-    const txs = await Transaction.find({ userId: req.params.userId }).sort({ createdAt: -1 }).limit(40);
+    const txs = await Transaction.find({ userId: req.params.userId }).sort({ createdAt: -1 }).limit(50);
     res.json(txs);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -349,8 +349,8 @@ app.get('/api/wallet/user-transactions/:userId', async (req, res) => {
 app.post('/api/admin/force-number', (req, res) => {
   const { roomKey, number } = req.body;
   if (!global.rooms[roomKey]) return res.status(400).json({ error: 'Room not found' });
-  global.rooms[roomKey].forcedResult = Number(number);
-  res.json({ message: `Success! Room [${roomKey}] forced to: ${number}` });
+  global.rooms[roomKey].forcedResult = number === null || number === '' ? null : Number(number);
+  res.json({ message: `Success! Room [${roomKey}] forced result updated.` });
 });
 
 app.get('/api/admin/system-status', async (req, res) => {
@@ -377,6 +377,8 @@ app.post('/api/admin/process-tx', async (req, res) => {
   await tx.save();
   if (tx.type === 'deposit' && status === 'approved') {
     await User.findByIdAndUpdate(tx.userId, { $inc: { winningBalance: tx.amount, totalDeposited: tx.amount } });
+    tx.status = 'completed';
+    await tx.save();
   }
   res.json({ message: `Transaction status updated: ${status}` });
 });
