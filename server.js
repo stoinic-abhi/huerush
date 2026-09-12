@@ -10,19 +10,22 @@ function hashPassword(pass) {
   return crypto.createHash('sha256').update(pass).digest('hex');
 }
 
-// --- MONGOOSE SCHEMAS ---
+// --- MONGOOSE SCHEMAS (100% PERSISTENT STORAGE) ---
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, default: 'user' },
+  referralCode: { type: String, unique: true },
+  referredBy: { type: String, default: null },
   bonusBalance: { type: Number, default: 50 },
   winningBalance: { type: Number, default: 0 },
   totalDeposited: { type: Number, default: 0 },
   claimedStreakDays: { type: [Number], default: [] },
   lastStreakDate: { type: String, default: '' },
   redeemedVouchers: { type: [String], default: [] },
-  referralEarnings: { type: Number, default: 0 }
+  referralEarnings: { type: Number, default: 0 },
+  invitedCount: { type: Number, default: 0 }
 }, { timestamps: true });
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
@@ -37,6 +40,23 @@ const transactionSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const Transaction = mongoose.models.Transaction || mongoose.model('Transaction', transactionSchema);
+
+// PERMANENT BET SCHEMA (Solves Issue #8: History vanishing after restart/logout)
+const betSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  period: { type: Number, required: true },
+  roomType: { type: String, required: true },
+  type: { type: String, required: true },
+  target: { type: mongoose.Schema.Types.Mixed, required: true },
+  amount: { type: Number, required: true },
+  status: { type: String, enum: ['pending', 'won', 'lost'], default: 'pending' },
+  winAmount: { type: Number, default: 0 },
+  winningNum: { type: Number },
+  winningColor: { type: String },
+  size: { type: String }
+}, { timestamps: true });
+
+const Bet = mongoose.models.Bet || mongoose.model('Bet', betSchema);
 
 const app = express();
 app.use(cors());
@@ -56,8 +76,7 @@ function servePage(fileName, res) {
 app.get('/', (req, res) => servePage('index.html', res));
 app.get('/god-panel.html', (req, res) => servePage('god-panel.html', res));
 
-global.userBetLedger = {};
-
+// Parity Engine Room States
 global.rooms = {
   '30s': { duration: 30, timeLeft: 30, currentPeriod: 20260901001, history: [], activeBets: [], forcedResult: null },
   '90s': { duration: 90, timeLeft: 90, currentPeriod: 20260902001, history: [], activeBets: [], forcedResult: null },
@@ -72,7 +91,7 @@ function getNumberMeta(num) {
   return { num, color: num % 2 === 0 ? 'red' : 'green', size };
 }
 
-// Background Game Loop
+// Background Game Loops
 Object.keys(global.rooms).forEach(roomKey => {
   setInterval(async () => {
     const room = global.rooms[roomKey];
@@ -123,8 +142,9 @@ Object.keys(global.rooms).forEach(roomKey => {
             await User.findByIdAndUpdate(bet.userId, { $inc: { winningBalance: winAmount } });
           }
 
-          if (!global.userBetLedger[bet.userId]) global.userBetLedger[bet.userId] = [];
-          global.userBetLedger[bet.userId].unshift({
+          // PERMANENTLY SAVE TO MONGODB DATABASE (Never vanishes)
+          await Bet.create({
+            userId: bet.userId,
             period: room.currentPeriod,
             roomType: roomKey,
             type: bet.type,
@@ -134,10 +154,9 @@ Object.keys(global.rooms).forEach(roomKey => {
             winAmount: winAmount,
             winningNum: winningNum,
             winningColor: meta.color,
-            size: meta.size,
-            time: new Date().toLocaleTimeString()
+            size: meta.size
           });
-          if (global.userBetLedger[bet.userId].length > 40) global.userBetLedger[bet.userId].pop();
+
         } catch (e) {
           console.error('Settle bet error:', e.message);
         }
@@ -159,16 +178,40 @@ Object.keys(global.rooms).forEach(roomKey => {
   }, 1000);
 });
 
-// Authentication
+// Authentication with Real Invite Code Binding
 app.post('/api/auth/register', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, inviteCode } = req.body;
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ error: 'Email already registered' });
 
     const hashedPassword = hashPassword(password);
-    user = await User.create({ name, email, password: hashedPassword, bonusBalance: 50, winningBalance: 0, totalDeposited: 0 });
-    res.json({ message: 'User created successfully', user: { id: user._id, name: user.name, email: user.email, bonusBalance: user.bonusBalance, winningBalance: user.winningBalance } });
+    const myRefCode = 'HR' + Math.floor(1000 + Math.random() * 9000);
+
+    let referrerUser = null;
+    if (inviteCode && inviteCode.trim().length > 0) {
+      referrerUser = await User.findOne({ referralCode: inviteCode.trim().toUpperCase() });
+    }
+
+    user = await User.create({ 
+      name, 
+      email, 
+      password: hashedPassword, 
+      referralCode: myRefCode,
+      referredBy: referrerUser ? referrerUser.referralCode : null,
+      bonusBalance: 50, 
+      winningBalance: 0, 
+      totalDeposited: 0 
+    });
+
+    // Credit inviter if valid invite happened
+    if (referrerUser) {
+      await User.findByIdAndUpdate(referrerUser._id, { 
+        $inc: { invitedCount: 1, referralEarnings: 15 } // Gives real commission on actual registration
+      });
+    }
+
+    res.json({ message: 'Account created successfully', user: { id: user._id, name: user.name, email: user.email, referralCode: user.referralCode } });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -178,12 +221,24 @@ app.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: 'Invalid credentials' });
+    if (!user) return res.status(400).json({ error: 'Invalid email or password' });
 
     const isMatch = hashPassword(password) === user.password;
-    if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
+    if (!isMatch) return res.status(400).json({ error: 'Invalid email or password' });
 
-    res.json({ user: { id: user._id, name: user.name, email: user.email, bonusBalance: user.bonusBalance, winningBalance: user.winningBalance, totalDeposited: user.totalDeposited } });
+    res.json({ 
+      user: { 
+        id: user._id, 
+        name: user.name, 
+        email: user.email, 
+        referralCode: user.referralCode,
+        bonusBalance: user.bonusBalance, 
+        winningBalance: user.winningBalance, 
+        totalDeposited: user.totalDeposited,
+        invitedCount: user.invitedCount || 0,
+        referralEarnings: user.referralEarnings || 0
+      } 
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -203,17 +258,25 @@ app.get('/api/game/all-rooms', (req, res) => {
   res.json(data);
 });
 
+// Permanent Personal Bets Retrieval from MongoDB
 app.get('/api/game/my-bets/:userId', async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
     if (!user) return res.status(404).json({ error: 'User not found' });
+    
+    // Fetch permanent history from DB
+    const bets = await Bet.find({ userId: req.params.userId }).sort({ createdAt: -1 }).limit(50);
+
     res.json({
       bonusBalance: user.bonusBalance,
       winningBalance: user.winningBalance,
       totalDeposited: user.totalDeposited,
       claimedStreakDays: user.claimedStreakDays || [],
       lastStreakDate: user.lastStreakDate || '',
-      bets: global.userBetLedger[req.params.userId] || []
+      referralCode: user.referralCode,
+      invitedCount: user.invitedCount || 0,
+      referralEarnings: user.referralEarnings || 0,
+      bets: bets
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -244,16 +307,14 @@ app.post('/api/game/bet', async (req, res) => {
   res.json({ message: 'Bet accepted!', bonusBalance: user.bonusBalance, winningBalance: user.winningBalance });
 });
 
-// REAL PERMANENT WALLET REWARD CLAIMS (Fixes Balance Not Updating Issue)
+// Controlled Redeem Codes & Streak Handler
 app.post('/api/wallet/claim-reward', async (req, res) => {
   try {
     const { userId, type, amount, targetWallet, code, day } = req.body;
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
-    const numAmount = Number(amount);
-    if (isNaN(numAmount) || numAmount <= 0) return res.status(400).json({ error: 'Invalid amount' });
-
+    let numAmount = Number(amount);
     const todayStr = new Date().toDateString();
 
     if (type === 'daily_streak') {
@@ -269,10 +330,30 @@ app.post('/api/wallet/claim-reward', async (req, res) => {
       }
     } else if (type === 'gift_code') {
       const upperCode = String(code).trim().toUpperCase();
-      if (user.redeemedVouchers.includes(upperCode)) {
-        return res.status(400).json({ error: 'You have already redeemed this code!' });
+      
+      // CONTROLLED REDEEM CODES: ₹10 - ₹15 ONLY
+      const codePricer = {
+        'BONUS10': 10,
+        'VIP15': 15,
+        'LUCKY10': 10,
+        'RUSH15': 15
+      };
+
+      if (!codePricer[upperCode]) {
+        return res.status(400).json({ error: 'Invalid or expired promo voucher!' });
       }
+      if (user.redeemedVouchers.includes(upperCode)) {
+        return res.status(400).json({ error: 'This voucher has already been claimed on this account!' });
+      }
+
+      numAmount = codePricer[upperCode];
       user.redeemedVouchers.push(upperCode);
+    } else if (type === 'claim_referral') {
+      if (user.referralEarnings <= 0) {
+        return res.status(400).json({ error: 'No referral commissions available to claim right now!' });
+      }
+      numAmount = user.referralEarnings;
+      user.referralEarnings = 0;
     }
 
     if (targetWallet === 'winning') {
@@ -285,11 +366,12 @@ app.post('/api/wallet/claim-reward', async (req, res) => {
 
     res.json({
       success: true,
-      message: `₹${numAmount.toFixed(2)} added to your ${targetWallet === 'winning' ? 'Winning' : 'Bonus'} wallet!`,
+      message: `₹${numAmount.toFixed(2)} credited successfully to your wallet!`,
       bonusBalance: user.bonusBalance,
       winningBalance: user.winningBalance,
       claimedStreakDays: user.claimedStreakDays,
-      lastStreakDate: user.lastStreakDate
+      lastStreakDate: user.lastStreakDate,
+      referralEarnings: user.referralEarnings
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -322,7 +404,7 @@ app.post('/api/wallet/submit-deposit', async (req, res) => {
     status: 'pending'
   });
 
-  res.json({ message: 'Deposit submitted! Balance will be credited once verified.' });
+  res.json({ message: 'Recharge verification submitted successfully!' });
 });
 
 app.post('/api/wallet/withdraw-request', async (req, res) => {
@@ -331,28 +413,29 @@ app.post('/api/wallet/withdraw-request', async (req, res) => {
   if (!user) return res.status(404).json({ error: 'User not found' });
 
   if (user.totalDeposited <= 0) {
-    return res.status(400).json({ error: 'Please make a minimum ₹100 deposit first to verify your account & activate withdrawals!' });
+    return res.status(400).json({ error: 'Please make a minimum ₹100 recharge first to verify your account & unlock cashout!' });
   }
 
-  if (user.winningBalance < amount) return res.status(400).json({ error: 'Insufficient winning balance! Bonus cannot be withdrawn.' });
+  if (user.winningBalance < amount) return res.status(400).json({ error: 'Insufficient withdrawable balance! Bonus funds cannot be withdrawn.' });
 
   user.winningBalance -= Number(amount);
   await user.save();
 
   await Transaction.create({ userId, type: 'withdraw', amount: Number(amount), upiId, status: 'pending' });
-  res.json({ message: 'Withdrawal submitted!', winningBalance: user.winningBalance });
+  res.json({ message: 'Cashout request submitted! Settlement in 5-15 mins.' });
 });
 
+// Permanent Withdrawal History from MongoDB
 app.get('/api/wallet/user-transactions/:userId', async (req, res) => {
   try {
-    const txs = await Transaction.find({ userId: req.params.userId }).sort({ createdAt: -1 }).limit(30);
+    const txs = await Transaction.find({ userId: req.params.userId }).sort({ createdAt: -1 }).limit(40);
     res.json(txs);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Admin Control
+// Admin Controllers
 app.post('/api/admin/force-number', (req, res) => {
   const { roomKey, number } = req.body;
   if (!global.rooms[roomKey]) return res.status(400).json({ error: 'Room not found' });
@@ -415,7 +498,7 @@ app.post('/api/admin/process-tx', async (req, res) => {
     await User.findByIdAndUpdate(tx.userId, { $inc: { winningBalance: tx.amount } });
   }
 
-  res.json({ message: `Transaction ${status}` });
+  res.json({ message: `Transaction status updated: ${status}` });
 });
 
 async function startServer() {
