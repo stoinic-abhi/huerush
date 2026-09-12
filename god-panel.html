@@ -2,143 +2,182 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HueRush — God Panel (Owner Admin Terminal)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>HueRush — God Terminal (Elite Admin)</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg-base:#020408;
+  --bg-surface:#0b101c;
+  --bg-elevated:#131d31;
+  --neon-red:#ff2a4d;
+  --neon-green:#00e676;
+  --neon-cyan:#00e5ff;
+  --text-main:#f8fafc;
+  --text-muted:#7b8ca5;
+  --glass-border:rgba(255,255,255,0.08);
+}
+
 body{
-  background:#04060b;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  color:#f8fafc;
-  padding:20px;
+  background:var(--bg-base);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;
+  color:var(--text-main);
+  padding:14px;
+  display:flex;
+  justify-content:center;
 }
-.god-container{max-width:1100px;margin:0 auto;}
+
+.god-shell{
+  width:100%;
+  max-width:650px;
+  margin:0 auto;
+  padding-bottom:50px;
+}
+
+/* PREMIER HEADER */
 .god-header{
-  display:flex;justify-content:space-between;align-items:center;
-  background:linear-gradient(135deg, #1c2436, #0d111a);
-  border:1px solid rgba(255,255,255,0.08);
-  padding:20px 24px;border-radius:20px;margin-bottom:24px;
+  background:linear-gradient(135deg, #131d31 0%, #0b101c 100%);
+  border:1px solid var(--glass-border);
+  border-radius:22px;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
 }
-.god-title{font-size:1.5rem;font-weight:900;color:#ff2a4d;}
+.god-title{font-size:1.25rem;font-weight:900;color:var(--neon-red);display:flex;align-items:center;gap:8px;}
+.back-link{
+  background:var(--bg-elevated);border:1px solid var(--glass-border);color:#fff;
+  text-decoration:none;padding:8px 14px;border-radius:12px;font-weight:800;font-size:0.75rem;
+  transition:all 0.2s;
+}
+.back-link:active{transform:scale(0.94);}
+
+/* STATS CARDS */
 .stats-grid{
-  display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:16px;margin-bottom:24px;
+  display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;margin-bottom:16px;
 }
 .stat-card{
-  background:#0b101a;border:1px solid rgba(255,255,255,0.06);
-  border-radius:16px;padding:18px;
+  background:var(--bg-surface);border:1px solid var(--glass-border);
+  border-radius:18px;padding:14px 10px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.4);
 }
-.stat-card span{font-size:0.75rem;color:#7b8ca5;text-transform:uppercase;font-weight:800;display:block;}
-.stat-card b{font-size:1.8rem;font-weight:900;margin-top:6px;display:block;font-family:monospace;}
+.stat-card span{font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;font-weight:900;display:block;}
+.stat-card b{font-size:1.15rem;font-weight:900;margin-top:4px;display:block;font-family:monospace;}
 
+/* SECTION BOX */
 .section-box{
-  background:#0b101a;border:1px solid rgba(255,255,255,0.06);
-  border-radius:20px;padding:20px;margin-bottom:24px;
+  background:var(--bg-surface);border:1px solid var(--glass-border);
+  border-radius:20px;padding:16px;margin-bottom:16px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.5);
 }
-.section-title{font-size:1.1rem;font-weight:900;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.section-title{font-size:0.95rem;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 
-table{width:100%;border-collapse:collapse;font-size:0.85rem;}
-th{text-align:left;padding:10px;color:#7b8ca5;border-bottom:1px solid rgba(255,255,255,0.06);}
-td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,0.03);}
+/* FORCE CONTROLS */
+.force-control-row{
+  display:flex;gap:8px;align-items:center;background:var(--bg-base);
+  padding:10px;border-radius:14px;margin-bottom:8px;border:1px solid var(--glass-border);
+}
+.force-control-row span{font-size:0.8rem;font-weight:800;flex:1;}
+.force-control-row select{
+  background:var(--bg-elevated);border:1px solid var(--glass-border);color:#fff;
+  padding:8px 10px;border-radius:10px;font-weight:800;font-size:0.8rem;outline:none;
+}
+.btn-lock{
+  background:linear-gradient(135deg, var(--neon-cyan), #0284c7);color:#000;
+  border:none;padding:8px 14px;border-radius:10px;font-weight:900;font-size:0.75rem;cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,229,255,0.3);
+}
+
+/* MOBILE RESPONSIVE CARDS INSTEAD OF CLUNKY TABLES */
+.record-item-card{
+  background:var(--bg-base);border:1px solid var(--glass-border);
+  border-radius:14px;padding:12px;margin-bottom:10px;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+}
+.record-info div:nth-child(1){font-weight:900;font-size:0.85rem;}
+.record-info div:nth-child(2){font-size:0.7rem;color:var(--text-muted);font-family:monospace;margin-top:2px;}
+.record-actions{display:flex;gap:6px;}
 
 .btn-action{
-  padding:6px 14px;border-radius:8px;border:none;font-weight:900;font-size:0.75rem;cursor:pointer;
+  padding:8px 12px;border-radius:10px;border:none;font-weight:900;font-size:0.72rem;cursor:pointer;
 }
-.btn-approve{background:#00e676;color:#000;}
-.btn-reject{background:#ff2a4d;color:#fff;}
-.btn-force{background:#00e5ff;color:#000;margin-left:6px;}
-
-.force-control-row{
-  display:flex;gap:10px;align-items:center;background:#04060b;padding:10px 14px;border-radius:12px;margin-bottom:8px;
-}
-.force-control-row select, .force-control-row input{
-  background:#131b2e;border:1px solid rgba(255,255,255,0.1);color:#fff;padding:8px 12px;border-radius:8px;font-weight:800;outline:none;
-}
+.btn-approve{background:rgba(0,230,118,0.2);color:var(--neon-green);border:1px solid var(--neon-green);}
+.btn-reject{background:rgba(255,42,77,0.2);color:var(--neon-red);border:1px solid var(--neon-red);}
 </style>
 </head>
 <body>
 
-<div class="god-container">
+<div class="god-shell">
   <div class="god-header">
     <div>
-      <div class="god-title"><i class="fa-solid fa-shield-halved"></i> HueRush God Terminal</div>
-      <p style="font-size:0.75rem;color:#7b8ca5;margin-top:4px;">Master Control & Financial Audit Panel</p>
+      <div class="god-title"><i class="fa-solid fa-shield-halved"></i> God Terminal</div>
+      <p style="font-size:0.68rem;color:var(--text-muted);margin-top:2px;">Master Control & Financial Audit</p>
     </div>
-    <a href="/" style="background:#131b2e;color:#fff;text-decoration:none;padding:10px 16px;border-radius:12px;font-weight:800;font-size:0.8rem;">← Back to App</a>
+    <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> App</a>
   </div>
 
   <!-- STATS -->
   <div class="stats-grid">
     <div class="stat-card">
-      <span>Total Revenue (Deposits)</span>
-      <b style="color:#00e676;" id="statRev">₹0.00</b>
+      <span>Deposits</span>
+      <b style="color:var(--neon-green);" id="statRev">₹0</b>
     </div>
     <div class="stat-card">
-      <span>Total Paid (Withdrawals)</span>
-      <b style="color:#ff2a4d;" id="statPaid">₹0.00</b>
+      <span>Withdraws</span>
+      <b style="color:var(--neon-red);" id="statPaid">₹0</b>
     </div>
     <div class="stat-card">
-      <span>Net House Profit</span>
-      <b style="color:#00e5ff;" id="statProfit">₹0.00</b>
+      <span>Net Profit</span>
+      <b style="color:var(--neon-cyan);" id="statProfit">₹0</b>
     </div>
   </div>
 
-  <!-- RIGGING ENGINE / FORCE RESULT -->
+  <!-- RIGGING ENGINE -->
   <div class="section-box">
-    <div class="section-title"><i class="fa-solid fa-dice" style="color:#00e5ff;"></i> Parity Rigging Engine (Force Next Result)</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:10px;">
-      <div class="force-control-row">
-        <span>30s Room:</span>
-        <select id="forceNum_30s">
-          <option value="">Random (Normal)</option>
-          <option value="0">0 (Red/Violet)</option>
-          <option value="1">1 (Green)</option>
-          <option value="2">2 (Red)</option>
-          <option value="3">3 (Green)</option>
-          <option value="4">4 (Red)</option>
-          <option value="5">5 (Green/Violet)</option>
-          <option value="6">6 (Red)</option>
-          <option value="7">7 (Green)</option>
-          <option value="8">8 (Red)</option>
-          <option value="9">9 (Green)</option>
-        </select>
-        <button class="btn-action btn-force" onclick="setForcedNumber('30s')">LOCK</button>
-      </div>
-      <div class="force-control-row">
-        <span>90s Room:</span>
-        <select id="forceNum_90s">
-          <option value="">Random (Normal)</option>
-          <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option>
-        </select>
-        <button class="btn-action btn-force" onclick="setForcedNumber('90s')">LOCK</button>
-      </div>
+    <div class="section-title"><i class="fa-solid fa-dice" style="color:var(--neon-cyan);"></i> Parity Rigging Engine</div>
+    <div class="force-control-row">
+      <span>30s Quick Room:</span>
+      <select id="forceNum_30s">
+        <option value="">Random (Normal)</option>
+        <option value="0">0 (Red/Vio)</option>
+        <option value="1">1 (Green)</option>
+        <option value="2">2 (Red)</option>
+        <option value="3">3 (Green)</option>
+        <option value="4">4 (Red)</option>
+        <option value="5">5 (Grn/Vio)</option>
+        <option value="6">6 (Red)</option>
+        <option value="7">7 (Green)</option>
+        <option value="8">8 (Red)</option>
+        <option value="9">9 (Green)</option>
+      </select>
+      <button class="btn-lock" onclick="setForcedNumber('30s')">LOCK</button>
+    </div>
+    <div class="force-control-row">
+      <span>90s Room:</span>
+      <select id="forceNum_90s">
+        <option value="">Random (Normal)</option>
+        <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option>
+      </select>
+      <button class="btn-lock" onclick="setForcedNumber('90s')">LOCK</button>
     </div>
   </div>
 
   <!-- PENDING DEPOSITS -->
   <div class="section-box">
-    <div class="section-title"><i class="fa-solid fa-arrow-down-long" style="color:#00e676;"></i> Pending Recharges (UTR Verification)</div>
-    <table>
-      <thead>
-        <tr><th>User</th><th>Amount</th><th>UTR Number</th><th>Time</th><th>Action</th></tr>
-      </thead>
-      <tbody id="tblPendingDeposits">
-        <tr><td colspan="5" style="text-align:center;color:#7b8ca5;">Loading...</td></tr>
-      </tbody>
-    </table>
+    <div class="section-title"><i class="fa-solid fa-arrow-down-long" style="color:var(--neon-green);"></i> Pending Recharges</div>
+    <div id="listPendingDeposits">
+      <p style="text-align:center;color:var(--text-muted);font-size:0.75rem;padding:10px;">Checking pending deposits...</p>
+    </div>
   </div>
 
   <!-- PENDING WITHDRAWALS -->
   <div class="section-box">
-    <div class="section-title"><i class="fa-solid fa-arrow-up-long" style="color:#ff2a4d;"></i> Pending Cashout Requests</div>
-    <table>
-      <thead>
-        <tr><th>User</th><th>Amount</th><th>Receiving UPI</th><th>Time</th><th>Action</th></tr>
-      </thead>
-      <tbody id="tblPendingWithdraws">
-        <tr><td colspan="5" style="text-align:center;color:#7b8ca5;">Loading...</td></tr>
-      </tbody>
-    </table>
+    <div class="section-title"><i class="fa-solid fa-arrow-up-long" style="color:var(--neon-red);"></i> Pending Cashouts</div>
+    <div id="listPendingWithdraws">
+      <p style="text-align:center;color:var(--text-muted);font-size:0.75rem;padding:10px;">Checking pending cashouts...</p>
+    </div>
   </div>
 </div>
 
@@ -148,52 +187,49 @@ async function loadGodData() {
     const res = await fetch('/api/admin/system-status');
     const data = await res.json();
 
-    document.getElementById('statRev').innerText = `₹${data.stats.totalRevenue.toFixed(2)}`;
-    document.getElementById('statPaid').innerText = `₹${data.stats.totalPaid.toFixed(2)}`;
+    document.getElementById('statRev').innerText = `₹${data.stats.totalRevenue.toFixed(0)}`;
+    document.getElementById('statPaid').innerText = `₹${data.stats.totalPaid.toFixed(0)}`;
     const net = data.stats.totalRevenue - data.stats.totalPaid;
-    document.getElementById('statProfit').innerText = `₹${net.toFixed(2)}`;
+    document.getElementById('statProfit').innerText = `₹${net.toFixed(0)}`;
 
     // Render Pending Deposits
-    const depBox = document.getElementById('tblPendingDeposits');
+    const depBox = document.getElementById('listPendingDeposits');
     if (!data.pendingDeposits.length) {
-      depBox.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#7b8ca5;">No pending recharges.</td></tr>`;
+      depBox.innerHTML = `<p style="text-align:center;color:var(--text-muted);font-size:0.75rem;padding:10px;">No pending recharges.</p>`;
     } else {
       depBox.innerHTML = data.pendingDeposits.map(d => `
-        <tr>
-          <td><b>${d.userId ? d.userId.name : 'Unknown'}</b><div style="font-size:0.7rem;color:#7b8ca5;">${d.userId ? d.userId.email : ''}</div></td>
-          <td><b style="color:#00e676;">₹${d.amount}</b></td>
-          <td><code style="background:#131b2e;padding:4px 8px;border-radius:6px;">${d.utrNumber}</code></td>
-          <td style="color:#7b8ca5;font-size:0.75rem;">${new Date(d.createdAt).toLocaleTimeString()}</td>
-          <td>
+        <div class="record-item-card">
+          <div class="record-info">
+            <div>${d.userId ? d.userId.name : 'Unknown'} • <b style="color:var(--neon-green);">₹${d.amount}</b></div>
+            <div>UTR: ${d.utrNumber}</div>
+          </div>
+          <div class="record-actions">
             <button class="btn-action btn-approve" onclick="processTx('${d._id}', 'approved')">Approve</button>
             <button class="btn-action btn-reject" onclick="processTx('${d._id}', 'rejected')">Reject</button>
-          </td>
-        </tr>
+          </div>
+        </div>
       `).join('');
     }
 
     // Render Pending Withdrawals
-    const wdBox = document.getElementById('tblPendingWithdraws');
+    const wdBox = document.getElementById('listPendingWithdraws');
     if (!data.pendingWithdraws.length) {
-      wdBox.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#7b8ca5;">No pending withdrawals.</td></tr>`;
+      wdBox.innerHTML = `<p style="text-align:center;color:var(--text-muted);font-size:0.75rem;padding:10px;">No pending cashouts.</p>`;
     } else {
       wdBox.innerHTML = data.pendingWithdraws.map(w => `
-        <tr>
-          <td><b>${w.userId ? w.userId.name : 'Unknown'}</b><div style="font-size:0.7rem;color:#7b8ca5;">${w.userId ? w.userId.email : ''}</div></td>
-          <td><b style="color:#ff2a4d;">₹${w.amount}</b></td>
-          <td><code style="background:#131b2e;padding:4px 8px;border-radius:6px;color:#00e5ff;">${w.upiId}</code></td>
-          <td style="color:#7b8ca5;font-size:0.75rem;">${new Date(w.createdAt).toLocaleTimeString()}</td>
-          <td>
+        <div class="record-item-card">
+          <div class="record-info">
+            <div>${w.userId ? w.userId.name : 'Unknown'} • <b style="color:var(--neon-red);">₹${w.amount}</b></div>
+            <div>UPI: ${w.upiId}</div>
+          </div>
+          <div class="record-actions">
             <button class="btn-action btn-approve" onclick="processTx('${w._id}', 'approved')">Approve</button>
             <button class="btn-action btn-reject" onclick="processTx('${w._id}', 'rejected')">Reject</button>
-          </td>
-        </tr>
+          </div>
+        </div>
       `).join('');
     }
-
-  } catch(e) {
-    console.error('God Panel Sync Error:', e);
-  }
+  } catch(e) {}
 }
 
 async function processTx(txId, status) {
@@ -209,8 +245,7 @@ async function processTx(txId, status) {
 
 async function setForcedNumber(roomKey) {
   const num = document.getElementById('forceNum_' + roomKey).value;
-  if (num === '') return alert('Please select a valid number to lock!');
-
+  if (num === '') return alert('Please select a valid number!');
   const res = await fetch('/api/admin/force-number', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
