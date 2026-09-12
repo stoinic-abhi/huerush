@@ -44,7 +44,7 @@ body{
 
 .hidden{display:none!important;}
 
-/* HEADER WITH CUSTOM INLINE VECTOR BRAND LOGO */
+/* HEADER WITH CUSTOM VECTOR LOGO */
 .app-header-strip{
   background:linear-gradient(135deg, #ff444a 0%, #b80d19 100%);
   padding:16px 16px 56px;
@@ -230,7 +230,7 @@ body{
   color:var(--text-dark);
 }
 
-/* 🎡 FUNCTIONAL LUCKY SPIN BANNER */
+/* LUCKY SPIN BANNER */
 .spin-banner-card{
   margin:0 14px 14px;
   background:linear-gradient(135deg, #4c1d95, #6d28d9 60%, #c026d3 100%);
@@ -677,7 +677,60 @@ body{
 }
 
 /* ========================================================= */
-/* DEAD-CENTERED ATM WINNING & LOSS POPUPS */
+/* 7-DAY STREAK CALENDAR CSS */
+/* ========================================================= */
+.streak-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:8px;
+  margin-bottom:14px;
+}
+.streak-day-card{
+  background:#f8fafc;
+  border:1.5px solid #e2e8f0;
+  border-radius:12px;
+  padding:10px 4px;
+  text-align:center;
+  position:relative;
+  transition:all 0.2s;
+}
+.streak-day-card.claimed{
+  background:#ecfdf5;
+  border-color:#10b981;
+}
+.streak-day-card.active-today{
+  border-color:#f59e0b;
+  box-shadow:0 0 10px rgba(245,158,11,0.3);
+}
+.streak-day-card .day-label{
+  font-size:0.65rem;
+  color:var(--text-muted);
+  font-weight:800;
+  display:block;
+}
+.streak-day-card .prize-amount{
+  font-size:0.95rem;
+  font-weight:900;
+  color:var(--text-dark);
+  margin-top:2px;
+  display:block;
+}
+.streak-day-card.claimed .prize-amount{
+  color:#10b981;
+}
+.streak-day-card .tick-badge{
+  display:none;
+  font-size:0.75rem;
+  color:#10b981;
+  font-weight:900;
+  margin-top:2px;
+}
+.streak-day-card.claimed .tick-badge{
+  display:block;
+}
+
+/* ========================================================= */
+/* 🎯 EXACT SAME ATM DISPENSER ANIMATION FOR WIN & LOSS */
 /* ========================================================= */
 .atm-viewport-overlay{
   position:fixed;
@@ -698,20 +751,17 @@ body{
 .atm-pop-container{
   width:100%;
   max-width:330px;
+  background:linear-gradient(180deg, #ff6d43 0%, #ff4f3b 100%);
   border-radius:28px;
   padding:72px 18px 22px;
   position:relative;
+  box-shadow:0 24px 60px rgba(255,79,59,0.45);
   text-align:center;
   margin:auto;
   animation:atmPopIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 @keyframes atmPopIn{0%{transform:scale(0.8);opacity:0;}100%{transform:scale(1);opacity:1;}}
 
-/* WIN THEME */
-.theme-win-card{
-  background:linear-gradient(180deg, #ff6d43 0%, #ff4f3b 100%);
-  box-shadow:0 24px 60px rgba(255,79,59,0.45);
-}
 .atm-gold-ribbon{
   position:absolute;
   top:-34px;
@@ -738,40 +788,6 @@ body{
   border-radius:100px;
 }
 .atm-flight-rocket{font-size:2rem;color:#fff;animation:rocketFloat 1.8s ease-in-out infinite alternate;}
-
-/* LOSS THEME */
-.theme-loss-card{
-  background:linear-gradient(180deg, #334155 0%, #1e293b 100%);
-  box-shadow:0 24px 60px rgba(0,0,0,0.6);
-  border:1px solid #475569;
-}
-.atm-loss-ribbon{
-  position:absolute;
-  top:-34px;
-  left:50%;
-  transform:translateX(-50%);
-  width:220px;
-  height:76px;
-  background:radial-gradient(circle at center, #64748b 0%, #334155 80%);
-  border-radius:100px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 8px 24px rgba(0,0,0,0.4);
-  border:3px solid #94a3b8;
-}
-.ribbon-loss-wings{
-  position:absolute;
-  width:270px;
-  height:36px;
-  top:18px;
-  left:-25px;
-  background:linear-gradient(90deg, transparent, #475569 20%, #334155 80%, transparent);
-  z-index:-1;
-  border-radius:100px;
-}
-.atm-loss-icon{font-size:2rem;color:#ef4444;}
-
 @keyframes rocketFloat{0%{transform:translateY(0);}100%{transform:translateY(-5px);}}
 
 .atm-heading-congrats{font-size:1.35rem;font-weight:900;color:#fff;line-height:1.2;}
@@ -785,8 +801,6 @@ body{
 .pill-violet{background:#8b5cf6;}
 
 .atm-cutter-slot{background:#b92716;border-radius:100px;height:14px;width:92%;margin:0 auto;box-shadow:inset 0 3px 6px rgba(0,0,0,0.6);}
-.slot-loss{background:#0f172a;}
-
 .atm-slide-receipt{
   position:relative;
   width:90%;
@@ -802,8 +816,9 @@ body{
 @keyframes slideCashPaper{0%{transform:scaleY(0);opacity:0;}100%{transform:scaleY(1);opacity:1;}}
 
 .receipt-bonus-lbl{font-size:0.8rem;color:#ef4444;font-weight:800;text-transform:lowercase;}
-.receipt-cash-val{font-size:1.85rem;font-weight:900;color:#f43f5e;margin:2px 0 6px;}
-.loss-val{color:#64748b;}
+.receipt-cash-val{font-size:1.85rem;font-weight:900;margin:2px 0 6px;}
+.val-win{color:#10b981;}
+.val-loss{color:#ef4444;}
 .receipt-issue-id{font-size:0.65rem;color:#64748b;font-weight:700;}
 
 .atm-auto-close-toggle{display:flex;align-items:center;gap:8px;margin-top:20px;padding-left:14px;font-size:0.78rem;font-weight:800;color:#ffdcd4;cursor:pointer;}
@@ -951,8 +966,8 @@ body{
           <span>Invite & Earn</span>
         </div>
         <div class="service-icon-box" onclick="openVipModal()">
-          <i class="fa-solid fa-crown" style="color:#8b5cf6;"></i>
-          <span>Daily Bonus</span>
+          <i class="fa-solid fa-calendar-check" style="color:#8b5cf6;"></i>
+          <span>7-Day Streak</span>
         </div>
         <div class="service-icon-box" onclick="openRebatesModal()">
           <i class="fa-solid fa-hand-holding-dollar" style="color:#10b981;"></i>
@@ -960,7 +975,7 @@ body{
         </div>
       </div>
 
-      <!-- 🎡 FUNCTIONAL LUCKY SPIN BANNER -->
+      <!-- 🎡 LUCKY SPIN BANNER -->
       <div class="spin-banner-card" onclick="openLuckySpinModal()">
         <div class="spin-banner-content">
           <small><i class="fa-solid fa-sparkles"></i> 1 Free Daily Chance</small>
@@ -1163,12 +1178,12 @@ body{
         <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('giftModal')"></i>
       </div>
 
-      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px;">Enter official promotional voucher or telegram redeem code to claim instant wallet credit:</p>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px;">Enter promotional voucher or Telegram gift code for direct wallet injection:</p>
 
       <input type="text" id="giftCodeInput" class="auth-input-field" placeholder="e.g. BONUS50 or VIP100" style="text-transform:uppercase;letter-spacing:1.5px;text-align:center;font-size:1.1rem;" />
 
       <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:10px;border-radius:12px;font-size:0.72rem;color:var(--text-muted);margin-bottom:14px;">
-        💡 Try code <b>BONUS50</b> or <b>VIP100</b> for instant testing reward!
+        💡 Valid Codes: <b>BONUS50</b> (₹50 Bonus), <b>VIP100</b> (₹100 Cash), <b>FREEVIP</b> (₹25 Bonus)
       </div>
 
       <button class="btn-confirm-order" onclick="submitGiftCode()">REDEEM CODE NOW</button>
@@ -1195,45 +1210,72 @@ body{
       <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:8px;">Your Invitation Link:</p>
       <input type="text" id="refLinkInput" class="auth-input-field" readonly style="font-size:0.78rem;" />
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
         <button class="btn-confirm-order" style="background:#0284c7;" onclick="copyReferralLink()"><i class="fa-solid fa-copy"></i> Copy Link</button>
         <button class="btn-confirm-order" style="background:#16a34a;" onclick="shareWhatsapp()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
       </div>
+
+      <button class="btn-confirm-order" style="background:#f59e0b;color:#000;" onclick="claimReferralCommission()">CLAIM COMMISSION (₹35.00)</button>
     </div>
   </div>
 
-  <!-- 4. DAILY BONUS MODAL -->
+  <!-- 4. 7-DAY STREAK DAILY BONUS MODAL (FULL DAY 1-7 INTERACTIVE) -->
   <div class="drawer-backdrop" id="vipModal" onclick="if(event.target===this)closeDrawer('vipModal')">
     <div class="bottom-drawer">
       <div style="width:40px;height:4px;background:#e2e8f0;border-radius:100px;margin:0 auto 14px;"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <h3 style="font-weight:900;"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> VIP Daily Rewards Hub</h3>
+        <h3 style="font-weight:900;"><i class="fa-solid fa-calendar-check" style="color:#f59e0b;"></i> 7-Day Login Streak</h3>
         <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:1.2rem;" onclick="closeDrawer('vipModal')"></i>
       </div>
 
       <div style="background:linear-gradient(135deg, #fffbeb, #fef3c7);border:1px solid #fde68a;padding:14px;border-radius:16px;margin-bottom:14px;">
         <div style="display:flex;justify-content:space-between;font-weight:900;font-size:0.9rem;">
-          <span>Current VIP Tier:</span>
-          <span style="color:#b45309;">VIP 1 Member</span>
+          <span>Streak Status:</span>
+          <span style="color:#b45309;" id="streakStatusText">Active</span>
         </div>
-        <div style="height:6px;background:#fde68a;border-radius:10px;margin:10px 0 6px;overflow:hidden;">
-          <div style="width:40%;height:100%;background:#f59e0b;"></div>
+        <p style="font-size:0.72rem;color:#78350f;margin-top:4px;">Login every 24 hours to claim incremental rewards. Day 7 gives a massive surprise jackpot!</p>
+      </div>
+
+      <!-- FULL DAY 1 TO DAY 7 GRID -->
+      <div class="streak-grid" id="streakDaysGrid">
+        <div class="streak-day-card" id="cardDay1">
+          <span class="day-label">Day 1</span>
+          <span class="prize-amount">₹5</span>
+          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:0.68rem;color:#78350f;font-weight:800;">
-          <span>Turnover: ₹1,200</span>
-          <span>Next Tier: VIP 2 (₹5,000)</span>
+        <div class="streak-day-card" id="cardDay2">
+          <span class="day-label">Day 2</span>
+          <span class="prize-amount">₹10</span>
+          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
+        </div>
+        <div class="streak-day-card" id="cardDay3">
+          <span class="day-label">Day 3</span>
+          <span class="prize-amount">₹15</span>
+          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
+        </div>
+        <div class="streak-day-card" id="cardDay4">
+          <span class="day-label">Day 4</span>
+          <span class="prize-amount">₹20</span>
+          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
+        </div>
+        <div class="streak-day-card" id="cardDay5">
+          <span class="day-label">Day 5</span>
+          <span class="prize-amount">₹25</span>
+          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
+        </div>
+        <div class="streak-day-card" id="cardDay6">
+          <span class="day-label">Day 6</span>
+          <span class="prize-amount">₹30</span>
+          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
+        </div>
+        <div class="streak-day-card" id="cardDay7" style="grid-column: span 2; background:linear-gradient(135deg, #fef3c7, #fde68a); border-color:#f59e0b;">
+          <span class="day-label" style="color:#78350f;">Day 7 (Grand Prize)</span>
+          <span class="prize-amount" style="color:#b45309;">₹50 🎁</span>
+          <span class="tick-badge"><i class="fa-solid fa-check"></i> Claimed</span>
         </div>
       </div>
 
-      <h4 style="font-size:0.85rem;font-weight:900;margin-bottom:8px;">Daily Check-in Streak:</h4>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;text-align:center;">
-        <div style="background:#f8fafc;padding:8px 4px;border-radius:10px;border:1px solid #e2e8f0;"><span style="font-size:0.65rem;color:var(--text-muted);display:block;">Day 1</span><b style="color:#10b981;font-size:0.85rem;">₹5</b></div>
-        <div style="background:#f8fafc;padding:8px 4px;border-radius:10px;border:1px solid #e2e8f0;"><span style="font-size:0.65rem;color:var(--text-muted);display:block;">Day 2</span><b style="color:#10b981;font-size:0.85rem;">₹10</b></div>
-        <div style="background:#f8fafc;padding:8px 4px;border-radius:10px;border:1px solid #e2e8f0;"><span style="font-size:0.65rem;color:var(--text-muted);display:block;">Day 3</span><b style="color:#10b981;font-size:0.85rem;">₹15</b></div>
-        <div style="background:linear-gradient(135deg,#fef3c7,#fde68a);padding:8px 4px;border-radius:10px;border:1px solid #f59e0b;"><span style="font-size:0.65rem;color:#78350f;display:block;">Day 7</span><b style="color:#b45309;font-size:0.85rem;">₹50 🎁</b></div>
-      </div>
-
-      <button class="btn-confirm-order" id="btnClaimDaily" onclick="claimDailyReward()">CLAIM TODAY'S REWARD (₹10)</button>
+      <button class="btn-confirm-order" id="btnClaimDaily" onclick="claimDailyRewardStreak()">CLAIM TODAY'S REWARD</button>
     </div>
   </div>
 
@@ -1339,15 +1381,15 @@ body{
   </div>
 
   <!-- ========================================================= -->
-  <!-- DEAD-CENTERED ATM CASH RECEIPT DISPENSER (WIN/LOSS DYNAMIC) -->
+  <!-- 🎯 EXACT SAME ATM RECEIPT DISPENSER MODAL (WIN VS LOSS) -->
   <!-- ========================================================= -->
   <div class="atm-viewport-overlay" id="atmCashModal">
-    <div class="atm-pop-container theme-win-card" id="atmCardBody">
+    <div class="atm-pop-container">
       
-      <!-- DYNAMIC TOP RIBBON (GOLD WINGS OR LOSS SHIELD) -->
-      <div class="atm-gold-ribbon" id="atmRibbonContainer">
-        <div class="ribbon-lateral-wings" id="atmWingsContainer"></div>
-        <i class="fa-solid fa-rocket atm-flight-rocket" id="atmTopIcon"></i>
+      <!-- EXACT SAME 3D GOLDEN RIBBON & ROCKET -->
+      <div class="atm-gold-ribbon">
+        <div class="ribbon-lateral-wings"></div>
+        <i class="fa-solid fa-rocket atm-flight-rocket"></i>
       </div>
 
       <div class="atm-heading-congrats" id="atmMainHeading">Congratulations on your</div>
@@ -1360,10 +1402,13 @@ body{
         <span class="pill-badge pill-green" id="atmWinSize">Big</span>
       </div>
 
-      <div class="atm-cutter-slot" id="atmSlotCutter"></div>
+      <!-- EXACT SAME DISPENSER SLOT CUTTER -->
+      <div class="atm-cutter-slot"></div>
+
+      <!-- EXACT SAME SLIDING CASH RECEIPT PAPER -->
       <div class="atm-slide-receipt">
         <div class="receipt-bonus-lbl" id="receiptTagLabel">bonus</div>
-        <div class="receipt-cash-val" id="atmWinCash">₹0.00</div>
+        <div class="receipt-cash-val" id="atmWinCash">+₹0.00</div>
         <div class="receipt-issue-id" id="atmWinIssue">Issue: 30s Quick 20260901001</div>
       </div>
 
@@ -1388,7 +1433,12 @@ let playerPendingBets = [];
 let upiInfo = { upiId: 'merchantpay@upi', name: 'HueRush' };
 let soundEnabled = true;
 
-// 8 CONTROLLED SEGMENTS: ₹10 TO ₹50 (WITH TRY AGAIN)
+// 7-DAY STREAK PRIZE MAPPING
+const streakPrizes = { 1: 5, 2: 10, 3: 15, 4: 20, 5: 25, 6: 30, 7: 50 };
+let userClaimedDays = [];
+let userLastStreakDate = '';
+
+// 8 CONTROLLED SEGMENTS: ₹10 TO ₹50
 const spinRewards = [
   { text: "₹10", value: 10, color: "#ef4444" },
   { text: "Try Again", value: 0, color: "#64748b" },
@@ -1527,6 +1577,10 @@ async function syncWalletBalances() {
     document.getElementById('accTot').innerText = total.toFixed(2);
     document.getElementById('accWin').innerText = data.winningBalance.toFixed(2);
 
+    userClaimedDays = data.claimedStreakDays || [];
+    userLastStreakDate = data.lastStreakDate || '';
+    updateStreakUI();
+
     renderPersonalBets(data.bets || []);
   } catch(e) {}
 }
@@ -1616,7 +1670,9 @@ async function submitBetOrder() {
   syncWalletBalances();
 }
 
-/* 🎡 CONTROLLED ROULETTE WHEEL */
+/* ========================================================= */
+/* 🎡 FUNCTIONAL LUCKY SPIN ENGINE */
+/* ========================================================= */
 function renderSpinWheelCanvas() {
   const canvas = document.getElementById('spinCanvas');
   if (!canvas) return;
@@ -1687,16 +1743,25 @@ function executeLuckySpin() {
     if (tickCount > 25) clearInterval(tickInterval);
   }, 140);
 
-  setTimeout(() => {
+  setTimeout(async () => {
     isSpinningWheel = false;
     const wonReward = spinRewards[targetIndex];
 
     if (wonReward.value > 0) {
       playTickBeep(880, 0.4);
-      currentUser.winningBalance = (currentUser.winningBalance || 0) + wonReward.value;
-      localStorage.setItem('user', JSON.stringify(currentUser));
+      // Permanent DB injection
+      await fetch('/api/wallet/claim-reward', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          userId: currentUser.id,
+          type: 'spin_reward',
+          amount: wonReward.value,
+          targetWallet: 'winning'
+        })
+      });
       syncWalletBalances();
-      alert(`🎉 CONGRATULATIONS!\nYou won ${wonReward.text}! Credited directly to your Withdrawable Balance.`);
+      alert(`🎉 CONGRATULATIONS!\nYou won ${wonReward.text}! Credited permanently to your Withdrawable Balance.`);
     } else {
       playTickBeep(300, 0.2);
       alert(`😔 ${wonReward.text}!\nBetter luck next time! Your daily spin is completed.`);
@@ -1704,45 +1769,182 @@ function executeLuckySpin() {
   }, 4100);
 }
 
-// 2. REDEEM VOUCHER ENGINE
+/* ========================================================= */
+/* 2. REAL PERMANENT GIFT CODE REDEEM */
+/* ========================================================= */
 function openGiftCodeModal() {
   document.getElementById('giftModal').classList.add('open');
 }
 
-function submitGiftCode() {
+async function submitGiftCode() {
   const code = document.getElementById('giftCodeInput').value.trim().toUpperCase();
   if (!code) return alert('Please enter a voucher code!');
 
   const validCodes = {
-    'BONUS50': 50,
-    'VIP100': 100,
-    'FREEVIP': 25,
-    'HUERUSH2026': 200
+    'BONUS50': { amount: 50, wallet: 'bonus' },
+    'VIP100': { amount: 100, wallet: 'winning' },
+    'FREEVIP': { amount: 25, wallet: 'bonus' },
+    'HUERUSH2026': { amount: 200, wallet: 'winning' }
   };
 
-  if (localStorage.getItem('redeemed_' + code)) {
-    return alert('❌ This promo code has already been redeemed on your account!');
+  if (!validCodes[code]) {
+    return alert('❌ Invalid or expired redeem voucher code!');
   }
 
-  if (validCodes[code]) {
-    const amount = validCodes[code];
-    localStorage.setItem('redeemed_' + code, 'true');
-    currentUser.bonusBalance = (currentUser.bonusBalance || 0) + amount;
-    localStorage.setItem('user', JSON.stringify(currentUser));
-    syncWalletBalances();
+  const { amount, wallet } = validCodes[code];
+
+  try {
+    const res = await fetch('/api/wallet/claim-reward', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        userId: currentUser.id,
+        type: 'gift_code',
+        code: code,
+        amount: amount,
+        targetWallet: wallet
+      })
+    });
+    const data = await res.json();
+    if (!res.ok) return alert(data.error);
 
     playTickBeep(900);
     document.getElementById('giftCodeInput').value = '';
     closeDrawer('giftModal');
-    alert(`✅ Code redeemed! ₹${amount} Bonus credited to your wallet.`);
-  } else {
-    alert('❌ Invalid or expired redeem voucher code!');
+    syncWalletBalances();
+    alert(`✅ Code successfully redeemed! ₹${amount} added to your account permanently.`);
+  } catch (e) {
+    alert('Server error while claiming code');
   }
 }
 
-// 3. REFERRAL & AFFILIATE
+/* ========================================================= */
+/* 3. 7-DAY LOGIN STREAK (VISUAL TICKS & PERMANENT DB SYNC) */
+/* ========================================================= */
+function updateStreakUI() {
+  const isClaimedToday = userLastStreakDate === todayDateStr;
+  const nextDayToClaim = userClaimedDays.length + 1;
+
+  for (let d = 1; d <= 7; d++) {
+    const card = document.getElementById(`cardDay${d}`);
+    if (!card) continue;
+    
+    if (userClaimedDays.includes(d)) {
+      card.className = 'streak-day-card claimed';
+    } else if (d === nextDayToClaim && !isClaimedToday) {
+      card.className = 'streak-day-card active-today';
+    } else {
+      card.className = 'streak-day-card';
+    }
+  }
+
+  const btn = document.getElementById('btnClaimDaily');
+  if (isClaimedToday) {
+    btn.innerText = 'ALREADY CLAIMED TODAY ✓';
+    btn.style.background = '#94a3b8';
+    btn.disabled = true;
+    document.getElementById('streakStatusText').innerText = `Day ${userClaimedDays.length} Claimed ✓`;
+  } else {
+    const todayPrize = streakPrizes[Math.min(7, nextDayToClaim)] || 10;
+    btn.innerText = `CLAIM DAY ${Math.min(7, nextDayToClaim)} REWARD (₹${todayPrize})`;
+    btn.style.background = 'linear-gradient(135deg, #ff444a, #b80d19)';
+    btn.disabled = false;
+    document.getElementById('streakStatusText').innerText = `Ready to Claim Day ${Math.min(7, nextDayToClaim)}`;
+  }
+}
+
+function openVipModal() {
+  updateStreakUI();
+  document.getElementById('vipModal').classList.add('open');
+}
+
+async function claimDailyRewardStreak() {
+  const nextDayToClaim = Math.min(7, userClaimedDays.length + 1);
+  const prize = streakPrizes[nextDayToClaim] || 10;
+
+  try {
+    const res = await fetch('/api/wallet/claim-reward', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        userId: currentUser.id,
+        type: 'daily_streak',
+        day: nextDayToClaim,
+        amount: prize,
+        targetWallet: 'bonus'
+      })
+    });
+    const data = await res.json();
+    if (!res.ok) return alert(data.error);
+
+    playTickBeep(880);
+    syncWalletBalances();
+    alert(`🎉 Day ${nextDayToClaim} Streak Bonus claimed! ₹${prize} permanently added to your wallet.`);
+    closeDrawer('vipModal');
+  } catch (e) {
+    alert('Server connection error');
+  }
+}
+
+/* ========================================================= */
+/* 4. REBATE CASH CLAIM & REFERRAL COMMISSION */
+/* ========================================================= */
+function openRebatesModal() {
+  document.getElementById('rebatesModal').classList.add('open');
+}
+
+async function claimRebateCash() {
+  const rebateAmt = 12.50;
+  try {
+    const res = await fetch('/api/wallet/claim-reward', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        userId: currentUser.id,
+        type: 'rebate',
+        amount: rebateAmt,
+        targetWallet: 'winning'
+      })
+    });
+    const data = await res.json();
+    if (!res.ok) return alert(data.error);
+
+    playTickBeep(880);
+    syncWalletBalances();
+    alert(`🎉 ₹${rebateAmt.toFixed(2)} Turnover Rebate credited directly to your Withdrawable Cash Balance!`);
+    closeDrawer('rebatesModal');
+  } catch (e) {
+    alert('Connection error');
+  }
+}
+
 function openInviteModal() {
   document.getElementById('inviteModal').classList.add('open');
+}
+
+async function claimReferralCommission() {
+  const commAmt = 35.00;
+  try {
+    const res = await fetch('/api/wallet/claim-reward', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        userId: currentUser.id,
+        type: 'referral_comm',
+        amount: commAmt,
+        targetWallet: 'winning'
+      })
+    });
+    const data = await res.json();
+    if (!res.ok) return alert(data.error);
+
+    playTickBeep(880);
+    syncWalletBalances();
+    alert(`🎉 ₹${commAmt.toFixed(2)} Referral Commission claimed to your Withdrawable Balance!`);
+    closeDrawer('inviteModal');
+  } catch (e) {
+    alert('Connection error');
+  }
 }
 
 function copyReferralLink() {
@@ -1758,57 +1960,11 @@ function shareWhatsapp() {
   window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
 }
 
-// 4. DAILY REWARD & REBATES
-function openVipModal() {
-  const claimed = localStorage.getItem('vip_daily_claimed_' + todayDateStr);
-  const btn = document.getElementById('btnClaimDaily');
-  if (claimed) {
-    btn.innerText = 'ALREADY CLAIMED TODAY ✓';
-    btn.style.background = '#94a3b8';
-    btn.disabled = true;
-  } else {
-    btn.innerText = "CLAIM TODAY'S REWARD (₹10)";
-    btn.style.background = 'linear-gradient(135deg, #ff444a, #b80d19)';
-    btn.disabled = false;
-  }
-  document.getElementById('vipModal').classList.add('open');
-}
-
-function claimDailyReward() {
-  localStorage.setItem('vip_daily_claimed_' + todayDateStr, 'true');
-  currentUser.bonusBalance = (currentUser.bonusBalance || 0) + 10;
-  localStorage.setItem('user', JSON.stringify(currentUser));
-  
-  document.getElementById('bonBal').innerText = currentUser.bonusBalance.toFixed(2);
-  document.getElementById('totBal').innerText = (currentUser.bonusBalance + (currentUser.winningBalance||0)).toFixed(2);
-  
-  playTickBeep(880);
-  alert('🎉 ₹10 Daily VIP Bonus added to your wallet!');
-  closeDrawer('vipModal');
-}
-
-function openRebatesModal() {
-  document.getElementById('rebatesModal').classList.add('open');
-}
-
-function claimRebateCash() {
-  const rebateAmt = 12.50;
-  currentUser.winningBalance = (currentUser.winningBalance || 0) + rebateAmt;
-  localStorage.setItem('user', JSON.stringify(currentUser));
-
-  document.getElementById('winBal').innerText = currentUser.winningBalance.toFixed(2);
-  document.getElementById('totBal').innerText = ((currentUser.bonusBalance||0) + currentUser.winningBalance).toFixed(2);
-
-  playTickBeep(880);
-  alert(`🎉 ₹${rebateAmt.toFixed(2)} Turnover Rebate credited to your Withdrawable Balance!`);
-  closeDrawer('rebatesModal');
-}
-
 function openSupportDrawer() {
   document.getElementById('supportDrawer').classList.add('open');
 }
 
-// DEPOSIT & WITHDRAW HANDLERS
+// DEPOSIT & WITHDRAW
 async function fetchUpiData() {
   try {
     const res = await fetch('/api/wallet/upi-config');
@@ -1902,9 +2058,9 @@ function renderPersonalBets(bets) {
   `).join('');
 }
 
-// =========================================================
-// ATM RECEIPT CONTROLLER: DYNAMIC WIN VS LOSS DISPLAY
-// =========================================================
+/* ========================================================= */
+/* 🎯 EXACT SAME ATM RECEIPT DISPENSER MODAL (WIN VS LOSS) */
+/* ========================================================= */
 function toggleAutoClose() {
   autoCloseActive = !autoCloseActive;
   const box = document.getElementById('atmToggleBox');
@@ -1913,43 +2069,25 @@ function toggleAutoClose() {
 }
 
 function triggerAtmOutcomeModal(isWin, amount, resultMeta, periodCode) {
-  const cardBody = document.getElementById('atmCardBody');
-  const ribbonBox = document.getElementById('atmRibbonContainer');
-  const wingsBox = document.getElementById('atmWingsContainer');
-  const topIcon = document.getElementById('atmTopIcon');
   const mainHead = document.getElementById('atmMainHeading');
   const subHead = document.getElementById('atmSubHeading');
   const cashVal = document.getElementById('atmWinCash');
   const tagLbl = document.getElementById('receiptTagLabel');
-  const slotCut = document.getElementById('atmSlotCutter');
 
   if (isWin) {
-    // WIN STYLES
-    cardBody.className = 'atm-pop-container theme-win-card';
-    ribbonBox.className = 'atm-gold-ribbon';
-    wingsBox.className = 'ribbon-lateral-wings';
-    topIcon.className = 'fa-solid fa-rocket atm-flight-rocket';
     mainHead.innerText = 'Congratulations on your';
     subHead.innerText = 'winning';
     tagLbl.innerText = 'bonus';
-    tagLbl.style.color = '#ef4444';
     cashVal.innerText = `+₹${amount.toFixed(2)}`;
-    cashVal.className = 'receipt-cash-val';
-    slotCut.className = 'atm-cutter-slot';
+    cashVal.className = 'receipt-cash-val val-win';
     playTickBeep(880, 0.4);
   } else {
-    // LOSS STYLES
-    cardBody.className = 'atm-pop-container theme-loss-card';
-    ribbonBox.className = 'atm-loss-ribbon';
-    wingsBox.className = 'ribbon-loss-wings';
-    topIcon.className = 'fa-solid fa-heart-crack atm-loss-icon';
+    // EXACT SAME TEMPLATE, ROCKET & RIBBON — ONLY HEADER & VALUE CHANGE
     mainHead.innerText = 'Better luck next time';
     subHead.innerText = 'you lost';
     tagLbl.innerText = 'debit';
-    tagLbl.style.color = '#64748b';
     cashVal.innerText = `-₹${amount.toFixed(2)}`;
-    cashVal.className = 'receipt-cash-val loss-val';
-    slotCut.className = 'atm-cutter-slot slot-loss';
+    cashVal.className = 'receipt-cash-val val-loss';
     playTickBeep(320, 0.3);
   }
 
@@ -2029,7 +2167,6 @@ setInterval(async () => {
         lastRecordedPeriod = latest.period;
         syncWalletBalances();
 
-        // Check if player placed bet in this period
         const matchBet = playerPendingBets.find(b => String(b.period) === String(latest.period));
         if (matchBet) {
           let win = false;
@@ -2049,7 +2186,6 @@ setInterval(async () => {
             const winCash = matchBet.amount * mult * 0.98;
             triggerAtmOutcomeModal(true, winCash, latest, latest.period);
           } else {
-            // TRIGGER LOSS POPUP
             triggerAtmOutcomeModal(false, matchBet.amount, latest, latest.period);
           }
 
