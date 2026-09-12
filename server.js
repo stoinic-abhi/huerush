@@ -2,15 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const crypto = require('crypto');
 require('dotenv').config();
 
-// Inbuilt zero-dependency password hash
 function hashPassword(pass) {
   return crypto.createHash('sha256').update(pass).digest('hex');
 }
 
-// --- EMBEDDED MONGOOSE SCHEMAS ---
+// --- MONGOOSE SCHEMAS ---
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
@@ -36,13 +36,28 @@ const Transaction = mongoose.models.Transaction || mongoose.model('Transaction',
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Multi-path static support (chahe public folder ho ya root)
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname));
 
+// Smart file resolver
+function servePage(fileName, res) {
+  const p1 = path.join(__dirname, 'public', fileName);
+  const p2 = path.join(__dirname, fileName);
+  if (fs.existsSync(p1)) return res.sendFile(p1);
+  if (fs.existsSync(p2)) return res.sendFile(p2);
+  res.status(404).send(`<h3>${fileName} not found on server</h3>`);
+}
+
+// Root page -> index.html
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'), (err) => {
-    if (err) res.sendFile(path.join(__dirname, 'index.html'));
-  });
+  servePage('index.html', res);
+});
+
+// Admin page -> god-panel.html
+app.get('/god-panel.html', (req, res) => {
+  servePage('god-panel.html', res);
 });
 
 // In-Memory Global Storage
@@ -138,7 +153,7 @@ Object.keys(global.rooms).forEach(roomKey => {
   }, 1000);
 });
 
-// --- INLINE AUTHENTICATION ROUTES ---
+// Authentication Routes
 app.post('/api/auth/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -343,11 +358,11 @@ app.post('/api/admin/process-tx', async (req, res) => {
   res.json({ message: `Transaction ${status}` });
 });
 
-// Boot Database & Server
+// Boot Server
 async function startServer() {
   const mongoUri = process.env.MONGO_URI;
   if (!mongoUri) {
-    console.error('❌ Error: .env file me MONGO_URI nahi mili!');
+    console.error('❌ Error: MONGO_URI missing in Environment Variables!');
     return;
   }
 
