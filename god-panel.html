@@ -3,18 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>HueRush — Elite God Control Vault</title>
+<title>HueRush — Master God Control Panel</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --dark-base:#030508;
-  --dark-surface:#0b0f19;
-  --dark-elevated:#131b2e;
+  --dark-surface:#0c111d;
+  --dark-elevated:#151d2e;
   --neon-red:#ff2a55;
-  --neon-green:#00e676;
+  --neon-green:#10b981;
   --neon-cyan:#00d2ff;
-  --gold-grad:linear-gradient(135deg, #ffd700 0%, #ff8f00 100%);
   --gold-text:#fde047;
   --text-primary:#f8fafc;
   --text-secondary:#8a99ad;
@@ -66,7 +65,7 @@ body{
 }
 .pin-key:active{transform:scale(0.92);background:var(--neon-red);}
 
-/* DASHBOARD HEADER */
+/* HEADER */
 .admin-header{
   background:linear-gradient(135deg, #182238, #0d1320);
   border:1px solid var(--glass-border);border-radius:20px;padding:16px;
@@ -87,6 +86,86 @@ body{
 }
 .admin-card h3{font-size:0.9rem;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 
+/* ========================================================= */
+/* 💎 ULTRA-PREMIUM CASINO RIGGING CONSOLE */
+/* ========================================================= */
+.rig-room-console{
+  background:var(--dark-elevated);
+  border:1px solid var(--glass-border);
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:12px;
+  position:relative;
+  overflow:hidden;
+}
+.rig-room-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+.room-name-badge{
+  font-size:0.85rem;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.period-badge-tag{
+  font-size:0.68rem;
+  font-family:monospace;
+  color:var(--neon-cyan);
+  background:rgba(0,210,255,0.1);
+  padding:3px 8px;
+  border-radius:6px;
+  border:1px solid rgba(0,210,255,0.2);
+}
+
+/* REAL CASINO EXACT 0-9 RIGGING BALLS (NO OVERLAP) */
+.rig-balls-grid{
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:8px;
+}
+.rig-ball-btn{
+  width:100%;
+  aspect-ratio:1;
+  border-radius:50%;
+  border:2px solid transparent;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:1.15rem;
+  font-weight:900;
+  cursor:pointer;
+  transition:all 0.15s ease;
+  box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
+.rig-ball-btn:active{transform:scale(0.9);}
+.rig-ball-btn sub{
+  font-size:0.52rem;
+  font-weight:800;
+  margin-top:-2px;
+  opacity:0.85;
+  text-transform:uppercase;
+}
+
+/* Casino Ball Gradient Classes */
+.ball-green{background:radial-gradient(circle at 35% 35%, #34d399, #059669);}
+.ball-red{background:radial-gradient(circle at 35% 35%, #f87171, #dc2626);}
+.ball-split-0{background:conic-gradient(#dc2626 0% 50%, #7c3aed 50% 100%);}
+.ball-split-5{background:conic-gradient(#059669 0% 50%, #7c3aed 50% 100%);}
+
+/* Locked / Active State Glow */
+.rig-ball-btn.rigged-active{
+  border-color:#fff!important;
+  box-shadow:0 0 16px #fff, 0 0 25px var(--neon-cyan);
+  transform:scale(1.05);
+}
+
+/* TABLE STYLING */
 .table-responsive{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .admin-table{width:100%;border-collapse:collapse;font-size:0.78rem;white-space:nowrap;}
 .admin-table th{padding:8px 6px;color:var(--text-secondary);border-bottom:1px solid var(--glass-border);font-weight:800;text-align:left;}
@@ -96,23 +175,29 @@ body{
 .btn-approve{background:var(--neon-green);color:#000;}
 .btn-reject{background:var(--neon-red);color:#fff;}
 
-/* 💎 PREMIUM RIGGING ENGINE STYLING */
-.rig-room-box{
-  background:var(--dark-elevated);border:1px solid var(--glass-border);
-  border-radius:16px;padding:12px;margin-bottom:10px;
+/* RADAR SUCCESS TOAST */
+.radar-toast{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%) translateY(-100px);
+  background:linear-gradient(135deg, #064e3b, #022c22);
+  border:1.5px solid #10b981;
+  color:#fff;
+  padding:12px 20px;
+  border-radius:100px;
+  font-size:0.8rem;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(16,185,129,0.5);
+  z-index:999999;
+  transition:transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space:nowrap;
 }
-.rig-room-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:0.85rem;font-weight:900;}
-.rig-num-grid{display:grid;grid-template-columns:repeat(5, 1fr);gap:6px;}
-.num-btn{
-  background:var(--dark-surface);border:1px solid var(--glass-border);color:#fff;
-  border-radius:8px;padding:8px 0;font-size:0.8rem;font-weight:900;cursor:pointer;text-align:center;
-  transition:all 0.15s;
-}
-.num-btn:active, .num-btn.rigged-active{background:var(--neon-cyan);color:#000;border-color:var(--neon-cyan);box-shadow:0 0 10px rgba(0,210,255,0.5);}
-
-.btn-wipe-zero{
-  width:100%;background:linear-gradient(135deg, #7f1d1d, #450a0a);border:1px solid rgba(239,68,68,0.4);
-  color:#fca5a5;border-radius:14px;padding:14px;font-weight:900;cursor:pointer;box-shadow:0 5px 20px rgba(127,29,29,0.4);
+.radar-toast.show{
+  transform:translateX(-50%) translateY(0);
 }
 </style>
 </head>
@@ -123,7 +208,7 @@ body{
   <div class="vault-pin-box">
     <div class="vault-shield-glow"><i class="fa-solid fa-lock"></i></div>
     <h2 style="font-weight:900;font-size:1.3rem;color:#fff;">God Vault Security</h2>
-    <p style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Enter 4-Digit Master PIN to Access</p>
+    <p style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Enter 4-Digit Master PIN</p>
     
     <div class="pin-dots-row">
       <div class="pin-dot" id="dot1"></div>
@@ -149,13 +234,19 @@ body{
   </div>
 </div>
 
+<!-- TOAST -->
+<div class="radar-toast" id="radarToast">
+  <i class="fa-solid fa-satellite-dish" style="color:var(--neon-green);"></i>
+  <span id="toastMsgText">Result Locked</span>
+</div>
+
 <div class="admin-container hidden" id="adminMainContent">
 
   <!-- HEADER -->
   <div class="admin-header">
     <div>
-      <h2 style="font-weight:900;font-size:1.2rem;"><i class="fa-solid fa-shield-halved" style="color:var(--neon-red);"></i> God Vault</h2>
-      <p style="font-size:0.7rem;color:var(--text-secondary);">Mobile Luxury Casino Operations</p>
+      <h2 style="font-weight:900;font-size:1.2rem;"><i class="fa-solid fa-crown" style="color:var(--gold-text);"></i> God Console</h2>
+      <p style="font-size:0.7rem;color:var(--text-secondary);">Master Operational Center</p>
     </div>
     <button class="btn-action" style="background:var(--dark-elevated);color:#fff;border:1px solid var(--glass-border);" onclick="loadAdminData()"><i class="fa-solid fa-rotate"></i> Refresh</button>
   </div>
@@ -176,26 +267,45 @@ body{
     </div>
   </div>
 
-  <!-- 💎 ULTRA-PREMIUM RIGGING & FORCE RESULT ENGINE -->
+  <!-- 💎 ULTRA-PREMIUM RIGGING CONSOLE (EXACT CASINO COLOR MAPPING) -->
   <div class="admin-card">
-    <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--neon-cyan);"></i> Ultimate Rigging Engine</h3>
-    <p style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:12px;">Tap target winning number for upcoming room period:</p>
+    <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--neon-cyan);"></i> Parity Rigging Engine</h3>
+    <p style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:12px;">Tap exact number ball to lock next winning outcome:</p>
     
-    <div class="rig-room-box">
-      <div class="rig-room-head"><span>⚡ 30s Quick Room</span> <b style="color:var(--neon-cyan);" id="period30s">Period: ---</b></div>
-      <div class="rig-num-grid" id="rigGrid30s"></div>
+    <!-- 30s Room -->
+    <div class="rig-room-console">
+      <div class="rig-room-header">
+        <span class="room-name-badge"><i class="fa-solid fa-stopwatch" style="color:var(--neon-red);"></i> 30s Quick</span>
+        <span class="period-badge-tag" id="period30s">Period: ---</span>
+      </div>
+      <div class="rig-balls-grid" id="rigGrid30s"></div>
     </div>
-    <div class="rig-room-box">
-      <div class="rig-room-head"><span>⚡ 90s Room</span> <b style="color:var(--neon-cyan);" id="period90s">Period: ---</b></div>
-      <div class="rig-num-grid" id="rigGrid90s"></div>
+
+    <!-- 90s Room -->
+    <div class="rig-room-console">
+      <div class="rig-room-header">
+        <span class="room-name-badge"><i class="fa-solid fa-stopwatch" style="color:var(--gold-text);"></i> 1.5 Min Room</span>
+        <span class="period-badge-tag" id="period90s">Period: ---</span>
+      </div>
+      <div class="rig-balls-grid" id="rigGrid90s"></div>
     </div>
-    <div class="rig-room-box">
-      <div class="rig-room-head"><span>⚡ 3m Room</span> <b style="color:var(--neon-cyan);" id="period3m">Period: ---</b></div>
-      <div class="rig-num-grid" id="rigGrid3m"></div>
+
+    <!-- 3m Room -->
+    <div class="rig-room-console">
+      <div class="rig-room-header">
+        <span class="room-name-badge"><i class="fa-solid fa-stopwatch" style="color:var(--neon-cyan);"></i> 3 Min Room</span>
+        <span class="period-badge-tag" id="period3m">Period: ---</span>
+      </div>
+      <div class="rig-balls-grid" id="rigGrid3m"></div>
     </div>
-    <div class="rig-room-box">
-      <div class="rig-room-head"><span>⚡ 5m Room</span> <b style="color:var(--neon-cyan);" id="period5m">Period: ---</b></div>
-      <div class="rig-num-grid" id="rigGrid5m"></div>
+
+    <!-- 5m Room -->
+    <div class="rig-room-console">
+      <div class="rig-room-header">
+        <span class="room-name-badge"><i class="fa-solid fa-stopwatch" style="color:var(--neon-green);"></i> 5 Min Room</span>
+        <span class="period-badge-tag" id="period5m">Period: ---</span>
+      </div>
+      <div class="rig-balls-grid" id="rigGrid5m"></div>
     </div>
   </div>
 
@@ -219,13 +329,6 @@ body{
         <tbody id="pendingWdRows"><tr><td colspan="4" style="text-align:center;color:var(--text-secondary);">Loading...</td></tr></tbody>
       </table>
     </div>
-  </div>
-
-  <!-- FRESH START ZERO WIPE BUTTON -->
-  <div class="admin-card" style="text-align:center;background:rgba(127,29,29,0.15);border-color:rgba(239,68,68,0.3);">
-    <h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--neon-red);"></i> Emergency Platform Reset</h3>
-    <p style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:12px;">Wipe all transactions, bets, and reset balances to zero for a fresh start.</p>
-    <button class="btn-wipe-zero" onclick="executeFreshZeroWipe()">WIPE ALL DATA & START FRESH 🔄</button>
   </div>
 
 </div>
@@ -262,6 +365,27 @@ function verifyPin() {
   }
 }
 
+function showRadarToast(msg) {
+  const toast = document.getElementById('radarToast');
+  document.getElementById('toastMsgText').innerText = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// REAL EXACT CASINO MAPPING FOR BALLS
+const ballMetaInfo = [
+  { num: 0, cls: 'ball-split-0', lbl: 'Red/Vio' },
+  { num: 1, cls: 'ball-green', lbl: 'Green' },
+  { num: 2, cls: 'ball-red', lbl: 'Red' },
+  { num: 3, cls: 'ball-green', lbl: 'Green' },
+  { num: 4, cls: 'ball-red', lbl: 'Red' },
+  { num: 5, cls: 'ball-split-5', lbl: 'Grn/Vio' },
+  { num: 6, cls: 'ball-red', lbl: 'Red' },
+  { num: 7, cls: 'ball-green', lbl: 'Green' },
+  { num: 8, cls: 'ball-red', lbl: 'Red' },
+  { num: 9, cls: 'ball-green', lbl: 'Green' }
+];
+
 async function loadAdminData() {
   try {
     const res = await fetch('/api/admin/system-status');
@@ -271,20 +395,22 @@ async function loadAdminData() {
     document.getElementById('statPaid').innerText = '₹' + data.stats.totalPaid.toLocaleString('en-IN');
     document.getElementById('statProfit').innerText = '₹' + data.stats.netProfit.toLocaleString('en-IN');
 
-    // Rooms Periods
+    // Rooms Rigging Setup
     ['30s', '90s', '3m', '5m'].forEach(roomKey => {
       if (data.rooms[roomKey]) {
         document.getElementById('period' + roomKey).innerText = `Period: ${data.rooms[roomKey].period}`;
       }
       const grid = document.getElementById('rigGrid' + roomKey);
       if (grid && grid.innerHTML === '') {
-        let html = '';
-        for (let i = 0; i <= 9; i++) {
-          html += `<button class="num-btn" id="rig_${roomKey}_${i}" onclick="forceRoomNum('${roomKey}', ${i}, this)">${i}</button>`;
-        }
-        grid.innerHTML = html;
+        grid.innerHTML = ballMetaInfo.map(b => `
+          <button class="rig-ball-btn ${b.cls}" id="rig_${roomKey}_${b.num}" onclick="forceRoomNum('${roomKey}', ${b.num}, this)">
+            ${b.num}
+            <sub>${b.lbl}</sub>
+          </button>
+        `).join('');
       }
-      // Highlight forced
+
+      // Highlight active locked number
       const forced = data.rooms[roomKey] ? data.rooms[roomKey].forcedResult : null;
       for (let i = 0; i <= 9; i++) {
         const btn = document.getElementById(`rig_${roomKey}_${i}`);
@@ -334,7 +460,7 @@ async function processTx(txId, status) {
     body: JSON.stringify({ txId, status })
   });
   const data = await res.json();
-  alert(data.message);
+  showRadarToast(`Transaction ${status.toUpperCase()}!`);
   loadAdminData();
 }
 
@@ -344,15 +470,7 @@ async function forceRoomNum(roomKey, number, el) {
     body: JSON.stringify({ roomKey, number })
   });
   const data = await res.json();
-  alert(data.message);
-  loadAdminData();
-}
-
-async function executeFreshZeroWipe() {
-  if (!confirm('⚠️ Are you sure? This will wipe all transaction history, user bets, and reset balances to zero!')) return;
-  const res = await fetch('/api/admin/fresh-reset', { method: 'POST' });
-  const data = await res.json();
-  alert(data.message);
+  showRadarToast(`🎯 Room [${roomKey}] Locked to: ${number}`);
   loadAdminData();
 }
 </script>
